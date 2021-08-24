@@ -1,3 +1,6 @@
-# final-project
+# Mint-Bean-Hackathon
 
-A full stack JavaScript solo project.
+Collab project with
+Brian Bozigian
+Michael Aguilar
+Daniel To
