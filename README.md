@@ -28,8 +28,8 @@ Collab project with
 1. Clone the repository.
 
     ```shell
-    git clone git@github.com:theDanielTo/Reeln.git
-    cd reeln
+    git clone git@github.com:theDanielTo/Mint-Bean-Hackathon.git
+    cd mint-bean-hackathon
     ```
     
 2. Install all dependencies with NPM.
