@@ -5,6 +5,9 @@ Collab project with
 * Michael Aguilar @Michael-M-Aguilar
 * Daniel To @theDanielTo
 
+#### Our group project for Mint Bean
+#### Aug 24, 2021 - Aug 31, 2021
+
 ## Live Demo
 
 ## Features
