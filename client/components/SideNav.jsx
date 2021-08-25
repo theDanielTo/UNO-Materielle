@@ -24,6 +24,9 @@ import FormDialog from './name-dialogs';
 const drawerWidth = 300;
 
 const useStyles = makeStyles(theme => ({
+  // modal: {
+  //   margin: '10px'
+  // },
   root: {
     display: 'flex'
   },
@@ -43,9 +46,6 @@ const useStyles = makeStyles(theme => ({
   listItem: {
     color: '#DDE0EF',
     textDecoration: 'none'
-  },
-  dialog: {
-    marginLeft: 3
   },
   toolbar: theme.mixins.toolbar
 }));
@@ -117,8 +117,9 @@ export default function SideNav() {
               ))
             }
           </List>
-
-          <FormDialog className={classes.dialog}/>
+          <List>
+          <FormDialog/>
+          </List>
         </Drawer>
     </div>
   );
