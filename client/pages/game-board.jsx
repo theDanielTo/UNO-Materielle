@@ -3,10 +3,17 @@ import Grid from '@material-ui/core/Grid';
 // import { makeStyles, Paper } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
+// import { height } from '@material-ui/system';
+
 const styles = theme => ({
+  root: {
+    backgroundColor: '#151224',
+    height: '100vh'
+  },
   paper: {
     height: 140,
-    width: 100
+    width: 100,
+    marginBottom: '50%'
   }
 });
 
@@ -24,26 +31,18 @@ export class GameBoard extends React.Component {
 
     return (
 
-      <>
-        <Grid container spacing={2} justifyContent="center">
-          <Grid item>
-            <Paper className={classes.paper} >1</Paper>
-          </Grid>
-          <Grid item>
-            <Paper className={classes.paper}>2</Paper>
-          </Grid>
-          <Grid item>
-            <Paper className={classes.paper}>3</Paper>
-          </Grid>
-          <Grid item>
-            <Paper className={classes.paper}>4</Paper>
-          </Grid>
-          <Grid item>
-            <Paper className={classes.paper}>5</Paper>
-          </Grid>
+      <div className={classes.root}>
+      {/* cpu hand */}
+        <Grid container justifyContent="center" spacing={2}>
+          {[0, 1, 2, 3, 4].map(value => (
+            <Grid item key={value}>
+              <Paper className={classes.paper}/>
+            </Grid>
+          ))
+          }
         </Grid>
-        {/* Middle with deck and draw */}
 
+        {/* Middle with deck and draw */}
         <Grid container spacing={2} justifyContent="center">
           <Grid item>
             <Paper className={classes.paper}>1</Paper>
@@ -53,7 +52,16 @@ export class GameBoard extends React.Component {
           </Grid>
         </Grid>
 
-      </>
+        {/* Players card layout  */}
+        <Grid container justifyContent="center" spacing={2}>
+          {[0, 1, 2, 3, 4].map(value => (
+            <Grid item key={value}>
+            <Paper className={classes.paper}/>
+            </Grid>
+          ))
+          }
+        </Grid>
+      </div >
     );
   }
 }
