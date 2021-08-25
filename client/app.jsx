@@ -1,11 +1,11 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import SideNav from './components/SideNav';
 import HowToPlay from './pages/HowToPlay';
 
 export default function App() {
   return (
-    <Router>
+    <Router basename="/">
       <Switch>
         <Route path="/how-to-play">
           <HowToPlay />
@@ -20,6 +20,7 @@ export default function App() {
           <Home />
         </Route>
       </Switch>
+
       <SideNav />
     </Router>
   );

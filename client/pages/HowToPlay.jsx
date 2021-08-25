@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
+    justifyContent: 'center',
+    marginLeft: '300px',
     marginTop: '64px',
     backgroundColor: 'blue',
     height: '100vh',

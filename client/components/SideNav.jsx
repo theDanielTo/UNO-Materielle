@@ -88,7 +88,7 @@ export default function SideNav() {
           <div className={classes.toolbar} />
           <Divider light={true} />
           <List>
-            <Link to="/">
+          <Link to="/">
               <ListItem button>
                 <ListItemIcon className={classes.listItem}>
                   <AccountCircleIcon />
