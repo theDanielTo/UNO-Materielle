@@ -7,13 +7,26 @@ import { withStyles } from '@material-ui/styles';
 
 const styles = theme => ({
   root: {
+    position: 'relative',
+    top: '10%',
     backgroundColor: '#151224',
     height: '100vh'
   },
+
   paper: {
+    position: 'relative',
+    top: '50%',
     height: 140,
-    width: 100,
-    marginBottom: '50%'
+    width: 100
+  },
+  deck: {
+    position: 'relative',
+    top: '15%'
+  },
+  userCards: {
+    position: 'relative',
+    top: '25%'
+
   }
 });
 
@@ -33,7 +46,7 @@ export class GameBoard extends React.Component {
 
       <div className={classes.root}>
       {/* cpu hand */}
-        <Grid container justifyContent="center" spacing={2}>
+        <Grid container justifyContent="center" spacing={2} className={classes.cpu}>
           {[0, 1, 2, 3, 4].map(value => (
             <Grid item key={value}>
               <Paper className={classes.paper}/>
@@ -43,7 +56,7 @@ export class GameBoard extends React.Component {
         </Grid>
 
         {/* Middle with deck and draw */}
-        <Grid container spacing={2} justifyContent="center">
+        <Grid container spacing={2} justifyContent="center" className={classes.deck}>
           <Grid item>
             <Paper className={classes.paper}>1</Paper>
           </Grid>
@@ -53,9 +66,9 @@ export class GameBoard extends React.Component {
         </Grid>
 
         {/* Players card layout  */}
-        <Grid container justifyContent="center" spacing={2}>
+        <Grid container justifyContent="center" spacing={2} className={classes.userCards}>
           {[0, 1, 2, 3, 4].map(value => (
-            <Grid item key={value}>
+            <Grid item key={value} >
             <Paper className={classes.paper}/>
             </Grid>
           ))

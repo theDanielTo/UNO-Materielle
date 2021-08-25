@@ -1,11 +1,10 @@
 import React from 'react';
-import GameBoard from './game-board';
+import gameBoard from './game-board';
 
 export default function Home(props) {
   return (
     <>
-    <GameBoard />
+    <gameBoard />
     </>
-
   );
 }
