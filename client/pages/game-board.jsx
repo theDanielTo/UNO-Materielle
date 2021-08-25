@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { Paper } from '@material-ui/core';
+import PlayerHand from '../components/PlayerHand';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,18 +21,9 @@ const useStyles = makeStyles(theme => ({
   midCards: {
     height: '25%'
   },
-  paper: {
+  card: {
     height: 140,
     width: 100
-  },
-  paperRight: {
-    transform: 'rotate(-90deg)'
-  },
-  paperTop: {
-    transform: 'rotate(180deg)'
-  },
-  paperLeft: {
-    transform: 'rotate(90deg)'
   }
 }));
 
@@ -40,7 +32,8 @@ export default function GameBoard() {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={0} className={classes.columnSm}>
+      <Grid container spacing={0} className={classes.columnSm}
+        onDragOver={e => e.preventDefault()}>
 
         <Grid className={classes.columnSm}
           container item xl={2} spacing={0}
@@ -48,14 +41,7 @@ export default function GameBoard() {
           justifyContent="center"
           alignItems="center"
         >
-          {[0, 1, 2, 3, 4].map(value => (
-            <Grid item key={value} >
-              <Paper className={classes.paper + ' ' + classes.paperLeft} draggable>
-                {value}
-              </Paper>
-            </Grid>
-          ))
-          }
+          <PlayerHand player={'left'}/>
         </Grid>
 
         <Grid className={classes.columnSm}
@@ -67,14 +53,7 @@ export default function GameBoard() {
             justifyContent="center"
             alignItems="center"
           >
-            {[0, 1, 2, 3, 4].map(value => (
-              <Grid item key={value} >
-                <Paper className={classes.paper + ' ' + classes.paperTop} draggable>
-                  {value}
-                </Paper>
-              </Grid>
-            ))
-            }
+            <PlayerHand player={'top'} />
           </Grid>
 
           <Grid className={classes.midRow}
@@ -83,14 +62,18 @@ export default function GameBoard() {
             alignItems="center"
           >
             <Grid item>
-              <Paper className={classes.paper}>
+              {/* <Paper className={classes.card}>
                 CARD PLAYED
-              </Paper>
+              </Paper> */}
+              <img src="./images/uno-red.png" alt=""
+                className={classes.card} />
             </Grid>
             <Grid item>
-              <Paper className={classes.paper}>
+              {/* <Paper className={classes.card}>
                 DECK
-              </Paper>
+              </Paper> */}
+              <img src="./images/uno-red.png" alt=""
+                className={classes.card} />
             </Grid>
           </Grid>
 
@@ -100,14 +83,7 @@ export default function GameBoard() {
             justifyContent="center"
             alignItems="center"
           >
-            {[0, 1, 2, 3, 4].map(value => (
-              <Grid item key={value} >
-                <Paper className={classes.paper} draggable>
-                  {value}
-                </Paper>
-              </Grid>
-            ))
-            }
+            <PlayerHand player={'bottom'} />
           </Grid>
         </Grid>
 
@@ -117,14 +93,7 @@ export default function GameBoard() {
           justifyContent="center"
           alignItems="center"
         >
-          {[0, 1, 2, 3, 4].map(value => (
-            <Grid item key={value} >
-              <Paper className={classes.paper + ' ' + classes.paperRight} draggable>
-                {value}
-              </Paper>
-            </Grid>
-          ))
-          }
+          <PlayerHand player={'right'} />
         </Grid>
 
       </Grid>
