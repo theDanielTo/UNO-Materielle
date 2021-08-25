@@ -19,9 +19,14 @@ import GradeIcon from '@material-ui/icons/Grade';
 import MoodIcon from '@material-ui/icons/Mood';
 import VideogameAssetIcon from '@material-ui/icons/VideogameAsset';
 
+import FormDialog from './name-dialogs';
+
 const drawerWidth = 300;
 
 const useStyles = makeStyles(theme => ({
+  // modal: {
+  //   margin: '10px'
+  // },
   root: {
     display: 'flex'
   },
@@ -111,6 +116,9 @@ export default function SideNav() {
                 </Link>
               ))
             }
+          </List>
+          <List>
+          <FormDialog/>
           </List>
         </Drawer>
     </div>
