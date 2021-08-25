@@ -2,6 +2,7 @@ import React from 'react';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import SideNav from './components/SideNav';
 import HowToPlay from './pages/HowToPlay';
+import GameBoard from './pages/game-board';
 
 export default function App() {
   return (
@@ -14,7 +15,7 @@ export default function App() {
           <AboutUs />
         </Route>
         <Route path="/games">
-          <Games />
+          <GameBoard />
         </Route>
         <Route path="/">
           <Home />
@@ -84,4 +85,5 @@ function Games() {
       <h1>Find a game</h1>
     </div>
   );
+
 }
