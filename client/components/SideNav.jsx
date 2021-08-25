@@ -52,12 +52,12 @@ const navLinks = [
     href: '/how-to-play'
   },
   {
-    text: 'About Us',
+    text: 'Developers',
     icon: <MoodIcon />,
     href: '/about-us'
   },
   {
-    text: 'Games',
+    text: 'Find a Game',
     icon: <VideogameAssetIcon />,
     href: '/games'
   }

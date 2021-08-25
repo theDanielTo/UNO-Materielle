@@ -11,7 +11,7 @@ export default function App() {
           <HowToPlay />
         </Route>
         <Route path="/about-us">
-          <About />
+          <AboutUs />
         </Route>
         <Route path="/games">
           <Games />
@@ -31,24 +31,38 @@ function Home() {
     <div
       style={
         {
-          backgroundColor: 'green',
+          display: 'flex',
+          justifyContent: 'center',
+          paddingTop: '64px',
+          backgroundColor: '#151224',
+          color: '#DDE0EF',
           height: '100vh',
-          width: '100%'
+          width: 'calc(100% - 300px)',
+          float: 'right'
         }}
-    />
+    >
+      <h1>Home</h1>
+    </div>
   );
 }
 
-function About() {
+function AboutUs() {
   return (
     <div
       style={
         {
-          backgroundColor: 'red',
+          display: 'flex',
+          justifyContent: 'center',
+          paddingTop: '64px',
+          backgroundColor: '#151224',
+          color: '#DDE0EF',
           height: '100vh',
-          width: '100%'
+          width: 'calc(100% - 300px)',
+          float: 'right'
         }}
-    />
+    >
+      <h1>About Us</h1>
+    </div>
   );
 }
 
@@ -57,10 +71,17 @@ function Games() {
     <div
       style={
         {
-          backgroundColor: 'pink',
+          display: 'flex',
+          justifyContent: 'center',
+          paddingTop: '64px',
+          backgroundColor: '#151224',
+          color: '#DDE0EF',
           height: '100vh',
-          width: '100%'
+          width: 'calc(100% - 300px)',
+          float: 'right'
         }}
-    />
+    >
+      <h1>Find a game</h1>
+    </div>
   );
 }
