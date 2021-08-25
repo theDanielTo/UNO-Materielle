@@ -62,18 +62,18 @@ export default function GameBoard() {
             alignItems="center"
           >
             <Grid item>
-              {/* <Paper className={classes.card}>
+              <Paper className={classes.card}>
                 CARD PLAYED
-              </Paper> */}
-              <img src="./images/uno-red.png" alt=""
-                className={classes.card} />
+              </Paper>
+              {/* <img src="./images/uno-red.png" alt=""
+                className={classes.card} /> */}
             </Grid>
             <Grid item>
-              {/* <Paper className={classes.card}>
+              <Paper className={classes.card}>
                 DECK
-              </Paper> */}
-              <img src="./images/uno-red.png" alt=""
-                className={classes.card} />
+              </Paper>
+              {/* <img src="./images/uno-red.png" alt=""
+                className={classes.card} /> */}
             </Grid>
           </Grid>
 

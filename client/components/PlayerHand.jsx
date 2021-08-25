@@ -34,14 +34,14 @@ export default function PlayerHand({ player }) {
     {
         [0, 1, 2, 3, 4].map(value => {
           return (
-          <Grid item key={value} >
-              {/* <Paper className={classes.card} draggable
-              style={{ transform: 'rotate(' + deg + ')' }}>
-              {value}
-            </Paper> */}
-            <img src="./images/uno-blue.png" alt=""
+          <Grid item key={value}>
+              <Paper className={classes.card} draggable
+                style={{ transform: 'rotate(' + deg + ')' }}>
+                {value}
+              </Paper>
+            {/* <img src="./images/uno-blue.png" alt=""
                 className={classes.card} draggable
-              style={{ transform: 'rotate(' + deg + ')' }} />
+              style={{ transform: 'rotate(' + deg + ')' }} /> */}
           </Grid>
           );
         })
