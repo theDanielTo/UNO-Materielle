@@ -18,6 +18,14 @@ const useStyles = makeStyles(theme => ({
   ruleRow: {
     display: 'flex',
     marginBottom: '15px'
+  },
+  header: {
+    fontFamily: 'Poppins, sans- serif',
+    color: '#DDE0EF'
+  },
+  infoText: {
+    fontFamily: 'Raleway, sans-serif',
+    color: '#DDE0EF'
   }
 }));
 
@@ -45,14 +53,14 @@ export default function HowToPlay() {
 
   return (
     <div className={classes.root}>
-      <h1>Rules</h1>
+      <h1 className={classes.header}>Rules</h1>
       <hr />
       <div className={classes.rules}>
         {
           rules.map(rule => (
             <div className={classes.ruleRow} key={rule.text}>
               <BlurCircularRoundedIcon style={rule.style} />
-              <h3>{rule.text}</h3>
+              <h3 className={classes.infoText}>{rule.text}</h3>
             </div>
           ))
         }
