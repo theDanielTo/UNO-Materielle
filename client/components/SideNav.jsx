@@ -19,6 +19,8 @@ import GradeIcon from '@material-ui/icons/Grade';
 import MoodIcon from '@material-ui/icons/Mood';
 import VideogameAssetIcon from '@material-ui/icons/VideogameAsset';
 
+import FormDialog from './name-dialogs';
+
 const drawerWidth = 300;
 
 const useStyles = makeStyles(theme => ({
@@ -41,6 +43,9 @@ const useStyles = makeStyles(theme => ({
   listItem: {
     color: '#DDE0EF',
     textDecoration: 'none'
+  },
+  dialog: {
+    marginLeft: 3
   },
   toolbar: theme.mixins.toolbar
 }));
@@ -112,6 +117,8 @@ export default function SideNav() {
               ))
             }
           </List>
+
+          <FormDialog className={classes.dialog}/>
         </Drawer>
     </div>
   );
