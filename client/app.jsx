@@ -1,8 +1,10 @@
 import React from 'react';
-import Home from './pages/home';
+import GameBoard from './pages/game-board';
+// import Home from './pages/home';
 
 export default class App extends React.Component {
   render() {
-    return <Home />;
+    return <GameBoard />;
+    // return <Home />;
   }
 }
