@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
     padding: '84px 20px',
     backgroundColor: '#151224',
     color: '#DDE0EF',
-    height: '100vh',
+    minHeight: '100vh',
     width: 'calc(100% - 300px)',
     float: 'right',
     fontSize: '1.5rem'
