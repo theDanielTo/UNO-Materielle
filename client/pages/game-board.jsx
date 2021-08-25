@@ -7,28 +7,39 @@ import { withStyles } from '@material-ui/styles';
 
 const styles = theme => ({
   root: {
-    position: 'relative',
-    top: '10%',
     backgroundColor: '#151224',
-    height: '100vh'
+    height: '100vh',
+    width: 'calc(100% - 300px)',
+    paddingTop: '64px',
+    float: 'right'
   },
-
+  columnSm: {
+    height: '100%'
+  },
+  midRow: {
+    height: '50%'
+  },
+  midCards: {
+    height: '25%'
+  },
   paper: {
-    position: 'relative',
-    top: '50%',
     height: 140,
     width: 100
   },
-  deck: {
-    position: 'relative',
-    top: '15%'
+  paperRight: {
+    transform: 'rotate(-90deg)'
   },
-  userCards: {
-    position: 'relative',
-    top: '25%'
-
+  paperTop: {
+    transform: 'rotate(180deg)'
+  },
+  paperLeft: {
+    transform: 'rotate(90deg)'
   }
 });
+
+// const hand = () => {
+
+// }
 
 export class GameBoard extends React.Component {
   constructor(props) {
@@ -43,36 +54,94 @@ export class GameBoard extends React.Component {
     const { classes } = this.props;
 
     return (
-
       <div className={classes.root}>
-      {/* cpu hand */}
-        <Grid container justifyContent="center" spacing={2} className={classes.cpu}>
-          {[0, 1, 2, 3, 4].map(value => (
-            <Grid item key={value}>
-              <Paper className={classes.paper}/>
-            </Grid>
-          ))
-          }
-        </Grid>
+        <Grid container spacing={0} className={classes.columnSm}>
 
-        {/* Middle with deck and draw */}
-        <Grid container spacing={2} justifyContent="center" className={classes.deck}>
-          <Grid item>
-            <Paper className={classes.paper}>1</Paper>
+          <Grid className={classes.columnSm}
+            container item xl={2} spacing={0}
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+          >
+            {[0, 1, 2, 3, 4].map(value => (
+              <Grid item key={value} >
+                <Paper className={classes.paper + ' ' + classes.paperLeft} draggable>
+                  {value}
+                </Paper>
+              </Grid>
+            ))
+            }
           </Grid>
-          <Grid item>
-            <Paper className={classes.paper}>2</Paper>
-          </Grid>
-        </Grid>
 
-        {/* Players card layout  */}
-        <Grid container justifyContent="center" spacing={2} className={classes.userCards}>
-          {[0, 1, 2, 3, 4].map(value => (
-            <Grid item key={value} >
-            <Paper className={classes.paper}/>
+          <Grid className={classes.columnSm}
+            container item xl={8} spacing={0}
+          >
+            <Grid className={classes.midCards}
+              container item xl={12} spacing={1}
+              direction="row-reverse"
+              justifyContent="center"
+              alignItems="center"
+            >
+              {[0, 1, 2, 3, 4].map(value => (
+                <Grid item key={value} >
+                  <Paper className={classes.paper + ' ' + classes.paperTop} draggable>
+                    {value}
+                  </Paper>
+                </Grid>
+              ))
+              }
             </Grid>
-          ))
-          }
+
+            <Grid className={classes.midRow}
+              container item xl={12} spacing={2}
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Grid item>
+                <Paper className={classes.paper}>
+                  CARD PLAYED
+                </Paper>
+              </Grid>
+              <Grid item>
+                <Paper className={classes.paper}>
+                  DECK
+                </Paper>
+              </Grid>
+            </Grid>
+
+            <Grid className={classes.midCards}
+              container item xl={12} spacing={1}
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+            >
+              {[0, 1, 2, 3, 4].map(value => (
+                <Grid item key={value} >
+                  <Paper className={classes.paper} draggable>
+                    {value}
+                  </Paper>
+                </Grid>
+              ))
+              }
+            </Grid>
+          </Grid>
+
+          <Grid className={classes.columnSm}
+            container item xl={2} spacing={0}
+            direction="column-reverse"
+            justifyContent="center"
+            alignItems="center"
+          >
+            {[0, 1, 2, 3, 4].map(value => (
+              <Grid item key={value} >
+                <Paper className={classes.paper + ' ' + classes.paperRight} draggable>
+                  {value}
+                </Paper>
+              </Grid>
+            ))
+            }
+          </Grid>
+
         </Grid>
       </div >
     );

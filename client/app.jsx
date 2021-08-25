@@ -66,24 +66,3 @@ function AboutUs() {
     </div>
   );
 }
-
-function Games() {
-  return (
-    <div
-      style={
-        {
-          display: 'flex',
-          justifyContent: 'center',
-          paddingTop: '64px',
-          backgroundColor: '#151224',
-          color: '#DDE0EF',
-          height: '100vh',
-          width: 'calc(100% - 300px)',
-          float: 'right'
-        }}
-    >
-      <h1>Find a game</h1>
-    </div>
-  );
-
-}
