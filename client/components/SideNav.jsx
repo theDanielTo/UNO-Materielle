@@ -70,6 +70,7 @@ const navLinks = [
 
 export default function SideNav() {
   const classes = useStyles();
+  const username = window.localStorage.getItem('username');
 
   return (
     <div className={classes.root}>
@@ -93,12 +94,12 @@ export default function SideNav() {
           <div className={classes.toolbar} />
           <Divider light={true} />
           <List>
-          <Link to="/">
+            <Link to="/">
               <ListItem button>
                 <ListItemIcon className={classes.listItem}>
                   <AccountCircleIcon />
                 </ListItemIcon>
-                <ListItemText primary='Username' className={classes.listItem}/>
+                <ListItemText primary={username} className={classes.listItem}/>
               </ListItem>
             </Link>
           </List>

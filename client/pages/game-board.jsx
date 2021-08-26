@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#151224',
     height: '100vh',
     width: 'calc(100% - 300px)',
-    paddingTop: 64,
+    paddingTop: 74,
     float: 'right'
   },
   columnSm: {

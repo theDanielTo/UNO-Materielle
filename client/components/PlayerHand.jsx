@@ -4,8 +4,8 @@ import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles(theme => ({
   card: {
-    height: 120,
-    width: 80,
+    height: 200,
+    width: 140,
     borderRadius: 10
   }
 }));
@@ -15,12 +15,12 @@ export default function PlayerHand({ side, player }) {
 
   let deg = '';
   let prop = '';
-  let margin = -30;
+  let margin = -70;
   switch (side) {
     case 'left':
       deg = '90deg';
       prop = 'marginTop';
-      margin = -70;
+      margin = -140;
       break;
     case 'top':
       deg = '180deg';
@@ -29,7 +29,7 @@ export default function PlayerHand({ side, player }) {
     case 'right':
       deg = '-90deg';
       prop = 'marginTop';
-      margin = -70;
+      margin = -140;
       break;
     default:
       deg = '0deg';

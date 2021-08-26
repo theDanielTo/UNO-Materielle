@@ -1,5 +1,5 @@
 import Player from './Player';
-import { dealCard } from './index';
+import dealCard from './dealCard';
 
 const HAND_SIZE = 7;
 
