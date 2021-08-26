@@ -1,82 +1,102 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-// import { makeStyles, Paper } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
-// import { height } from '@material-ui/system';
+import PlayerHand from '../components/PlayerHand';
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    position: 'relative',
-    top: '10%',
     backgroundColor: '#151224',
-    height: '100vh'
+    height: '100vh',
+    width: 'calc(100% - 300px)',
+    paddingTop: '64px',
+    float: 'right'
   },
-
-  paper: {
-    position: 'relative',
-    top: '50%',
+  columnSm: {
+    height: '100%'
+  },
+  midRow: {
+    height: '50%'
+  },
+  midCards: {
+    height: '25%'
+  },
+  card: {
     height: 140,
     width: 100
-  },
-  deck: {
-    position: 'relative',
-    top: '15%'
-  },
-  userCards: {
-    position: 'relative',
-    top: '25%'
-
   }
-});
+}));
 
-export class GameBoard extends React.Component {
-  constructor(props) {
-    super(props);
+export default function GameBoard() {
+  const classes = useStyles();
 
-    this.state = {
-      cards: []
-    };
-  }
+  return (
+    <div className={classes.root}>
+      <Grid container spacing={0} className={classes.columnSm}
+        onDragOver={e => e.preventDefault()}>
 
-  render() {
-    const { classes } = this.props;
-
-    return (
-
-      <div className={classes.root}>
-      {/* cpu hand */}
-        <Grid container justifyContent="center" spacing={2} className={classes.cpu}>
-          {[0, 1, 2, 3, 4].map(value => (
-            <Grid item key={value}>
-              <Paper className={classes.paper}/>
-            </Grid>
-          ))
-          }
+        <Grid className={classes.columnSm}
+          container item xl={2} spacing={0}
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <PlayerHand player={'left'}/>
         </Grid>
 
-        {/* Middle with deck and draw */}
-        <Grid container spacing={2} justifyContent="center" className={classes.deck}>
-          <Grid item>
-            <Paper className={classes.paper}>1</Paper>
+        <Grid className={classes.columnSm}
+          container item xl={8} spacing={0}
+        >
+          <Grid className={classes.midCards}
+            container item xl={12} spacing={1}
+            direction="row-reverse"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <PlayerHand player={'top'} />
           </Grid>
-          <Grid item>
-            <Paper className={classes.paper}>2</Paper>
+
+          <Grid className={classes.midRow}
+            container item xl={12} spacing={2}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid item>
+              {/* <Paper className={classes.card}>
+                CARD PLAYED
+              </Paper> */}
+              <img src="./images/uno-red.png" alt=""
+                className={classes.card} />
+            </Grid>
+            <Grid item>
+              {/* <Paper className={classes.card}>
+                DECK
+              </Paper> */}
+              <img src="./images/uno-red.png" alt=""
+                className={classes.card} />
+            </Grid>
+          </Grid>
+
+          <Grid className={classes.midCards}
+            container item xl={12} spacing={1}
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <PlayerHand player={'bottom'} />
           </Grid>
         </Grid>
 
-        {/* Players card layout  */}
-        <Grid container justifyContent="center" spacing={2} className={classes.userCards}>
-          {[0, 1, 2, 3, 4].map(value => (
-            <Grid item key={value} >
-            <Paper className={classes.paper}/>
-            </Grid>
-          ))
-          }
+        <Grid className={classes.columnSm}
+          container item xl={2} spacing={0}
+          direction="column-reverse"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <PlayerHand player={'right'} />
         </Grid>
-      </div >
-    );
-  }
+
+      </Grid>
+    </div >
+  );
 }
-
-export default withStyles(styles, { withTheme: true })(GameBoard);
