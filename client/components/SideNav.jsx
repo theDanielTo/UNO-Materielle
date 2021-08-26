@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   },
   appBar: {
     background: '#540062',
-    width: `calc(100% - ${drawerWidth}px)`,
+    // width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth
   },
   drawer: {
@@ -49,34 +49,69 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar
 }));
 
-const navLinks = [
-  {
-    text: 'How To Play',
-    icon: <GradeIcon />,
-    href: '/how-to-play'
-  },
-  {
-    text: 'Developers',
-    icon: <MoodIcon />,
-    href: '/about-us'
-  },
-  {
-    text: 'Find a Game',
-    icon: <VideogameAssetIcon />,
-    href: '/games'
-  }
-];
-
 export default function SideNav(props) {
-  const classes = useStyles();
-  // const username = window.localStorage.getItem('username');
-  const [mobileOpen, setMobileOpen] = React.useState(false);
   const { window } = props;
+  const classes = useStyles();
+  // const username = window.localStorage.getItem('username');s
+  const [mobileOpen, setMobileOpen] = React.useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
   const container =
     window !== undefined ? () => window().document.body : undefined;
+
+  const navLinks = [
+    {
+      text: 'How To Play',
+      icon: <GradeIcon />,
+      href: '/how-to-play'
+    },
+    {
+      text: 'Developers',
+      icon: <MoodIcon />,
+      href: '/about-us'
+    },
+    {
+      text: 'Find a Game',
+      icon: <VideogameAssetIcon />,
+      href: '/games'
+    }
+  ];
+
+  const drawer = (
+    <div>
+      <div className={classes.toolbar} />
+      <Divider light={true} />
+      <List>
+        <Link to="/">
+          <ListItem button>
+            <ListItemIcon className={classes.listItem}>
+              <AccountCircleIcon />
+            </ListItemIcon>s
+            {/* <ListItemText primary={username} className={classes.listItem}/> */}
+          </ListItem>
+        </Link>
+      </List>
+      <Divider light={true} />
+      <List>
+        {
+          navLinks.map(link => (
+            <Link to={link.href} key={link.text}>
+              <ListItem button>
+                <ListItemIcon className={classes.listItem}>
+                  {link.icon}
+                </ListItemIcon>
+                <ListItemText primary={link.text} className={classes.listItem} />
+              </ListItem>
+            </Link>
+          ))
+        }
+      </List>
+      <List>
+        <FormDialog />
+      </List>
+    </div>
+  );
 
   return (
     <div className={classes.root}>
@@ -96,7 +131,7 @@ export default function SideNav(props) {
         </Toolbar>
         </AppBar>
         <nav aria-label="sidenav">
-          <Hidden>
+          <Hidden mdUp implementation="css">
             <Drawer
               container={container}
               className={classes.drawer}
@@ -109,38 +144,19 @@ export default function SideNav(props) {
               ModalProps={{
                 keepMounted: true
               }}
-              // anchor="left"
               >
-              <div className={classes.toolbar} />
-              <Divider light={true} />
-              <List>
-                <Link to="/">
-                  <ListItem button>
-                    <ListItemIcon className={classes.listItem}>
-                      <AccountCircleIcon />
-                      </ListItemIcon>s
-                    {/* <ListItemText primary={username} className={classes.listItem}/> */}
-                  </ListItem>
-                </Link>
-              </List>
-              <Divider light={true} />
-              <List>
-                {
-                navLinks.map(link => (
-                  <Link to={link.href} key={link.text}>
-                    <ListItem button>
-                      <ListItemIcon className={classes.listItem}>
-                        {link.icon}
-                      </ListItemIcon>
-                      <ListItemText primary={link.text} className={classes.listItem}/>
-                    </ListItem>
-                  </Link>
-                ))
-                }
-              </List>
-              <List>
-                <FormDialog/>
-              </List>
+              {drawer}
+            </Drawer>
+          </Hidden>
+          <Hidden smDown implementation="css">
+            <Drawer
+              classes={{
+                paper: classes.drawerPaper
+              }}
+              variant="permanent"
+              open
+            >
+              {drawer}
             </Drawer>
           </Hidden>
         </nav>
