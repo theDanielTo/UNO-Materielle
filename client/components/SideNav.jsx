@@ -20,13 +20,12 @@ import MoodIcon from '@material-ui/icons/Mood';
 import VideogameAssetIcon from '@material-ui/icons/VideogameAsset';
 
 import FormDialog from './name-dialogs';
+import { Hidden, IconButton } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
 
 const drawerWidth = 300;
 
 const useStyles = makeStyles(theme => ({
-  // modal: {
-  //   margin: '10px'
-  // },
   root: {
     display: 'flex'
   },
@@ -68,60 +67,83 @@ const navLinks = [
   }
 ];
 
-export default function SideNav() {
+export default function SideNav(props) {
   const classes = useStyles();
-  const username = window.localStorage.getItem('username');
+  // const username = window.localStorage.getItem('username');
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const { window } = props;
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
 
   return (
     <div className={classes.root}>
-        <CssBaseline />
-        <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
-            <Typography variant="h6" noWrap>
-              Mint Bean Hackathon!
-            </Typography>
-          </Toolbar>
+      <CssBaseline />
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar>
+          <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          edge="start"
+          onClick={handleDrawerToggle} >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap>
+            Mint Bean Hackathon!
+          </Typography>
+        </Toolbar>
         </AppBar>
-
-        <Drawer
-          className={classes.drawer}
-          variant="permanent"
-          classes={{
-            paper: classes.drawerPaper
-          }}
-          anchor="left"
-        >
-          <div className={classes.toolbar} />
-          <Divider light={true} />
-          <List>
-            <Link to="/">
-              <ListItem button>
-                <ListItemIcon className={classes.listItem}>
-                  <AccountCircleIcon />
-                </ListItemIcon>
-                <ListItemText primary={username} className={classes.listItem}/>
-              </ListItem>
-            </Link>
-          </List>
-          <Divider light={true} />
-          <List>
-            {
-              navLinks.map(link => (
-                <Link to={link.href} key={link.text}>
+        <nav aria-label="sidenav">
+          <Hidden>
+            <Drawer
+              container={container}
+              className={classes.drawer}
+              variant="temporary"
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              classes={{
+                paper: classes.drawerPaper
+              }}
+              ModalProps={{
+                keepMounted: true
+              }}
+              // anchor="left"
+              >
+              <div className={classes.toolbar} />
+              <Divider light={true} />
+              <List>
+                <Link to="/">
                   <ListItem button>
                     <ListItemIcon className={classes.listItem}>
-                      {link.icon}
-                    </ListItemIcon>
-                    <ListItemText primary={link.text} className={classes.listItem}/>
+                      <AccountCircleIcon />
+                      </ListItemIcon>s
+                    {/* <ListItemText primary={username} className={classes.listItem}/> */}
                   </ListItem>
                 </Link>
-              ))
-            }
-          </List>
-          <List>
-          <FormDialog/>
-          </List>
-        </Drawer>
+              </List>
+              <Divider light={true} />
+              <List>
+                {
+                navLinks.map(link => (
+                  <Link to={link.href} key={link.text}>
+                    <ListItem button>
+                      <ListItemIcon className={classes.listItem}>
+                        {link.icon}
+                      </ListItemIcon>
+                      <ListItemText primary={link.text} className={classes.listItem}/>
+                    </ListItem>
+                  </Link>
+                ))
+                }
+              </List>
+              <List>
+                <FormDialog/>
+              </List>
+            </Drawer>
+          </Hidden>
+        </nav>
     </div>
   );
 }
