@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 // import { io } from 'socket.io-client';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -17,8 +17,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function FormDialog() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const [name, setName] = React.useState('');
+  const [open, setOpen] = useState(false);
+  const [name, setName] = useState('');
   // const [socket, setSocket] = useState();
 
   // useEffect(() => {
@@ -28,32 +28,26 @@ export default function FormDialog() {
   //   return () => newSocket.close();
   // }, []);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-    window.localStorage.removeItem('username');
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const setUsername = () => {
-    handleClose();
     window.localStorage.setItem('username', name);
     fetch('/api/users', {
       method: 'POST',
-      body: name
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name })
     })
       .then(res => res.json())
+      .then(result => setOpen(false))
       .catch(err => console.error('fetch err:', err));
   };
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleClickOpen} className={classes.modal}>
+      <Button variant="contained" color="primary" onClick={() => setOpen(true)} className={classes.modal}>
         Make UserName
       </Button>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog open={open} onClose={() => setOpen(false)} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Please Enter your Username</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -70,7 +64,7 @@ export default function FormDialog() {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={() => setOpen(false)} color="primary">
             Cancel
           </Button>
           <Button onClick={setUsername} color="primary">

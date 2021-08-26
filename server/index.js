@@ -1,6 +1,7 @@
 require('dotenv/config');
 const express = require('express');
 const http = require('http');
+const ClientError = require('./client-error');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
 const db = require('./db');
@@ -17,19 +18,23 @@ io.on('connection', socket => {
   // socket.on('join lobby', () => {
   //   socket.join('lobby');
   // });
-  console.log(socket.id);
+  // console.log(socket.id);
 });
 
 app.use(staticMiddleware);
+app.use(express.json());
 
 app.post('/api/users', (req, res, next) => {
-  const { username } = req.body;
+  const { name } = req.body;
+  if (!name) {
+    throw new ClientError(400, 'missing required fields');
+  }
   const sql = `
     INSERT into "users" ("username")
-      VALUES (username)
+      VALUES ($1)
       RETURNING *
   `;
-  const param = [username];
+  const param = [name];
   db.query(sql, param)
     .then(result => res.status(201).json(result.rows[0]))
     .catch(err => next(err));
