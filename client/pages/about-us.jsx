@@ -59,13 +59,23 @@ const useStyles = makeStyles(theme => ({
     height: '250px',
     display: 'block',
     margin: '0 auto 1em',
-    // position: 'relative',
     borderRadius: '50%',
     overflow: 'hidden'
   },
-  images: {
+  brian: {
     width: 'auto',
-    marginLeft: '-20px'
+    marginLeft: '-20px',
+    marginTop: '-5px'
+  },
+  daniel: {
+    width: 'auto',
+    marginLeft: '-1px',
+    marginTop: '-40px'
+  },
+  michael: {
+    width: 'auto',
+    marginLeft: '-100px',
+    marginTop: '-5px'
   }
 }));
 
@@ -80,7 +90,7 @@ export default function AboutUs() {
         <Grid item lg={4}>
           <Paper className={classes.about}>
             <div className={classes.trial}>
-              <img className={classes.images}src="/images/brianbozigian.png" alt="Brian's Picture"></img>
+              <img className={classes.brian}src="/images/brianbozigian.png" alt="Brian's Picture"></img>
             </div>
             <p className={classes.header}>Brian Bozigan</p>
             <p className={classes.infoText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?</p>
@@ -93,7 +103,7 @@ export default function AboutUs() {
         <Grid item lg={4}>
           <Paper className={classes.about}>
             <div className={classes.trial}>
-              <img className={classes.images} src="/images/danielto.jpg" alt="Daniel's Picture"></img>
+              <img className={classes.daniel} src="/images/danielto.png" alt="Daniel's Picture"></img>
             </div>
             <p className={classes.header}>Daniel To</p>
             <p className={classes.infoText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?</p>
@@ -105,7 +115,9 @@ export default function AboutUs() {
         </Grid>
         <Grid item lg={4}>
           <Paper className={classes.about}>
-            <span className={classes.circle}></span>
+            <div className={classes.trial}>
+              <img className={classes.michael} src="/images/michaelaguilar.png" alt="Michael's Picture"></img>
+            </div>
             <p className={classes.header}>Michael Aguilar</p>
             <p className={classes.infoText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?</p>
             <Paper className={classes.link}>
