@@ -7,10 +7,10 @@ import game from '../lib/game.js';
 const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: '#151224',
+    color: '#DDE0EF',
     height: '100vh',
-    width: 'calc(100% - 300px)',
-    paddingTop: 74,
-    float: 'right'
+    maxWidth: '1200px',
+    fontSize: '1.5rem'
   },
   columnSm: {
     height: '100%'

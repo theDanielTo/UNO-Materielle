@@ -4,12 +4,10 @@ import BlurCircularRoundedIcon from '@material-ui/icons/BlurCircularRounded';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: '84px 20px',
     backgroundColor: '#151224',
     color: '#DDE0EF',
-    minHeight: '100vh',
-    width: 'calc(100% - 300px)',
-    float: 'right',
+    minHeight: '93.6vh',
+    maxWidth: '1200px',
     fontSize: '1.5rem'
   },
   rules: {

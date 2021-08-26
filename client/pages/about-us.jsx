@@ -4,12 +4,11 @@ import { Paper, Grid } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: '84px 20px',
     backgroundColor: '#151224',
     color: '#DDE0EF',
-    minHeight: '100vh',
-    width: 'calc(100% - 300px)',
-    float: 'right',
+    minHeight: '93.6vh',
+    maxWidth: '1200px',
+    paddingBottom: '1em',
     fontSize: '1.5rem'
   },
   rules: {
@@ -87,7 +86,7 @@ export default function AboutUs() {
       <h1 className="poppins">About Us</h1>
       <hr />
       <Grid container spacing={6} direction="row" justifyContent="space-around">
-        <Grid item lg={4}>
+        <Grid item md={4}>
           <Paper className={classes.about}>
             <div className={classes.trial}>
               <img className={classes.brian}src="/images/brianbozigian.png" alt="Brian's Picture"></img>
@@ -100,7 +99,7 @@ export default function AboutUs() {
             </Paper>
           </Paper>
         </Grid>
-        <Grid item lg={4}>
+        <Grid item md={4}>
           <Paper className={classes.about}>
             <div className={classes.trial}>
               <img className={classes.daniel} src="/images/danielto.png" alt="Daniel's Picture"></img>
@@ -113,7 +112,7 @@ export default function AboutUs() {
             </Paper>
           </Paper>
         </Grid>
-        <Grid item lg={4}>
+        <Grid item md={4}>
           <Paper className={classes.about}>
             <div className={classes.trial}>
               <img className={classes.michael} src="/images/michaelaguilar.png" alt="Michael's Picture"></img>

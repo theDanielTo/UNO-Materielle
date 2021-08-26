@@ -52,7 +52,6 @@ const useStyles = makeStyles(theme => ({
 export default function SideNav(props) {
   const { window } = props;
   const classes = useStyles();
-  // const username = window.localStorage.getItem('username');s
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -88,7 +87,7 @@ export default function SideNav(props) {
             <ListItemIcon className={classes.listItem}>
               <AccountCircleIcon />
             </ListItemIcon>s
-            {/* <ListItemText primary={username} className={classes.listItem}/> */}
+            <ListItemText primary="username" className={classes.listItem}/>
           </ListItem>
         </Link>
       </List>
@@ -131,7 +130,7 @@ export default function SideNav(props) {
         </Toolbar>
         </AppBar>
         <nav aria-label="sidenav">
-          <Hidden mdUp implementation="css">
+          <Hidden lgUp implementation="css">
             <Drawer
               container={container}
               className={classes.drawer}
@@ -148,7 +147,7 @@ export default function SideNav(props) {
               {drawer}
             </Drawer>
           </Hidden>
-          <Hidden smDown implementation="css">
+          <Hidden lgDown implementation="css">
             <Drawer
               classes={{
                 paper: classes.drawerPaper
