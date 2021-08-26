@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import { Paper } from '@material-ui/core';
 import PlayerHand from '../components/PlayerHand';
 import game from '../lib/game.js';
 
@@ -10,7 +9,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#151224',
     height: '100vh',
     width: 'calc(100% - 300px)',
-    paddingTop: '64px',
+    paddingTop: 64,
     float: 'right'
   },
   columnSm: {
@@ -23,8 +22,9 @@ const useStyles = makeStyles(theme => ({
     height: '25%'
   },
   card: {
-    height: 140,
-    width: 100
+    height: 210,
+    width: 150,
+    borderRadius: 10
   }
 }));
 
@@ -64,18 +64,12 @@ export default function GameBoard() {
             alignItems="center"
           >
             <Grid item>
-              <Paper className={classes.card}>
-                CARD PLAYED
-              </Paper>
-              {/* <img src="./images/uno-red.png" alt=""
-                className={classes.card} /> */}
+              <img src="./images/green-1.png" alt=""
+                className={classes.card} />
             </Grid>
             <Grid item>
-              <Paper className={classes.card}>
-                DECK
-              </Paper>
-              {/* <img src="./images/uno-red.png" alt=""
-                className={classes.card} /> */}
+              <img src="./images/back-of-card.png" alt="Uno Card"
+                className={classes.card} />
             </Grid>
           </Grid>
 

@@ -1,18 +1,18 @@
 export default function cardType(num) {
   switch (num % 14) {
     case 10:
-      return 'Skip';
+      return 'skip';
     case 11:
-      return 'Reverse';
+      return 'reverse';
     case 12:
-      return 'Draw2';
+      return 'draw2';
     case 13:
       if (Math.floor(num / 14) >= 4) {
-        return 'Draw4';
+        return 'draw4';
       } else {
-        return 'Wild';
+        return 'wild';
       }
     default:
-      return 'Number ' + (num % 14);
+      return num % 14;
   }
 }
