@@ -10,11 +10,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PlayerHand({ player }) {
+export default function PlayerHand({ side, player }) {
   const classes = useStyles();
 
   let deg = '';
-  switch (player) {
+  switch (side) {
     case 'left':
       deg = '90deg';
       break;
@@ -28,17 +28,16 @@ export default function PlayerHand({ player }) {
       deg = '0deg';
       break;
   }
-
   return (
     <>
     {
-        [0, 1, 2, 3, 4].map(value => {
+        player.hand.map((card, index) => {
           return (
-          <Grid item key={value}>
-              <Paper className={classes.card} draggable
-                style={{ transform: 'rotate(' + deg + ')' }}>
-                {value}
-              </Paper>
+            <Grid item key={index}>
+            <Paper className={classes.card} draggable
+              style={{ transform: 'rotate(' + deg + ')' }}>
+              {'color: ' + card.color + ', type: ' + card.type}
+            </Paper>
             {/* <img src="./images/uno-blue.png" alt=""
                 className={classes.card} draggable
               style={{ transform: 'rotate(' + deg + ')' }} /> */}

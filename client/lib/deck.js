@@ -240,3 +240,5 @@ const deck = [
     action: ''
   }
 ];
+
+export default deck;

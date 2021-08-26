@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { Paper } from '@material-ui/core';
 import PlayerHand from '../components/PlayerHand';
+import game from '../lib/game.js';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,6 +30,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function GameBoard() {
   const classes = useStyles();
+  const players = game();
 
   return (
     <div className={classes.root}>
@@ -41,7 +43,7 @@ export default function GameBoard() {
           justifyContent="center"
           alignItems="center"
         >
-          <PlayerHand player={'left'}/>
+          <PlayerHand side={'left'} player={players[0]}/>
         </Grid>
 
         <Grid className={classes.columnSm}
@@ -53,7 +55,7 @@ export default function GameBoard() {
             justifyContent="center"
             alignItems="center"
           >
-            <PlayerHand player={'top'} />
+            <PlayerHand side={'top'} player={players[1]} />
           </Grid>
 
           <Grid className={classes.midRow}
@@ -83,7 +85,7 @@ export default function GameBoard() {
             justifyContent="center"
             alignItems="center"
           >
-            <PlayerHand player={'bottom'} />
+            <PlayerHand side={'bottom'} player={players[2]} />
           </Grid>
         </Grid>
 
@@ -93,7 +95,7 @@ export default function GameBoard() {
           justifyContent="center"
           alignItems="center"
         >
-          <PlayerHand player={'right'} />
+          <PlayerHand side={'right'} player={players[3]} />
         </Grid>
 
       </Grid>
