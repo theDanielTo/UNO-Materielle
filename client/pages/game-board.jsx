@@ -1,15 +1,15 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import { Paper } from '@material-ui/core';
 import PlayerHand from '../components/PlayerHand';
+import game from '../lib/game.js';
 
 const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: '#151224',
     height: '100vh',
     width: 'calc(100% - 300px)',
-    paddingTop: '64px',
+    paddingTop: 74,
     float: 'right'
   },
   columnSm: {
@@ -22,13 +22,15 @@ const useStyles = makeStyles(theme => ({
     height: '25%'
   },
   card: {
-    height: 140,
-    width: 100
+    height: 210,
+    width: 150,
+    borderRadius: 10
   }
 }));
 
 export default function GameBoard() {
   const classes = useStyles();
+  const players = game();
 
   return (
     <div className={classes.root}>
@@ -41,7 +43,7 @@ export default function GameBoard() {
           justifyContent="center"
           alignItems="center"
         >
-          <PlayerHand player={'left'}/>
+          <PlayerHand side={'left'} player={players[0]}/>
         </Grid>
 
         <Grid className={classes.columnSm}
@@ -53,7 +55,7 @@ export default function GameBoard() {
             justifyContent="center"
             alignItems="center"
           >
-            <PlayerHand player={'top'} />
+            <PlayerHand side={'top'} player={players[1]} />
           </Grid>
 
           <Grid className={classes.midRow}
@@ -62,17 +64,11 @@ export default function GameBoard() {
             alignItems="center"
           >
             <Grid item>
-              {/* <Paper className={classes.card}>
-                CARD PLAYED
-              </Paper> */}
-              <img src="./images/uno-red.png" alt=""
+              <img src="./images/green-1.png" alt=""
                 className={classes.card} />
             </Grid>
             <Grid item>
-              {/* <Paper className={classes.card}>
-                DECK
-              </Paper> */}
-              <img src="./images/uno-red.png" alt=""
+              <img src="./images/back-of-card.png" alt="Uno Card"
                 className={classes.card} />
             </Grid>
           </Grid>
@@ -83,7 +79,7 @@ export default function GameBoard() {
             justifyContent="center"
             alignItems="center"
           >
-            <PlayerHand player={'bottom'} />
+            <PlayerHand side={'bottom'} player={players[2]} />
           </Grid>
         </Grid>
 
@@ -93,7 +89,7 @@ export default function GameBoard() {
           justifyContent="center"
           alignItems="center"
         >
-          <PlayerHand player={'right'} />
+          <PlayerHand side={'right'} player={players[3]} />
         </Grid>
 
       </Grid>
