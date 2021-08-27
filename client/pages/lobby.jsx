@@ -69,7 +69,9 @@ export default function Lobby() {
       </Grid>
 
       <h2>Create Game</h2>
-
-    </div>
+      <Button variant="contained" className={classes.button}>
+        Create Game
+      </Button>
+      </div>
   );
 }
