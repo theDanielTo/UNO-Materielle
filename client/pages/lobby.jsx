@@ -17,10 +17,15 @@ const useStyles = makeStyles(theme => ({
     fontSize: '1.5rem'
   },
   card: {
-    height: 210,
+    // height: 100,
     width: 210,
-    borderRadius: 10
-    // marginLeft: '-20px'
+    borderRadius: 10,
+    color: 'white',
+    background: '#484040'
+  },
+  button: {
+    background: '#D3A500',
+    color: 'white'
   }
 
 }));
@@ -32,9 +37,9 @@ export default function Lobby() {
       <h2>Choose a game:</h2>
       <Grid container spacing={6} direction="row" justifyContent="flex-start">
         <Grid item>
-          <Card >
-            <CardContent className={classes.card}>
-              <Typography color="textSecondary" >
+          <Card className={classes.card}>
+            <CardContent >
+              <Typography color="white" >
                 Game: 1
               </Typography>
               <Typography>
@@ -42,14 +47,14 @@ export default function Lobby() {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button>Join</Button>
+              <Button className={classes.button}>Join</Button>
             </CardActions>
           </Card>
         </Grid>
         <Grid item>
-          <Card>
-          <CardContent className={classes.card}>
-          <Typography color="textSecondary" >
+          <Card className={classes.card}>
+          <CardContent>
+          <Typography color="white" >
             Game: 1
           </Typography>
           <Typography>
@@ -57,11 +62,13 @@ export default function Lobby() {
           </Typography>
         </CardContent >
           <CardActions>
-            <Button>Join</Button>
+            <Button className={classes.button}>Join</Button>
           </CardActions>
           </Card>
           </Grid>
       </Grid>
+
+      <h2>Create Game</h2>
 
     </div>
   );
