@@ -1,8 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import BoardCenter from '../components/BoardCenter';
 import PlayerHand from '../components/PlayerHand';
-import game from '../lib/game.js';
+import CpuHand from '../components/CpuHand';
+import gameStart from '../lib/gameStart';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,9 +30,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const NUM_PLAYERS = 4;
+
 export default function GameBoard() {
   const classes = useStyles();
-  const players = game();
+  const players = gameStart(NUM_PLAYERS);
 
   return (
     <div className={classes.root}>
@@ -43,7 +47,7 @@ export default function GameBoard() {
           justifyContent="center"
           alignItems="center"
         >
-          <PlayerHand side={'left'} player={players[0]}/>
+          <CpuHand side={'left'} player={players[0]}/>
         </Grid>
 
         <Grid className={classes.columnSm}
@@ -55,7 +59,7 @@ export default function GameBoard() {
             justifyContent="center"
             alignItems="center"
           >
-            <PlayerHand side={'top'} player={players[1]} />
+            <CpuHand side={'top'} player={players[1]} />
           </Grid>
 
           <Grid className={classes.midRow}
@@ -63,14 +67,7 @@ export default function GameBoard() {
             justifyContent="center"
             alignItems="center"
           >
-            <Grid item>
-              <img src="./images/green-1.png" alt=""
-                className={classes.card} />
-            </Grid>
-            <Grid item>
-              <img src="./images/back-of-card.png" alt="Uno Card"
-                className={classes.card} />
-            </Grid>
+            <BoardCenter cardStyle={classes.card}/>
           </Grid>
 
           <Grid className={classes.midCards}
@@ -89,7 +86,7 @@ export default function GameBoard() {
           justifyContent="center"
           alignItems="center"
         >
-          <PlayerHand side={'right'} player={players[3]} />
+          <CpuHand side={'right'} player={players[3]} />
         </Grid>
 
       </Grid>

@@ -6,18 +6,6 @@ import SideNav from './components/SideNav';
 import HowToPlay from './pages/HowToPlay';
 import GameBoard from './pages/game-board';
 import AboutUs from './pages/about-us';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    position: 'absolute',
-    display: 'flex',
-    justifyContent: 'center',
-    width: '100%',
-    paddingTop: 84,
-    backgroundColor: '#151224'
-  }
-}));
 
 const useStyles = makeStyles(theme => ({
   root: {
