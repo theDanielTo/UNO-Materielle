@@ -19,8 +19,9 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#151224'
   },
   lobby: {
-    position: 'relative',
-    left: '15%'
+
+    maxWidth: '1200px'
+
   }
 }));
 
