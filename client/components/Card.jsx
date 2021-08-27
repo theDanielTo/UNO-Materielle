@@ -14,7 +14,8 @@ export default function Card(props) {
   };
 
   const handleDragEnd = e => {
-    props.playCard(e);
+    e.target.style.display = 'initial';
+    // props.playCard(e, e.target.alt);
   };
 
   const dragOver = e => {

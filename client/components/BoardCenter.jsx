@@ -1,29 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Grid from '@material-ui/core/Grid';
 
-export default function BoardCenter(props) {
-  const [topCard, setTopCard] = useState('mint-bean');
-  const [playedCards, setPlayedCards] = useState([]);
-  const { cardStyle, player } = props;
-
-  const drop = e => {
-    e.preventDefault();
-
-    const cardId = e.dataTransfer.getData('card-id');
-    const cardSrc = e.dataTransfer.getData('card');
-
-    if (e.target.closest('div').id === 'played-cards') {
-      setPlayedCards(prevCards => [...prevCards, cardSrc]);
-      setTopCard(cardSrc);
-      const card = document.getElementById(cardId);
-      player.playCard(card.alt);
-    }
-  };
-
-  const dragOver = e => {
-    e.preventDefault();
-  };
-
+export default function BoardCenter({ cardStyle, topCard, playedCards }) {
   const displayPlayedCards = () => {
     // eslint-disable-next-line no-console
     console.log(playedCards);
@@ -33,8 +11,6 @@ export default function BoardCenter(props) {
     <>
       <Grid item
         id="played-cards"
-        onDrop={drop}
-        onDragOver={dragOver}
         onClick={displayPlayedCards}
       >
         <img src={`./images/${topCard}.png`} alt=""

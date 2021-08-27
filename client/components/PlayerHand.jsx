@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from './Card';
@@ -12,19 +12,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PlayerHand({ side, player }) {
-  const [hand, setHand] = useState(player.hand);
+export default function PlayerHand({ playerHand, playCard }) {
   const classes = useStyles();
-
-  const playCard = (e, card) => {
-    e.target.style.display = 'initial';
-    setHand(hand.filter(c => `${c.color}-${c.type}` !== card));
-  };
 
   return (
     <>
       {
-        hand.map((card, index) => {
+        playerHand.map((card, index) => {
           const src = `${card.color}-${card.type}`;
           return (
             <Grid item key={index}>

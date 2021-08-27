@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import BoardCenter from '../components/BoardCenter';
@@ -36,19 +36,27 @@ export default function GameBoard() {
   const classes = useStyles();
   const players = gameStart(NUM_PLAYERS);
 
+  const [topCard, setTopCard] = useState('mint-bean');
+  const [playedCards, setPlayedCards] = useState([]);
+  const [playerHand, setPlayerHand] = useState(players[2].hand);
+
   const drop = e => {
     e.preventDefault();
-  };
+    e.target.style.background = '';
 
-  const dragOver = e => {
-    e.preventDefault();
+    const cardId = e.dataTransfer.getData('card-id');
+    const cardSrc = e.dataTransfer.getData('card');
+    const card = document.getElementById(cardId);
+
+    setPlayedCards(prevCards => [...prevCards, cardSrc]);
+    setTopCard(cardSrc);
+    setPlayerHand(playerHand.filter(c => `${c.color}-${c.type}` !== card.alt));
   };
 
   return (
     <div className={classes.root}>
       <Grid container spacing={0} className={classes.columnSm}
-        onDrop={drop}
-        onDragOver={dragOver}
+        onDragOver={e => e.preventDefault()}
       >
 
         <Grid className={classes.columnSm}
@@ -76,8 +84,15 @@ export default function GameBoard() {
             container item xl={12} spacing={2}
             justifyContent="center"
             alignItems="center"
+            onDrop={drop}
+            onDragEnter={e => { e.target.style.background = 'purple'; }}
+            onDragLeave={e => { e.target.style.background = ''; }}
           >
-            <BoardCenter cardStyle={classes.card} player={players[2]} />
+            <BoardCenter
+              cardStyle={classes.card}
+              topCard={topCard}
+              playedCards={playedCards}
+            />
           </Grid>
 
           <Grid className={classes.midCards}
@@ -86,7 +101,7 @@ export default function GameBoard() {
             justifyContent="center"
             alignItems="center"
           >
-            <PlayerHand side={'bottom'} player={players[2]} />
+            <PlayerHand playerHand={playerHand} />
           </Grid>
         </Grid>
 
