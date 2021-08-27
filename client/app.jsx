@@ -4,9 +4,9 @@ import AppContext from './context/app-context';
 import { makeStyles } from '@material-ui/core/styles';
 import SideNav from './components/SideNav';
 import HowToPlay from './pages/HowToPlay';
-import GameBoard from './pages/game-board';
+// import GameBoard from './pages/game-board';
 import AboutUs from './pages/about-us';
-
+import Lobby from './pages/lobby';
 const useStyles = makeStyles(theme => ({
   root: {
     position: 'absolute',
@@ -38,7 +38,7 @@ export default function App() {
               <AboutUs />
             </Route>
             <Route path="/games">
-              <GameBoard />
+            <Lobby />
             </Route>
             <Route path="/">
               <Home />
