@@ -2,19 +2,22 @@ import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 
 export default function BoardCenter(props) {
-  const [topCard, setTopCard] = useState('');
+  const [topCard, setTopCard] = useState('mint-bean');
   const [playedCards, setPlayedCards] = useState([]);
-  const { cardStyle } = props;
+  const { cardStyle, player } = props;
 
   const drop = e => {
     e.preventDefault();
-    const cardId = e.dataTransfer.getData('card_id');
-    const cardSrc = e.dataTransfer.getData('card');
-    setPlayedCards(prevCards => [...prevCards, cardSrc]);
-    setTopCard(cardSrc);
 
-    const card = document.getElementById(cardId);
-    card.style.display = 'block';
+    const cardId = e.dataTransfer.getData('card-id');
+    const cardSrc = e.dataTransfer.getData('card');
+
+    if (e.target.closest('div').id === 'played-cards') {
+      setPlayedCards(prevCards => [...prevCards, cardSrc]);
+      setTopCard(cardSrc);
+      const card = document.getElementById(cardId);
+      player.playCard(card.alt);
+    }
   };
 
   const dragOver = e => {
@@ -29,13 +32,14 @@ export default function BoardCenter(props) {
   return (
     <>
       <Grid item
+        id="played-cards"
         onDrop={drop}
         onDragOver={dragOver}
         onClick={displayPlayedCards}
       >
         <img src={`./images/${topCard}.png`} alt=""
           className={cardStyle} draggable="false"
-          id="played-cards" />
+        />
       </Grid>
       <Grid item>
         <img src="./images/back-of-card.png" alt="Uno Card"

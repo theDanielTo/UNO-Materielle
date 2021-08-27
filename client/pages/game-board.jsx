@@ -36,10 +36,20 @@ export default function GameBoard() {
   const classes = useStyles();
   const players = gameStart(NUM_PLAYERS);
 
+  const drop = e => {
+    e.preventDefault();
+  };
+
+  const dragOver = e => {
+    e.preventDefault();
+  };
+
   return (
     <div className={classes.root}>
       <Grid container spacing={0} className={classes.columnSm}
-        onDragOver={e => e.preventDefault()}>
+        onDrop={drop}
+        onDragOver={dragOver}
+      >
 
         <Grid className={classes.columnSm}
           container item xl={2} spacing={0}
@@ -67,7 +77,7 @@ export default function GameBoard() {
             justifyContent="center"
             alignItems="center"
           >
-            <BoardCenter cardStyle={classes.card}/>
+            <BoardCenter cardStyle={classes.card} player={players[2]} />
           </Grid>
 
           <Grid className={classes.midCards}
