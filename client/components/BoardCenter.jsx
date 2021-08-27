@@ -13,7 +13,7 @@ export default function BoardCenter({ cardStyle, topCard, playedCards }) {
         id="played-cards"
         onClick={displayPlayedCards}
       >
-        <img src={`./images/${topCard}.png`} alt=""
+        <img src={`./images/cards/${topCard}.png`} alt=""
           className={cardStyle} draggable="false"
         />
       </Grid>

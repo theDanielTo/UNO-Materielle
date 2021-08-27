@@ -24,7 +24,7 @@ export default function Card(props) {
 
   return (
     <>
-      <img src={`./images/${src}.png`} alt={src}
+      <img src={`./images/cards/${src}.png`} alt={src}
         id={id}
         className={className} draggable={draggable}
         style={{ transform: 'rotate(' + deg + ')', [prop]: margin }}
