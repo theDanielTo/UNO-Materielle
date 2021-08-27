@@ -4,10 +4,24 @@ import SideNav from './components/SideNav';
 import HowToPlay from './pages/HowToPlay';
 import GameBoard from './pages/game-board';
 import AboutUs from './pages/about-us';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    position: 'absolute',
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100%',
+    paddingTop: 84,
+    backgroundColor: '#151224'
+  }
+}));
 
 export default function App() {
+  const classes = useStyles();
   return (
     <Router basename="/">
+      <div className={classes.root} >
       <Switch>
         <Route path="/how-to-play">
           <HowToPlay />
@@ -22,7 +36,7 @@ export default function App() {
           <Home />
         </Route>
       </Switch>
-
+      </div>
       <SideNav />
     </Router>
   );
@@ -33,14 +47,13 @@ function Home() {
     <div
       style={
         {
-          display: 'flex',
-          justifyContent: 'center',
-          paddingTop: '64px',
-          backgroundColor: '#151224',
-          color: '#DDE0EF',
-          height: '100vh',
-          width: 'calc(100% - 300px)',
-          float: 'right'
+          root: {
+            backgroundColor: '#151224',
+            color: '#DDE0EF',
+            height: '100vh',
+            maxWidth: '1200px',
+            fontSize: '1.5rem'
+          }
         }}
     >
       <h1>Home</h1>
