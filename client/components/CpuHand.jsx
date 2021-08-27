@@ -7,26 +7,43 @@ const useStyles = makeStyles(theme => ({
   card: {
     height: 200,
     width: 140,
-    borderRadius: 10,
-    marginLeft: -70
+    borderRadius: 10
   }
 }));
 
 export default function PlayerHand({ side, player }) {
-  // const [hand, setHand] = useState([]);
   const classes = useStyles();
+
+  let deg = '';
+  let prop = 'marginTop';
+  let margin = -140;
+  switch (side) {
+    case 'left':
+      deg = '90deg';
+      break;
+    case 'top':
+      deg = '180deg';
+      prop = 'marginLeft';
+      margin = -70;
+      break;
+    case 'right':
+      deg = '-90deg';
+      break;
+    default:
+      break;
+  }
 
   return (
     <>
       {
         player.hand.map((card, index) => {
-          const src = `${card.color}-${card.type}`;
+          const src = 'back-of-card';
           return (
             <Grid item key={index}>
               <Card
-                src={src}
-                className={classes.card}
-                draggable="true"
+                src={src} className={classes.card}
+                deg={deg} prop={prop} margin={margin}
+                draggable="false"
               />
             </Grid>
           );
