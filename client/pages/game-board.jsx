@@ -80,13 +80,13 @@ export default function GameBoard() {
             <CpuHand side={'top'} player={players[1]} />
           </Grid>
 
-          <Grid className={classes.midRow}
+          <Grid className={classes.midRow} id='midRow'
             container item xl={12} spacing={2}
             justifyContent="center"
             alignItems="center"
             onDrop={drop}
-            onDragEnter={e => { e.target.style.background = 'purple'; }}
-            onDragLeave={e => { e.target.style.background = ''; }}
+            onDragEnter={e => { if (e.target.closest('div').id === 'midRow') e.target.style.background = 'purple'; }}
+            onDragLeave={e => { if (e.target.closest('div').id === 'midRow') e.target.style.background = ''; }}
           >
             <BoardCenter
               cardStyle={classes.card}

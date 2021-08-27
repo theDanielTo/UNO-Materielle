@@ -18,7 +18,7 @@ export default function BoardCenter({ cardStyle, topCard, playedCards }) {
         />
       </Grid>
       <Grid item>
-        <img src="./images/back-of-card.png" alt="Uno Card"
+        <img src="./images/cards/back-of-card.png" alt="Uno Card"
           className={cardStyle} draggable="false"
           style={{ cursor: 'pointer' }} />
       </Grid>
