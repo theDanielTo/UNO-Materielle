@@ -6,6 +6,7 @@ import SideNav from './components/SideNav';
 import HowToPlay from './pages/HowToPlay';
 import GameBoard from './pages/game-board';
 import AboutUs from './pages/about-us';
+import Home from './pages/home';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -52,21 +53,21 @@ export default function App() {
   );
 }
 
-function Home() {
-  return (
-    <div
-      style={
-        {
-          root: {
-            backgroundColor: '#151224',
-            color: '#DDE0EF',
-            height: '100vh',
-            maxWidth: '1200px',
-            fontSize: '1.5rem'
-          }
-        }}
-    >
-      <h1>Home</h1>
-    </div>
-  );
-}
+// function Home() {
+//   return (
+//     <div
+//       style={
+//         {
+//           root: {
+//             backgroundColor: '#151224',
+//             color: '#DDE0EF',
+//             height: '100vh',
+//             maxWidth: '1200px',
+//             fontSize: '1.5rem'
+//           }
+//         }}
+//     >
+//       <h1>Home</h1>
+//     </div>
+//   );
+// }
