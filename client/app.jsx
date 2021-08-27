@@ -7,6 +7,8 @@ import HowToPlay from './pages/HowToPlay';
 // import GameBoard from './pages/game-board';
 import AboutUs from './pages/about-us';
 import Lobby from './pages/lobby';
+import Grid from '@material-ui/core/Grid';
+
 const useStyles = makeStyles(theme => ({
   root: {
     position: 'absolute',
@@ -15,6 +17,10 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     paddingTop: 84,
     backgroundColor: '#151224'
+  },
+  lobby: {
+    position: 'relative',
+    left: '15%'
   }
 }));
 
@@ -38,7 +44,11 @@ export default function App() {
               <AboutUs />
             </Route>
             <Route path="/games">
-            <Lobby />
+              <Grid container spacing={6} direction="row" justifyContent="flex-start" className={classes.lobby}>
+              <Grid item>
+                <Lobby />
+              </Grid>
+            </Grid>
             </Route>
             <Route path="/">
               <Home />
