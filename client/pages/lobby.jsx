@@ -20,7 +20,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function Lobby() {
   const classes = useStyles();
-
   const [games, setGames] = useState([]);
 
   useEffect(() => {
@@ -41,8 +40,22 @@ export default function Lobby() {
       body: JSON.stringify({ title })
     })
       .then(res => res.json())
-      .then(result => setGames([...games, result]))
+      .then(result => {
+        const userId = JSON.parse(localStorage.getItem('mintbean-user')).userId;
+        const gameId = result.gameId;
+        setGames([...games, result]);
+        fetch('/api/lobbies', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ userId, gameId })
+        })
+          .then(res => res.json())
+          .catch(err => console.error('fetch err:', err));
+      })
       .catch(err => console.error('fetch err:', err));
+
   };
 
   return (
@@ -51,7 +64,7 @@ export default function Lobby() {
       <Grid container spacing={6} direction="row" justifyContent="flex-start">
         {
           games.map(game => (
-            <LobbyCard key={game.gameId} id={game.gameId}/>
+            <LobbyCard key={game.gameId} game={game}/>
           ))
         }
       </Grid>
