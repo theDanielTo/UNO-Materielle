@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { io } from 'socket.io-client';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -15,21 +14,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function FormDialog({ setUsername }) {
+export default function FormDialog({ setStorage }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
 
-  // const [socket, setSocket] = useState();
-
-  // useEffect(() => {
-  //   const newSocket = io('http://localhost:3001');
-  //   setSocket(newSocket);
-
-  //   return () => newSocket.close();
-  // }, []);
   const handleChangeName = () => {
-    setUsername(name);
     fetch('/api/users', {
       method: 'POST',
       headers: {
@@ -38,7 +28,11 @@ export default function FormDialog({ setUsername }) {
       body: JSON.stringify({ name })
     })
       .then(res => res.json())
+      .then(result => {
+        setStorage(result);
+      })
       .catch(err => console.error('fetch err:', err));
+
     setOpen(false);
   };
 

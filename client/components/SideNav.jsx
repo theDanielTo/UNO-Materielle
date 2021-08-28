@@ -13,8 +13,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Avatar from '@material-ui/core/Avatar';
 
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import HomeIcon from '@material-ui/icons/Home';
 import GradeIcon from '@material-ui/icons/Grade';
 import MoodIcon from '@material-ui/icons/Mood';
 import VideogameAssetIcon from '@material-ui/icons/VideogameAsset';
@@ -50,6 +51,11 @@ const useStyles = makeStyles(theme => ({
 
 const navLinks = [
   {
+    text: 'Home',
+    icon: <HomeIcon />,
+    href: '/home'
+  },
+  {
     text: 'How To Play',
     icon: <GradeIcon />,
     href: '/how-to-play'
@@ -70,12 +76,12 @@ export default function SideNav(props) {
   const { window } = props;
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [username, setUsername] = useLocalStorage();
-  const [displayName, setDisplayName] = useState(username);
+  const [storage, setStorage] = useLocalStorage();
+  const [displayName, setDisplayName] = useState('');
 
   useEffect(() => {
-    setDisplayName(username);
-  }, [username]);
+    setDisplayName(storage.username);
+  }, [storage.username]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -89,14 +95,12 @@ export default function SideNav(props) {
       <div className={classes.toolbar} />
       <Divider light={true} />
       <List>
-        <Link to="/">
-          <ListItem button>
-            <ListItemIcon className={classes.listItem}>
-              <AccountCircleIcon />
-            </ListItemIcon>
-            <ListItemText primary={displayName} className={classes.listItem}/>
-          </ListItem>
-        </Link>
+        <ListItem alignItems="center">
+          <ListItemIcon className={classes.listItem}>
+            <Avatar>{displayName[0]}</Avatar>
+          </ListItemIcon>
+          <ListItemText primary={displayName} className={classes.listItem} />
+        </ListItem>
       </List>
       <Divider light={true} />
       <List>
@@ -114,7 +118,7 @@ export default function SideNav(props) {
         }
       </List>
       <List>
-        <FormDialog setUsername={setUsername} />
+        <FormDialog setStorage={setStorage} />
       </List>
     </div>
   );
