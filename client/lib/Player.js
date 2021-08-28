@@ -1,7 +1,7 @@
 export default class Player {
-  constructor(id) {
-    this.hand = [];
+  constructor(id, hand) {
     this.id = id;
+    this.hand = hand;
   }
 
   addCard(card) {

@@ -12,13 +12,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PlayerHand({ playerHand, playCard }) {
+export default function PlayerHand({ player1Hand, playCard }) {
   const classes = useStyles();
 
   return (
     <>
       {
-        playerHand.map((card, index) => {
+        player1Hand.map((card, index) => {
           const src = `${card.color}-${card.type}`;
           return (
             <Grid item key={index}>

@@ -55,7 +55,7 @@ export default function LobbyCard({ game }) {
             onClick={joinGame}
             disabled={isStarted}
           >
-            <Link to={`/game/game-id=${gameId}`}>
+            <Link to={`/play?game-id=${gameId}`}>
               Join
             </Link>
           </Button>

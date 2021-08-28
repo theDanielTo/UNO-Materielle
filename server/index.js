@@ -5,6 +5,7 @@ const ClientError = require('./client-error');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
 const db = require('./db');
+const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 
 const app = express();
 const server = http.createServer(app);
@@ -15,10 +16,36 @@ const io = require('socket.io')(server, {
 });
 
 io.on('connection', socket => {
-  // socket.on('join lobby', () => {
-  //   socket.join('lobby');
+  socket.on('join', (payload, callback) => {
+    const { error, newUser } = addUser({
+      id: socket.id,
+      name: payload.username,
+      room: payload.room
+    });
+
+    if (error) { return callback(error); }
+
+    socket.join(newUser.room);
+
+    io.to(newUser.room).emit('roomData', { room: newUser.room, users: getUsersInRoom(newUser.room) });
+    socket.emit('currentUserData', { name: newUser.name });
+    callback();
+  });
+
+  socket.on('initGameState', gameState => {
+    const user = getUser(socket.id);
+    if (user) { io.to(user.room).emit('initGameState', gameState); }
+  });
+
+  socket.on('updateGameState', gameState => {
+    const user = getUser(socket.id);
+    if (user) { io.to(user.room).emit('updateGameState', gameState); }
+  });
+
+  // socket.on('disconnect', () => {
+  //   const user = removeUser(socket.id);
+  //   if (user) { io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) }); }
   // });
-  // console.log(socket.id);
 });
 
 app.use(staticMiddleware);

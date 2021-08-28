@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PlayerHand({ side, player }) {
+export default function CpuHand({ side, player }) {
   const classes = useStyles();
 
   let deg = '';

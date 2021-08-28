@@ -1,16 +1,16 @@
 import Player from './Player';
-import dealCard from './dealCard';
+import UnoCards from './UnoCards';
+import shuffleDeck from './shuffleDeck';
 
 const HAND_SIZE = 7;
 
 export default function gameStart(numPlayers) {
   const players = [];
+  const shuffledDeck = shuffleDeck(UnoCards);
+
   for (let i = 0; i < numPlayers; i++) {
-    players.push(new Player(i + 1));
+    players.push(new Player(i + 1, shuffledDeck.splice(0, HAND_SIZE)));
   }
 
-  players.forEach(player => {
-    for (let j = 0; j < HAND_SIZE; j++) player.addCard(dealCard());
-  });
   return players;
 }
