@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { io } from 'socket.io-client';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -20,14 +19,6 @@ export default function FormDialog({ setUsername }) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
 
-  // const [socket, setSocket] = useState();
-
-  // useEffect(() => {
-  //   const newSocket = io('http://localhost:3001');
-  //   setSocket(newSocket);
-
-  //   return () => newSocket.close();
-  // }, []);
   const handleChangeName = () => {
     setUsername(name);
     fetch('/api/users', {

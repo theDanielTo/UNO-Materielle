@@ -3,7 +3,7 @@ import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import SideNav from './components/SideNav';
 import HowToPlay from './pages/HowToPlay';
-// import GameBoard from './pages/game-board';
+import GameBoard from './pages/game-board';
 import AboutUs from './pages/about-us';
 import Home from './pages/home';
 import Lobby from './pages/lobby';
@@ -42,6 +42,9 @@ export default function App() {
               <Lobby />
             </Grid>
           </Grid>
+          <Route path="/games/:g">
+            <GameBoard />
+          </Route>
           </Route>
           <Route path="/">
             <Home />
