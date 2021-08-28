@@ -11,13 +11,6 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: '1em',
     fontSize: '1.5rem'
   },
-  rules: {
-    padding: '20px'
-  },
-  ruleRow: {
-    display: 'flex',
-    marginBottom: '15px'
-  },
   about: {
     backgroundColor: '#484040',
     borderRadius: '25px',
@@ -48,11 +41,6 @@ const useStyles = makeStyles(theme => ({
   logo: {
     color: '#DDE0EF'
   },
-  organize: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
-
   trial: {
     width: '250px',
     height: '250px',

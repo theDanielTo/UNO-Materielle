@@ -6,6 +6,7 @@ import SideNav from './components/SideNav';
 import HowToPlay from './pages/HowToPlay';
 // import GameBoard from './pages/game-board';
 import AboutUs from './pages/about-us';
+import Home from './pages/home';
 import Lobby from './pages/lobby';
 import Grid from '@material-ui/core/Grid';
 
@@ -60,24 +61,5 @@ export default function App() {
         </div>
       </Router>
     </AppContext.Provider>
-  );
-}
-
-function Home() {
-  return (
-    <div
-      style={
-        {
-          root: {
-            backgroundColor: '#151224',
-            color: '#DDE0EF',
-            height: '100vh',
-            maxWidth: '1200px',
-            fontSize: '1.5rem'
-          }
-        }}
-    >
-      <h1>Home</h1>
-    </div>
   );
 }
