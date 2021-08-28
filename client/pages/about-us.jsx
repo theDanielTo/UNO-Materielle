@@ -6,7 +6,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: '#151224',
     color: '#DDE0EF',
-    minHeight: '93.6vh',
+    height: '93.6vh',
     maxWidth: '1200px',
     paddingBottom: '1em',
     fontSize: '1.5rem'

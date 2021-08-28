@@ -1,12 +1,8 @@
-import React from 'react';
-// import { makeStyles } from '@material-ui/core/styles';
+import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
-import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import CardActions from '@material-ui/core/CardActions';
-import Card from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core';
+import LobbyCard from '../components/LobbyCard';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -16,62 +12,58 @@ const useStyles = makeStyles(theme => ({
     maxWidth: '1200px',
     fontSize: '1.5rem'
   },
-  card: {
-    // height: 100,
-    width: 210,
-    borderRadius: 10,
-    color: 'white',
-    background: '#484040'
-  },
   button: {
     background: '#D3A500',
     color: 'white'
   }
-
 }));
 
 export default function Lobby() {
   const classes = useStyles();
+
+  const [games, setGames] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/games')
+      .then(res => res.json())
+      .then(result => setGames(result))
+      .catch(err => console.error('fetch err:', err));
+  }, []);
+
+  const title = 'new game';
+
+  const createGame = () => {
+    fetch('/api/games', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ title })
+    })
+      .then(res => res.json())
+      .then(result => setGames([...games, result]))
+      .catch(err => console.error('fetch err:', err));
+  };
+
   return (
     <div className={classes.root}>
       <h2>Choose a game:</h2>
       <Grid container spacing={6} direction="row" justifyContent="flex-start">
-        <Grid item>
-          <Card className={classes.card}>
-            <CardContent >
-              <Typography color="white" >
-                Game: 1
-              </Typography>
-              <Typography>
-                Players: 1 / 4
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button className={classes.button}>Join</Button>
-            </CardActions>
-          </Card>
-        </Grid>
-        <Grid item>
-          <Card className={classes.card}>
-          <CardContent>
-          <Typography color="white" >
-            Game: 1
-          </Typography>
-          <Typography>
-            Players: 1 / 4
-          </Typography>
-        </CardContent >
-          <CardActions>
-            <Button className={classes.button}>Join</Button>
-          </CardActions>
-          </Card>
-          </Grid>
+        {
+          games.map(game => (
+            <LobbyCard key={game.gameId}/>
+          ))
+        }
       </Grid>
 
       <h2>Create Game</h2>
-      <Button variant="contained" className={classes.button}>
+      <Button
+        variant="contained"
+        className={classes.button}
+        onClick={createGame}
+      >
         Create Game
       </Button>
-      </div>
+    </div>
   );
 }
