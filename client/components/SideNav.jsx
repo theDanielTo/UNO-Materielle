@@ -115,7 +115,7 @@ export default function SideNav(props) {
         }
       </List>
       <List>
-        <FormDialog username={username} />
+        <FormDialog setUsername={setUsername} />
       </List>
     </div>
   );

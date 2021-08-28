@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import useLocalStorage from '../hooks/useLocalStorage';
 // import { io } from 'socket.io-client';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -16,11 +15,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function FormDialog() {
+export default function FormDialog({ setUsername }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
-  const [username, setUsername] = useLocalStorage();
 
   // const [socket, setSocket] = useState();
 
