@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import useLocalStorage from '../hooks/useLocalStorage';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -31,7 +32,6 @@ const useStyles = makeStyles(theme => ({
   },
   appBar: {
     background: '#540062',
-    // width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth
   },
   drawer: {
@@ -49,33 +49,41 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar
 }));
 
+const navLinks = [
+  {
+    text: 'How To Play',
+    icon: <GradeIcon />,
+    href: '/how-to-play'
+  },
+  {
+    text: 'Developers',
+    icon: <MoodIcon />,
+    href: '/about-us'
+  },
+  {
+    text: 'Find a Game',
+    icon: <VideogameAssetIcon />,
+    href: '/games'
+  }
+];
+
 export default function SideNav(props) {
   const { window } = props;
   const classes = useStyles();
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [username, setUsername] = useLocalStorage();
+  const [displayName, setDisplayName] = useState(username);
+
+  useEffect(() => {
+    setDisplayName(username);
+  }, [username]);
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
   const container =
     window !== undefined ? () => window().document.body : undefined;
-
-  const navLinks = [
-    {
-      text: 'How To Play',
-      icon: <GradeIcon />,
-      href: '/how-to-play'
-    },
-    {
-      text: 'Developers',
-      icon: <MoodIcon />,
-      href: '/about-us'
-    },
-    {
-      text: 'Find a Game',
-      icon: <VideogameAssetIcon />,
-      href: '/games'
-    }
-  ];
 
   const drawer = (
     <div>
@@ -86,8 +94,8 @@ export default function SideNav(props) {
           <ListItem button>
             <ListItemIcon className={classes.listItem}>
               <AccountCircleIcon />
-            </ListItemIcon>s
-            <ListItemText primary="username" className={classes.listItem}/>
+            </ListItemIcon>
+            <ListItemText primary={displayName} className={classes.listItem}/>
           </ListItem>
         </Link>
       </List>
@@ -107,7 +115,7 @@ export default function SideNav(props) {
         }
       </List>
       <List>
-        <FormDialog />
+        <FormDialog username={username} />
       </List>
     </div>
   );

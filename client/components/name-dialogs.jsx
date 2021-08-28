@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import useLocalStorage from '../hooks/useLocalStorage';
 // import { io } from 'socket.io-client';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -19,6 +20,8 @@ export default function FormDialog() {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
+  const [username, setUsername] = useLocalStorage();
+
   // const [socket, setSocket] = useState();
 
   // useEffect(() => {
@@ -27,9 +30,8 @@ export default function FormDialog() {
 
   //   return () => newSocket.close();
   // }, []);
-
-  const setUsername = () => {
-    window.localStorage.setItem('username', name);
+  const handleChangeName = () => {
+    setUsername(name);
     fetch('/api/users', {
       method: 'POST',
       headers: {
@@ -38,8 +40,8 @@ export default function FormDialog() {
       body: JSON.stringify({ name })
     })
       .then(res => res.json())
-      .then(result => setOpen(false))
       .catch(err => console.error('fetch err:', err));
+    setOpen(false);
   };
 
   return (
@@ -58,7 +60,7 @@ export default function FormDialog() {
             margin="dense"
             id="name"
             label="USERNAME:"
-            type="anme"
+            type="name"
             fullWidth
             onChange={e => { setName(e.target.value); }}
           />
@@ -67,7 +69,7 @@ export default function FormDialog() {
           <Button onClick={() => setOpen(false)} color="primary">
             Cancel
           </Button>
-          <Button onClick={setUsername} color="primary">
+          <Button onClick={handleChangeName} color="primary">
             Play
           </Button>
         </DialogActions>

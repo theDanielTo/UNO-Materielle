@@ -1,5 +1,4 @@
 import React from 'react';
-// import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
@@ -17,7 +16,6 @@ const useStyles = makeStyles(theme => ({
     fontSize: '1.5rem'
   },
   card: {
-    // height: 100,
     width: 210,
     borderRadius: 10,
     color: 'white',
@@ -39,7 +37,7 @@ export default function Lobby() {
         <Grid item>
           <Card className={classes.card}>
             <CardContent >
-              <Typography color="white" >
+              <Typography>
                 Game: 1
               </Typography>
               <Typography>
@@ -54,7 +52,7 @@ export default function Lobby() {
         <Grid item>
           <Card className={classes.card}>
           <CardContent>
-          <Typography color="white" >
+          <Typography>
             Game: 1
           </Typography>
           <Typography>

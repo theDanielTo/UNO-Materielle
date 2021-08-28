@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
-import AppContext from './context/app-context';
 import { makeStyles } from '@material-ui/core/styles';
 import SideNav from './components/SideNav';
 import HowToPlay from './pages/HowToPlay';
@@ -19,47 +18,38 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#151224'
   },
   lobby: {
-
     maxWidth: '1200px'
-
   }
 }));
 
 export default function App() {
-  const [username, setUsername] = useState(() => window.localStorage.getItem('username'));
   const classes = useStyles();
 
-  useEffect(() => {
-    setUsername(() => window.localStorage.getItem('username'));
-  }, []);
-
   return (
-    <AppContext.Provider value={{ username }}>
-      <Router basename="/">
-        <div className={classes.root}>
-          <Switch>
-            <Route path="/how-to-play">
-              <HowToPlay />
-            </Route>
-            <Route path="/about-us">
-              <AboutUs />
-            </Route>
-            <Route path="/games">
-              <Grid container spacing={6} direction="row" justifyContent="flex-start" className={classes.lobby}>
-              <Grid item>
-                <Lobby />
-              </Grid>
+    <Router basename="/">
+      <div className={classes.root}>
+        <Switch>
+          <Route path="/how-to-play">
+            <HowToPlay />
+          </Route>
+          <Route path="/about-us">
+            <AboutUs />
+          </Route>
+          <Route path="/games">
+            <Grid container spacing={6} direction="row" justifyContent="flex-start" className={classes.lobby}>
+            <Grid item>
+              <Lobby />
             </Grid>
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
-          </Switch>
+          </Grid>
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
 
-          <SideNav />
-        </div>
-      </Router>
-    </AppContext.Provider>
+        <SideNav />
+      </div>
+    </Router>
   );
 }
 
