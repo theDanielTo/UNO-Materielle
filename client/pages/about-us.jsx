@@ -77,7 +77,7 @@ export default function AboutUs() {
         <Grid item md={4}>
           <Paper className={classes.about}>
             <div className={classes.trial}>
-              <img className={classes.brian}src="/images/brianbozigian.png" alt="Brian's Picture"></img>
+              <img className={classes.brian}src="/images/devs/brianbozigian.png" alt="Brian's Picture"></img>
             </div>
             <p className={classes.header}>Brian Bozigan</p>
             <p className={classes.infoText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?</p>
@@ -90,7 +90,7 @@ export default function AboutUs() {
         <Grid item md={4}>
           <Paper className={classes.about}>
             <div className={classes.trial}>
-              <img className={classes.daniel} src="/images/danielto.png" alt="Daniel's Picture"></img>
+              <img className={classes.daniel} src="/images/devs/danielto.png" alt="Daniel's Picture"></img>
             </div>
             <p className={classes.header}>Daniel To</p>
             <p className={classes.infoText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?</p>
@@ -103,7 +103,7 @@ export default function AboutUs() {
         <Grid item md={4}>
           <Paper className={classes.about}>
             <div className={classes.trial}>
-              <img className={classes.michael} src="/images/michaelaguilar.png" alt="Michael's Picture"></img>
+              <img className={classes.michael} src="/images/devs/michaelaguilar.png" alt="Michael's Picture"></img>
             </div>
             <p className={classes.header}>Michael Aguilar</p>
             <p className={classes.infoText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?</p>

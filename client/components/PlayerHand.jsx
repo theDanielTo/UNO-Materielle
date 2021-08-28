@@ -12,18 +12,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PlayerHand({ side, player }) {
-  // const [hand, setHand] = useState([]);
+export default function PlayerHand({ playerHand, playCard }) {
   const classes = useStyles();
 
   return (
     <>
       {
-        player.hand.map((card, index) => {
+        playerHand.map((card, index) => {
           const src = `${card.color}-${card.type}`;
           return (
             <Grid item key={index}>
               <Card
+                playCard={playCard}
                 src={src}
                 className={classes.card}
                 draggable="true"

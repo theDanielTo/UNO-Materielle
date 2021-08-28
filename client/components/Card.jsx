@@ -13,20 +13,24 @@ export default function Card(props) {
     }, 0);
   };
 
-  const playCard = e => {
+  const handleDragEnd = e => {
+    e.target.style.display = 'initial';
+    // props.playCard(e, e.target.alt);
+  };
+
+  const dragOver = e => {
     e.stopPropagation();
-    // if (e.target.id === 'played-cards') {
-    //   console.log(e.target);
-    // }
   };
 
   return (
     <>
-      <img src={`./images/${src}.png`} alt={src}
+      <img src={`./images/cards/${src}.png`} alt={src}
+        id={id}
         className={className} draggable={draggable}
         style={{ transform: 'rotate(' + deg + ')', [prop]: margin }}
         onDragStart={dragStart}
-        onDragOver={playCard}
+        onDragEnd={handleDragEnd}
+        onDragOver={dragOver}
       />
     </>
   );
