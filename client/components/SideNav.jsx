@@ -6,7 +6,6 @@ import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
@@ -124,9 +123,9 @@ export default function SideNav(props) {
           onClick={handleDrawerToggle} >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          {/* <Typography variant="h6" noWrap>
             Mint Bean Hackathon!
-          </Typography>
+          </Typography> */}
         </Toolbar>
         </AppBar>
         <nav aria-label="sidenav">
