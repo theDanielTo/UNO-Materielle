@@ -51,7 +51,7 @@ export default function Lobby() {
       <Grid container spacing={6} direction="row" justifyContent="flex-start">
         {
           games.map(game => (
-            <LobbyCard key={game.gameId}/>
+            <LobbyCard key={game.gameId} id={game.gameId}/>
           ))
         }
       </Grid>

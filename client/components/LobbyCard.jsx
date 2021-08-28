@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
@@ -20,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function LobbyCard() {
+export default function LobbyCard({ id }) {
   const classes = useStyles();
 
   return (
@@ -35,7 +36,9 @@ export default function LobbyCard() {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button className={classes.button}>Join</Button>
+          <Link to={`/game/game-id=${id}`}>
+            <Button className={classes.button}>Join</Button>
+          </Link>
         </CardActions>
       </Card>
     </Grid>
