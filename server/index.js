@@ -40,6 +40,32 @@ app.post('/api/users', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/games', (req, res, next) => {
+  const sql = `
+    SELECT *
+      FROM "games"
+  `;
+  db.query(sql)
+    .then(result => res.status(201).json(result.rows))
+    .catch(err => next(err));
+});
+
+app.post('/api/games', (req, res, next) => {
+  const { title } = req.body;
+  if (!title) {
+    throw new ClientError(400, 'missing required fields');
+  }
+  const sql = `
+    INSERT into "games" ("gameTitle", "numPlayers")
+      VALUES ($1, $2)
+      RETURNING *
+  `;
+  const param = [title, 4];
+  db.query(sql, param)
+    .then(result => res.status(201).json(result.rows[0]))
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 server.listen(process.env.PORT, () => {
