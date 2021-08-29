@@ -38,7 +38,7 @@ export default function Home(props) {
     <div className={classes.root}>
       <Grid container direction="row">
         <Grid item xs={12}>
-          <p className={classes.header}>Lorem ipsum</p>
+          <p className={classes.header}>UNO <em>Matérielle</em></p>
         </Grid>
         <Grid item lg={7}>
           <img src="/images/home-1.png" className={classes.image} alt="placeholder"></img>
