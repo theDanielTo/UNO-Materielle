@@ -55,7 +55,7 @@ export default function Home(props) {
           <img src="/images/home-2.png" className={classes.image} alt="placeholder"></img>
         </Grid>
         <Grid item lg={7}>
-          <img src="/images/placeholder.png" className={classes.image} alt="placeholder"></img>
+          <img src="/images/home-3.png" className={classes.image} alt="placeholder"></img>
         </Grid>
         <Grid item lg={5}>
           <p className={classes.infoText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae voluptatum officia maxime, odit
