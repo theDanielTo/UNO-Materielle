@@ -79,7 +79,12 @@ export default function Player2View({ onCardClick, playCard, turn, topCard, play
           justifyContent="center"
           alignItems="center"
         >
-          <PlayerHand player={'Player 2'} playerHand={player2Hand} turn={turn} />
+          <PlayerHand
+            player={'Player 2'}
+            playerHand={player2Hand}
+            turn={turn}
+            topCard={topCard}
+          />
         </Grid>
       </Grid>
 

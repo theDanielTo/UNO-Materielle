@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function Card(props) {
-  const { src, className, deg, prop, margin, draggable, cursor } = props;
+  const { src, className, valid, deg, prop, margin, draggable, cursor } = props;
   const id = Math.floor(Math.random() * 100000);
 
   const dragStart = e => {
@@ -21,12 +21,27 @@ export default function Card(props) {
     e.stopPropagation();
   };
 
+  const shadowColor = src.split('-')[0];
+  const validFilter = valid
+    ? `drop-shadow(0px 0px 20px ${shadowColor})`
+    : 'opacity(50%) grayscale(80%)';
+  const validTranslate = valid
+    ? '25px'
+    : '0px';
+
+  const cardStyle = {
+    transform: `rotate(${deg}) translateY(${validTranslate})`,
+    [prop]: margin,
+    cursor: cursor,
+    filter: validFilter
+  };
+
   return (
     <>
       <img src={`./images/cards/${src}.png`} alt={src}
         id={id}
         className={className} draggable={draggable}
-        style={{ transform: 'rotate(' + deg + ')', [prop]: margin, cursor: cursor }}
+        style={cardStyle}
         onDragStart={dragStart}
         onDragEnd={handleDragEnd}
         onDragOver={dragOver}
