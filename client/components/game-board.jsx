@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import gameStart from '../lib/game-start';
-import parseRoute from '../lib/parse-route';
+import { Player, UnoCards, shuffleDeck, parseRoute } from '../lib';
 import Player1View from '../views/Player1View';
 import Player2View from '../views/Player2View';
 import Grid from '@material-ui/core/Grid';
@@ -35,6 +34,13 @@ const useStyles = makeStyles(theme => ({
 let socket;
 const ENDPOINT = 'http://localhost:3000';
 const NUM_PLAYERS = 2;
+const HAND_SIZE = 7;
+// indices for 'skip', 'reverse', 'draw2'
+const INVALID_ACTION_INDICES = [
+  19, 20, 21, 22, 23, 24,
+  44, 45, 46, 47, 48, 49,
+  69, 70, 71, 72, 73, 74
+];
 
 export default function GameBoard() {
   const classes = useStyles();
@@ -80,7 +86,24 @@ export default function GameBoard() {
   const [player2Hand, setPlayer2Hand] = useState([]);
 
   useEffect(() => {
-    const { players, shuffledDeck, topCard } = gameStart(NUM_PLAYERS);
+    // const { players, shuffledDeck, topCard } = gameStart(NUM_PLAYERS);
+    const players = [];
+    const shuffledDeck = shuffleDeck(UnoCards);
+
+    for (let i = 0; i < NUM_PLAYERS; i++) {
+      players.push(new Player(i + 1, shuffledDeck.splice(0, HAND_SIZE)));
+    }
+
+    let randomIndex = Math.floor(Math.random() * 93);
+    while (INVALID_ACTION_INDICES.includes(randomIndex)) {
+      randomIndex = Math.floor(Math.random() * 93);
+    }
+
+    const topColor = shuffledDeck[randomIndex].color;
+    const topType = shuffledDeck[randomIndex].type;
+    const topCard = `${topColor}-${topType}`;
+
+    const playedCards = shuffledDeck.splice(randomIndex, 1);
 
     socket.emit('initGameState', {
       gameOver: false,
@@ -145,6 +168,20 @@ export default function GameBoard() {
     let cardColor = card.split('-')[0];
     if (cardColor === 'black') {
       cardColor = prompt('Enter a color (red/green/blue/yellow)').toLowerCase();
+    }
+
+    switch (card) {
+      case card.type === '0':
+      case card.type === '1':
+      case card.type === '2':
+      case card.type === '3':
+      case card.type === '4':
+      case card.type === '5':
+      case card.type === '6':
+      case card.type === '7':
+      case card.type === '8':
+      case card.type === '9':
+
     }
 
     if (player === 'Player 1') {
