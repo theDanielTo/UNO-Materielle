@@ -12,5 +12,5 @@ export default function gameStart(numPlayers) {
     players.push(new Player(i + 1, shuffledDeck.splice(0, HAND_SIZE)));
   }
 
-  return players;
+  return { players, shuffledDeck };
 }

@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function CpuHand({ side, player }) {
+export default function CpuHand({ side, playerHand }) {
   const classes = useStyles();
 
   let deg = '';
@@ -36,7 +36,7 @@ export default function CpuHand({ side, player }) {
   return (
     <>
       {
-        player.hand.map((card, index) => {
+        playerHand.map((card, index) => {
           const src = 'back-of-card';
           return (
             <Grid item key={index}>

@@ -17,9 +17,11 @@ const io = require('socket.io')(server, {
 
 io.on('connection', socket => {
   socket.on('join', (payload, callback) => {
+    const numberOfUsersInRoom = getUsersInRoom(payload.room).length;
+
     const { error, newUser } = addUser({
       id: socket.id,
-      name: payload.username,
+      name: numberOfUsersInRoom === 0 ? 'Player 1' : 'Player 2',
       room: payload.room
     });
 
@@ -40,9 +42,10 @@ io.on('connection', socket => {
   socket.on('updateGameState', gameState => {
     const user = getUser(socket.id);
     if (user) { io.to(user.room).emit('updateGameState', gameState); }
+    console.log(user, gameState);
   });
 
-  // socket.on('disconnect', () => {
+  // socket.on('disconnection', () => {
   //   const user = removeUser(socket.id);
   //   if (user) { io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) }); }
   // });
@@ -51,21 +54,21 @@ io.on('connection', socket => {
 app.use(staticMiddleware);
 app.use(express.json());
 
-app.post('/api/users', (req, res, next) => {
-  const { name } = req.body;
-  if (!name) {
-    throw new ClientError(400, 'missing required fields');
-  }
-  const sql = `
-    INSERT into "users" ("username")
-      VALUES ($1)
-      RETURNING *
-  `;
-  const param = [name];
-  db.query(sql, param)
-    .then(result => res.status(201).json(result.rows[0]))
-    .catch(err => next(err));
-});
+// app.post('/api/users', (req, res, next) => {
+//   const { name } = req.body;
+//   if (!name) {
+//     throw new ClientError(400, 'missing required fields');
+//   }
+//   const sql = `
+//     INSERT into "users" ("username")
+//       VALUES ($1)
+//       RETURNING *
+//   `;
+//   const param = [name];
+//   db.query(sql, param)
+//     .then(result => res.status(201).json(result.rows[0]))
+//     .catch(err => next(err));
+// });
 
 app.get('/api/games', (req, res, next) => {
   const sql = `
@@ -83,8 +86,8 @@ app.post('/api/games', (req, res, next) => {
     throw new ClientError(400, 'missing required fields');
   }
   const sql = `
-    INSERT into "games" ("gameTitle", "numPlayers")
-      VALUES ($1, $2)
+    INSERT into "games" ("gameTitle", "numPlayers", "isStarted")
+      VALUES ($1, $2, false)
       RETURNING *
   `;
   const param = [title, 4];

@@ -18,16 +18,6 @@ CREATE TABLE "public"."games" (
 
 
 
-CREATE TABLE "public"."users" (
-	"userId" serial NOT NULL,
-	"username" VARCHAR(255) NOT NULL,
-	CONSTRAINT "users_pk" PRIMARY KEY ("userId")
-) WITH (
-  OIDS=FALSE
-);
-
-
-
 CREATE TABLE "public"."lobbies" (
 	"gameId" integer NOT NULL,
 	"userId" integer NOT NULL
@@ -40,4 +30,3 @@ CREATE TABLE "public"."lobbies" (
 
 
 ALTER TABLE "lobbies" ADD CONSTRAINT "lobbies_fk0" FOREIGN KEY ("gameId") REFERENCES "games"("gameId");
-ALTER TABLE "lobbies" ADD CONSTRAINT "lobbies_fk1" FOREIGN KEY ("userId") REFERENCES "users"("userId");

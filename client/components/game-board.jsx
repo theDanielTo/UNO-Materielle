@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import BoardCenter from '../components/BoardCenter';
-import PlayerHand from '../components/PlayerHand';
-import CpuHand from '../components/CpuHand';
-import gameStart from '../lib/gameStart';
+import gameStart from '../lib/game-start';
 import parseRoute from '../lib/parse-route';
+import Player1View from '../views/Player1View';
+import Player2View from '../views/Player2View';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 import { io } from 'socket.io-client';
 
 const useStyles = makeStyles(theme => ({
@@ -44,7 +43,7 @@ const NUM_PLAYERS = 2;
 
 export default function GameBoard() {
   const classes = useStyles();
-  const players = gameStart(NUM_PLAYERS);
+
   const route = parseRoute(window.location.hash);
   const gameId = route.params.get('game-id');
   const username = JSON.parse(localStorage.getItem('mintbean-user'));
@@ -68,21 +67,54 @@ export default function GameBoard() {
     });
 
     return function cleanup() {
-      socket.emit('disconnect');
+      socket.emit('disconnection');
       socket.off();
     };
   }, []);
 
-  const [topCard, setTopCard] = useState('mint-bean');
-  const [playedCards, setPlayedCards] = useState([]);
-  const [player1Hand, setPlayer1Hand] = useState(players[0].hand);
-  const [player2Hand, setPlayer2Hand] = useState(players[1].hand);
-
-  const [gameOver, setGameOver] = useState(true);
+  const [gameOver, setGameOver] = useState(false);
   const [winner, setWinner] = useState('');
   const [turn, setTurn] = useState('');
 
-  // const [drawCardPile, setDrawCardPile] = useState([]);
+  const [topCard, setTopCard] = useState('mint-bean');
+  const [playedCards, setPlayedCards] = useState([]);
+  const [drawCardPile, setDrawCardPile] = useState([]);
+
+  const [player1Hand, setPlayer1Hand] = useState([]);
+  const [player2Hand, setPlayer2Hand] = useState([]);
+
+  useEffect(() => {
+    const { players, shuffledDeck } = gameStart(NUM_PLAYERS);
+    setPlayer1Hand([...players[0].hand]);
+    setPlayer2Hand([...players[1].hand]);
+
+    let startingCardIndex;
+    while (true) {
+      startingCardIndex = Math.floor(Math.random() * 100);
+      if (shuffledDeck[startingCardIndex].color === 'black' ||
+        shuffledDeck[startingCardIndex].type === 'skip' ||
+        shuffledDeck[startingCardIndex].type === 'reverse' ||
+        shuffledDeck[startingCardIndex].type === 'draw2') {
+        continue;
+      } else break;
+    }
+
+    const playedCards = shuffledDeck.splice(startingCardIndex, 1);
+
+    const drawCardPile = shuffledDeck;
+
+    const topCard = `${shuffledDeck[startingCardIndex].color}-${shuffledDeck[startingCardIndex].type}`;
+
+    socket.emit('initGameState', {
+      gameOver: false,
+      turn: players[0].id,
+      player1Hand: [...players[0].hand],
+      player2Hand: [...players[1].hand],
+      topCard: topCard,
+      playedCards: [...playedCards],
+      drawCardPile: [...drawCardPile]
+    });
+  }, []);
 
   useEffect(() => {
     socket.on('initGameState', ({ gameOver, turn, player1Hand, player2Hand, topCard, playedCards, drawCardPile }) => {
@@ -97,7 +129,6 @@ export default function GameBoard() {
 
     socket.on('updateGameState', ({ gameOver, winner, turn, player1Hand, player2Hand, topCard, playedCards, drawCardPile }) => {
       gameOver && setGameOver(gameOver);
-      gameOver === true;
       winner && setWinner(winner);
       turn && setTurn(turn);
       player1Hand && setPlayer1Hand(player1Hand);
@@ -116,81 +147,31 @@ export default function GameBoard() {
     });
   }, []);
 
-  const drop = e => {
-    e.preventDefault();
-    e.target.style.background = '';
+  const onPlayCard1 = () => {
 
-    const cardId = e.dataTransfer.getData('card-id');
-    const cardSrc = e.dataTransfer.getData('card');
-    const card = document.getElementById(cardId);
+  };
 
-    setPlayedCards(prevCards => [...prevCards, cardSrc]);
-    setTopCard(cardSrc);
-    setPlayer1Hand(player1Hand.filter(c => `${c.color}-${c.type}` !== card.alt));
+  const onPlayCard2 = () => {
+
   };
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={0} className={classes.columnSm}
+      <Grid container spacing={0}
+        className={classes.columnSm}
         onDragOver={e => e.preventDefault()}
       >
-
-        {/* <Grid className={classes.columnSm}
-          container item xl={2} spacing={0}
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <CpuHand side={'left'} player={players[0]}/>
-        </Grid> */}
-
-        <Grid className={classes.columnSm}
-          container item xl={8} spacing={0}
-        >
-          <Grid className={classes.midCards}
-            container item xl={12} spacing={1}
-            direction="row-reverse"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <CpuHand side={'top'} player={players[1]} />
-          </Grid>
-
-          <Grid className={classes.midRow} id='midRow'
-            container item xl={12} spacing={2}
-            justifyContent="center"
-            alignItems="center"
-            onDrop={drop}
-            onDragEnter={e => { if (e.target.closest('div').id === 'midRow') e.target.style.background = 'purple'; }}
-            onDragLeave={e => { if (e.target.closest('div').id === 'midRow') e.target.style.background = ''; }}
-          >
-            <BoardCenter
-              cardStyle={classes.card}
-              topCard={topCard}
-              playedCards={playedCards}
-            />
-          </Grid>
-
-          <Grid className={classes.midCards}
-            container item xl={12} spacing={1}
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <PlayerHand player1Hand={player1Hand} />
-          </Grid>
-        </Grid>
-
-        {/* <Grid className={classes.columnSm}
-          container item xl={2} spacing={0}
-          direction="column-reverse"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <CpuHand side={'right'} player={players[3]} />
-        </Grid> */}
-
+        {currentUser === 'Player 1' &&
+          <Player1View playCard={onPlayCard1}
+            topCard={topCard} playedCards={playedCards}
+            player1Hand={player1Hand} player2Hand={player2Hand}
+          />}
+        {currentUser === 'Player 2' &&
+          <Player2View playCard={onPlayCard2}
+            topCard={topCard} playedCards={playedCards}
+            player1Hand={player1Hand} player2Hand={player2Hand}
+          />}
       </Grid>
-    </div >
+    </div>
   );
 }

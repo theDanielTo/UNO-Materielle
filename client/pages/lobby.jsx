@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core';
 import LobbyCard from '../components/LobbyCard';
+import NewUser from '../components/NewUser';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -77,6 +78,7 @@ export default function Lobby() {
       >
         Create Game
       </Button>
+      <NewUser />
     </div>
   );
 }
