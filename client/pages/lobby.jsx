@@ -28,7 +28,7 @@ export default function Lobby() {
       .then(res => res.json())
       .then(result => setGames(result))
       .catch(err => console.error('fetch err:', err));
-  }, []);
+  }, [games]);
 
   const title = 'new game';
 
