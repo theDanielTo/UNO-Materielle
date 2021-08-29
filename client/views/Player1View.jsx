@@ -30,11 +30,8 @@ export default function Player1View({ onCardClick, playCard, turn, topCard, play
     e.preventDefault();
     e.target.style.background = '';
 
-    const cardId = e.dataTransfer.getData('card-id');
     const cardSrc = e.dataTransfer.getData('card');
-    const card = document.getElementById(cardId);
-
-    playCard('Player 1', cardSrc, card);
+    playCard('Player 1', cardSrc);
   };
 
   return (
