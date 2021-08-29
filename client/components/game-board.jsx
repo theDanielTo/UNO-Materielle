@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import gameStart from '../lib/game-start';
 import parseRoute from '../lib/parse-route';
@@ -155,26 +156,25 @@ export default function GameBoard() {
     return hand.length === 1 ? player : '';
   };
 
-  const playCard = (player, cardSrc, card) => {
+  const playCard = (player, card) => {
     if (player === 'Player 1') {
       socket.emit('updateGameState', {
         gameOver: checkGameOver(player1Hand),
         winner: checkWinner(player1Hand, 'Player 1'),
         turn: 'Player 2',
-        playedCards: [...playedCards, cardSrc],
-        player1Hand: player1Hand.filter(c => `${c.color}-${c.type}` !== card.alt),
-        topCard: cardSrc,
+        playedCards: [...playedCards, card],
+        player1Hand: player1Hand.filter(c => `${c.color}-${c.type}` !== card),
+        topCard: card,
         drawCardPile: drawCardPile
       });
     } else {
-      setPlayer2Hand(player2Hand.filter(c => `${c.color}-${c.type}` !== card.alt));
       socket.emit('updateGameState', {
         gameOver: checkGameOver(player2Hand),
         winner: checkWinner(player2Hand, 'Player 2'),
         turn: 'Player 1',
-        playedCards: [...playedCards, cardSrc],
-        player2Hand: player2Hand.filter(c => `${c.color}-${c.type}` !== card.alt),
-        topCard: cardSrc,
+        playedCards: [...playedCards, card],
+        player2Hand: player2Hand.filter(c => `${c.color}-${c.type}` !== card),
+        topCard: card,
         drawCardPile: drawCardPile
       });
     }
