@@ -21,7 +21,8 @@ const useStyles = makeStyles(theme => ({
     color: '#F0F4F8',
     padding: '1em 2em 1em',
     backgroundColor: '#334e68',
-    margin: '2em 2em'
+    margin: '2em 2em',
+    borderRadius: '21px'
   },
   image: {
     width: '85%',
@@ -40,7 +41,7 @@ export default function Home(props) {
           <p className={classes.header}>Lorem ipsum</p>
         </Grid>
         <Grid item lg={7}>
-          <img src="/images/placeholder.png" className={classes.image} alt="placeholder"></img>
+          <img src="/images/home-1.png" className={classes.image} alt="placeholder"></img>
         </Grid>
         <Grid item lg={5}>
           <p className={classes.infoText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae voluptatum officia maxime, odit
@@ -51,7 +52,7 @@ export default function Home(props) {
             adipisci nam fugit qui asperiores obcaecati cupiditate accusamus dicta excepturi, exercitationem neque.</p>
         </Grid>
         <Grid item lg={7}>
-          <img src="/images/placeholder.png" className={classes.image} alt="placeholder"></img>
+          <img src="/images/home-2.png" className={classes.image} alt="placeholder"></img>
         </Grid>
         <Grid item lg={7}>
           <img src="/images/placeholder.png" className={classes.image} alt="placeholder"></img>

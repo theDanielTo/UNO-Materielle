@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex'
   },
   appBar: {
-    background: '#540062',
+    background: '#161224',
     marginLeft: drawerWidth
   },
   drawer: {
