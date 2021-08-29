@@ -8,7 +8,6 @@ create schema "public";
 
 CREATE TABLE "public"."games" (
 	"gameId" serial NOT NULL,
-	"gameTitle" VARCHAR(255) NOT NULL,
 	"numPlayers" integer NOT NULL,
   "isStarted" BOOLEAN NOT NULL,
 	CONSTRAINT "games_pk" PRIMARY KEY ("gameId")

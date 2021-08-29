@@ -42,7 +42,6 @@ io.on('connection', socket => {
   socket.on('updateGameState', gameState => {
     const user = getUser(socket.id);
     if (user) { io.to(user.room).emit('updateGameState', gameState); }
-    console.log(user, gameState);
   });
 
   // socket.on('disconnection', () => {
@@ -53,22 +52,6 @@ io.on('connection', socket => {
 
 app.use(staticMiddleware);
 app.use(express.json());
-
-// app.post('/api/users', (req, res, next) => {
-//   const { name } = req.body;
-//   if (!name) {
-//     throw new ClientError(400, 'missing required fields');
-//   }
-//   const sql = `
-//     INSERT into "users" ("username")
-//       VALUES ($1)
-//       RETURNING *
-//   `;
-//   const param = [name];
-//   db.query(sql, param)
-//     .then(result => res.status(201).json(result.rows[0]))
-//     .catch(err => next(err));
-// });
 
 app.get('/api/games', (req, res, next) => {
   const sql = `
@@ -81,16 +64,12 @@ app.get('/api/games', (req, res, next) => {
 });
 
 app.post('/api/games', (req, res, next) => {
-  const { title } = req.body;
-  if (!title) {
-    throw new ClientError(400, 'missing required fields');
-  }
   const sql = `
-    INSERT into "games" ("gameTitle", "numPlayers", "isStarted")
-      VALUES ($1, $2, false)
+    INSERT into "games" ("numPlayers", "isStarted")
+      VALUES ($1, false)
       RETURNING *
   `;
-  const param = [title, 4];
+  const param = [4];
   db.query(sql, param)
     .then(result => res.status(201).json(result.rows[0]))
     .catch(err => next(err));

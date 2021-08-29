@@ -147,18 +147,50 @@ export default function GameBoard() {
     });
   }, []);
 
+  const checkGameOver = hand => {
+    return hand.length === 1;
+  };
+
+  const checkWinner = (hand, player) => {
+    return hand.length === 1 ? player : '';
+  };
+
   const playCard = (player, cardSrc, card) => {
-    setPlayedCards(prevCards => [...prevCards, cardSrc]);
-    setTopCard(cardSrc);
     if (player === 'Player 1') {
-      setPlayer1Hand(player1Hand.filter(c => `${c.color}-${c.type}` !== card.alt));
+      socket.emit('updateGameState', {
+        gameOver: checkGameOver(player1Hand),
+        winner: checkWinner(player1Hand, 'Player 1'),
+        turn: 'Player 2',
+        playedCards: [...playedCards, cardSrc],
+        player1Hand: player1Hand.filter(c => `${c.color}-${c.type}` !== card.alt),
+        topCard: cardSrc,
+        drawCardPile: drawCardPile
+      });
     } else {
       setPlayer2Hand(player2Hand.filter(c => `${c.color}-${c.type}` !== card.alt));
+      socket.emit('updateGameState', {
+        gameOver: checkGameOver(player2Hand),
+        winner: checkWinner(player2Hand, 'Player 2'),
+        turn: 'Player 1',
+        playedCards: [...playedCards, cardSrc],
+        player2Hand: player2Hand.filter(c => `${c.color}-${c.type}` !== card.alt),
+        topCard: cardSrc,
+        drawCardPile: drawCardPile
+      });
     }
   };
 
   return (
     <div className={classes.root}>
+      <div className='topInfo'>
+        <h1>Game Code: {room}</h1>
+      </div>
+
+      {
+        users.length === 1 && currentUser === 'Player 1' &&
+        <h1 className='topInfoText'>Waiting for Player 2 to join the game.</h1>
+      }
+
       <Grid container spacing={0}
         className={classes.columnSm}
         onDragOver={e => e.preventDefault()}
@@ -167,11 +199,13 @@ export default function GameBoard() {
           <Player1View playCard={playCard}
             topCard={topCard} playedCards={playedCards}
             player1Hand={player1Hand} player2Hand={player2Hand}
+            username={username}
           />}
         {currentUser === 'Player 2' &&
           <Player2View playCard={playCard}
             topCard={topCard} playedCards={playedCards}
             player1Hand={player1Hand} player2Hand={player2Hand}
+            username={username}
           />}
       </Grid>
     </div>

@@ -56,7 +56,7 @@ export default function Player1View({ playCard, topCard, playedCards, player1Han
           justifyContent="center"
           alignItems="center"
         >
-          <CpuHand side={'top'} playerHand={player2Hand} />
+          <CpuHand side={'top'} hand={player2Hand} />
         </Grid>
 
         <Grid className={classes.midRow} id='midRow'

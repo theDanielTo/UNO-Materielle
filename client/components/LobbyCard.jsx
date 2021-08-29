@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function LobbyCard({ game }) {
   const classes = useStyles();
-  const { gameTitle, gameId, isStarted } = game;
+  const { gameId, isStarted } = game;
 
   const joinGame = () => {
     const userId = JSON.parse(localStorage.getItem('mintbean-user')).id;
@@ -43,7 +43,7 @@ export default function LobbyCard({ game }) {
       <Card className={classes.card}>
         <CardContent >
           <Typography>
-            {`Game: ${gameTitle}`}
+            {`ID: ${gameId}`}
           </Typography>
           <Typography>
             {'Players: 1 / 4'}
