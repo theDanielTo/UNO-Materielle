@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import { Player, UnoCards, shuffleDeck, parseRoute } from '../lib';
+import { Player, shuffleDeck, parseRoute } from '../lib';
+import UnoCards from '../lib/UnoCards';
 import Player1View from '../views/Player1View';
 import Player2View from '../views/Player2View';
 import Grid from '@material-ui/core/Grid';

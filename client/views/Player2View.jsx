@@ -66,6 +66,8 @@ export default function Player2View({ onCardClick, playCard, turn, validColor, t
           onDragLeave={e => { if (e.target.closest('div').id === 'midRow') e.target.style.background = ''; }}
         >
           <BoardCenter
+            player={'Player 2'}
+            turn={turn}
             onCardClick={onCardClick}
             cardStyle={classes.card}
             topCard={topCard}
