@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
     width: '100%',
-    paddingTop: 84,
+    paddingTop: 50,
     backgroundColor: '#151224'
   }
 }));

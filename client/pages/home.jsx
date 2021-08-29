@@ -6,7 +6,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: '#151224',
     color: '#DDE0EF',
-    minHeight: '93.6vh',
+    minHeight: '96.6vh',
     maxWidth: '1300px',
     fontSize: '1.5rem'
   },
@@ -21,7 +21,8 @@ const useStyles = makeStyles(theme => ({
     color: '#F0F4F8',
     padding: '1em 2em 1em',
     backgroundColor: '#334e68',
-    margin: '2em 2em'
+    margin: '2em 2em',
+    borderRadius: '21px'
   },
   image: {
     width: '85%',
@@ -37,28 +38,25 @@ export default function Home(props) {
     <div className={classes.root}>
       <Grid container direction="row">
         <Grid item xs={12}>
-          <p className={classes.header}>Lorem ipsum</p>
+          <p className={classes.header}>UNO <em>Matérielle</em></p>
         </Grid>
         <Grid item lg={7}>
-          <img src="/images/placeholder.png" className={classes.image} alt="placeholder"></img>
+          <img src="/images/home-1.png" className={classes.image} alt="placeholder"></img>
         </Grid>
         <Grid item lg={5}>
-          <p className={classes.infoText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae voluptatum officia maxime, odit
-            adipisci nam fugit qui asperiores obcaecati cupiditate accusamus dicta excepturi, exercitationem neque.</p>
+          <p className={classes.infoText}>UNO is back with a new look and feel! Players take turns matching a card in their hand with the current card shown on top of the deck either by color or number.</p>
         </Grid>
         <Grid item lg={5}>
-          <p className={classes.infoText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae voluptatum officia maxime, odit
-            adipisci nam fugit qui asperiores obcaecati cupiditate accusamus dicta excepturi, exercitationem neque.</p>
+          <p className={classes.infoText}>Delivering a responseive and an appealing aesthetic using React.js and Material UI, and with the addition of Socket.io, you can play with other players online!</p>
         </Grid>
         <Grid item lg={7}>
-          <img src="/images/placeholder.png" className={classes.image} alt="placeholder"></img>
+          <img src="/images/home-2.png" className={classes.image} alt="placeholder"></img>
         </Grid>
         <Grid item lg={7}>
-          <img src="/images/placeholder.png" className={classes.image} alt="placeholder"></img>
+          <img src="/images/home-3.png" className={classes.image} alt="placeholder"></img>
         </Grid>
         <Grid item lg={5}>
-          <p className={classes.infoText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae voluptatum officia maxime, odit
-            adipisci nam fugit qui asperiores obcaecati cupiditate accusamus dicta excepturi, exercitationem neque.</p>
+          <p className={classes.infoText}>So, what are you waiting for!? Grabs some friends and get ready to battle it out online for the top prize of being the  Uno master!</p>
         </Grid>
       </Grid>
     </div>
