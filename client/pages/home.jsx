@@ -47,8 +47,7 @@ export default function Home(props) {
           <p className={classes.infoText}>UNO is back with a new look and feel! Players take turns matching a card in their hand with the current card shown on top of the deck either by color or number.</p>
         </Grid>
         <Grid item lg={5}>
-          <p className={classes.infoText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae voluptatum officia maxime, odit
-            adipisci nam fugit qui asperiores obcaecati cupiditate accusamus dicta excepturi, exercitationem neque.</p>
+          <p className={classes.infoText}>Delivering a responseive and an appealing aesthetic using React.js and Material UI, and with the addition of Socket.io, you can play with other players online!</p>
         </Grid>
         <Grid item lg={7}>
           <img src="/images/home-2.png" className={classes.image} alt="placeholder"></img>
