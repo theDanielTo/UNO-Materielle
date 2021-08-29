@@ -1,16 +1,6 @@
 export default class Player {
-  constructor(id) {
-    this.hand = [];
+  constructor(id, hand) {
     this.id = id;
-  }
-
-  addCard(card) {
-    this.hand.push(card);
-  }
-
-  playCard(card) {
-    this.hand = this.hand.filter(c => {
-      return `${c.color}-${c.type}` !== card;
-    });
+    this.hand = hand;
   }
 }

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 function getSavedUser(key) {
   const savedValue = JSON.parse(localStorage.getItem(key));
   if (savedValue) return savedValue;
+  return '';
 }
 
 export default function useLocalStorage() {

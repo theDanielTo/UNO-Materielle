@@ -1,23 +1,15 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 
-export default function BoardCenter({ cardStyle, topCard, playedCards }) {
-  const displayPlayedCards = () => {
-    // eslint-disable-next-line no-console
-    console.log(playedCards);
-  };
-
+export default function BoardCenter({ onCardClick, cardStyle, topCard, playedCards }) {
   return (
     <>
-      <Grid item
-        id="played-cards"
-        onClick={displayPlayedCards}
-      >
+      <Grid item id="played-cards">
         <img src={`./images/cards/${topCard}.png`} alt=""
           className={cardStyle} draggable="false"
         />
       </Grid>
-      <Grid item>
+      <Grid item onClick={onCardClick}>
         <img src="./images/cards/back-of-card.png" alt="Uno Card"
           className={cardStyle} draggable="false"
           style={{ cursor: 'pointer' }} />

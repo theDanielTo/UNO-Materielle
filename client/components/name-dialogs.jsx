@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import useLocalStorage from '../hooks/useLocalStorage';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core';
 
@@ -18,42 +18,28 @@ export default function FormDialog({ setStorage }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
+  const [user, setUser] = useLocalStorage();
 
   const handleChangeName = () => {
-    fetch('/api/users', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ name })
-    })
-      .then(res => res.json())
-      .then(result => {
-        setStorage(result);
-      })
-      .catch(err => console.error('fetch err:', err));
-
+    setUser({ id: user.id, username: name });
     setOpen(false);
   };
 
   return (
     <div>
       <Button variant="contained" color="primary" onClick={() => setOpen(true)} className={classes.modal}>
-        Make UserName
+        Change UserName
       </Button>
       <Dialog open={open} onClose={() => setOpen(false)} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Please Enter your Username</DialogTitle>
+        <DialogTitle id="form-dialog-title">Please Enter a New Username</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Please use a existing or new name
-          </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
             id="name"
             label="USERNAME:"
-            type="name"
             fullWidth
+            required
             onChange={e => { setName(e.target.value); }}
           />
         </DialogContent>

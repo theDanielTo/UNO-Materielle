@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PlayerHand({ playerHand, playCard }) {
+export default function PlayerHand({ playerHand }) {
   const classes = useStyles();
 
   return (
@@ -23,7 +23,6 @@ export default function PlayerHand({ playerHand, playCard }) {
           return (
             <Grid item key={index}>
               <Card
-                playCard={playCard}
                 src={src}
                 className={classes.card}
                 draggable="true"

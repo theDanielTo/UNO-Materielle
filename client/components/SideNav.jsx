@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import useLocalStorage from '../hooks/useLocalStorage';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -53,7 +52,7 @@ const navLinks = [
   {
     text: 'Home',
     icon: <HomeIcon />,
-    href: '/home'
+    href: '/'
   },
   {
     text: 'How To Play',
@@ -76,12 +75,6 @@ export default function SideNav(props) {
   const { window } = props;
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [storage, setStorage] = useLocalStorage();
-  const [displayName, setDisplayName] = useState('');
-
-  useEffect(() => {
-    setDisplayName(storage.username);
-  }, [storage.username]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -97,9 +90,9 @@ export default function SideNav(props) {
       <List>
         <ListItem alignItems="center">
           <ListItemIcon className={classes.listItem}>
-            <Avatar>{displayName[0]}</Avatar>
+            <Avatar>M</Avatar>
           </ListItemIcon>
-          <ListItemText primary={displayName} className={classes.listItem} />
+          <ListItemText primary="Uno!" className={classes.listItem} />
         </ListItem>
       </List>
       <Divider light={true} />
@@ -118,7 +111,7 @@ export default function SideNav(props) {
         }
       </List>
       <List>
-        <FormDialog setStorage={setStorage} />
+        <FormDialog />
       </List>
     </div>
   );
