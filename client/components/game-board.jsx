@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import gameStart from '../lib/game-start';
-import parseRoute from '../lib/parse-route';
+import { Player, shuffleDeck, parseRoute } from '../lib';
+import UnoCards from '../lib/UnoCards';
 import Player1View from '../views/Player1View';
 import Player2View from '../views/Player2View';
 import Grid from '@material-ui/core/Grid';
@@ -32,15 +32,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-// NUMBER CODES FOR ACTION CARDS
-// SKIP - 404
-// DRAW 2 - 252
-// WILD - 300
-// DRAW 4 WILD - 600
-
 let socket;
 const ENDPOINT = 'http://localhost:3000';
 const NUM_PLAYERS = 2;
+const HAND_SIZE = 7;
+// indices for 'skip', 'reverse', 'draw2', black cards
+const INVALID_ACTION_INDICES = [
+  19, 20, 21, 22, 23, 24,
+  44, 45, 46, 47, 48, 49,
+  69, 70, 71, 72, 73, 74,
+  94, 95, 96, 97, 98, 99,
+  100, 101, 102, 103,
+  104, 105, 106, 107
+];
 
 export default function GameBoard() {
   const classes = useStyles();
@@ -77,6 +81,7 @@ export default function GameBoard() {
   const [winner, setWinner] = useState('');
   const [turn, setTurn] = useState('');
 
+  const [validColor, setValidColor] = useState('');
   const [topCard, setTopCard] = useState('mint-bean');
   const [playedCards, setPlayedCards] = useState([]);
   const [drawCardPile, setDrawCardPile] = useState([]);
@@ -85,55 +90,61 @@ export default function GameBoard() {
   const [player2Hand, setPlayer2Hand] = useState([]);
 
   useEffect(() => {
-    const { players, shuffledDeck } = gameStart(NUM_PLAYERS);
-    setPlayer1Hand([...players[0].hand]);
-    setPlayer2Hand([...players[1].hand]);
+    const players = [];
+    const shuffledDeck = shuffleDeck(UnoCards);
 
-    let startingCardIndex;
-    while (true) {
-      startingCardIndex = Math.floor(Math.random() * 100);
-      if (shuffledDeck[startingCardIndex].color === 'black' ||
-        shuffledDeck[startingCardIndex].type === 'skip' ||
-        shuffledDeck[startingCardIndex].type === 'reverse' ||
-        shuffledDeck[startingCardIndex].type === 'draw2') {
-        continue;
-      } else break;
+    for (let i = 0; i < NUM_PLAYERS; i++) {
+      players.push(new Player(i + 1, shuffledDeck.splice(0, HAND_SIZE)));
     }
 
-    const playedCards = shuffledDeck.splice(startingCardIndex, 1);
+    let randomIndex = Math.floor(Math.random() * 108);
+    while (INVALID_ACTION_INDICES.includes(randomIndex)) {
+      randomIndex = Math.floor(Math.random() * 108);
+    }
 
-    const drawCardPile = shuffledDeck;
+    const topColor = shuffledDeck[randomIndex].color;
+    const topType = shuffledDeck[randomIndex].type;
+    const topCard = `${topColor}-${topType}`;
 
-    const topCard = `${shuffledDeck[startingCardIndex].color}-${shuffledDeck[startingCardIndex].type}`;
+    const playedCards = shuffledDeck.splice(randomIndex, 1);
 
     socket.emit('initGameState', {
       gameOver: false,
       turn: 'Player 1',
       player1Hand: [...players[0].hand],
       player2Hand: [...players[1].hand],
+      validColor: topCard.split('-')[0],
       topCard: topCard,
       playedCards: [...playedCards],
-      drawCardPile: [...drawCardPile]
+      drawCardPile: [...shuffledDeck]
     });
   }, []);
 
   useEffect(() => {
-    socket.on('initGameState', ({ gameOver, turn, player1Hand, player2Hand, topCard, playedCards, drawCardPile }) => {
+    socket.on('initGameState', ({
+      gameOver, turn, player1Hand, player2Hand,
+      validColor, topCard, playedCards, drawCardPile
+    }) => {
       setGameOver(gameOver);
       setTurn(turn);
       setPlayer1Hand(player1Hand);
       setPlayer2Hand(player2Hand);
+      setValidColor(validColor);
       setTopCard(topCard);
       setPlayedCards(playedCards);
       setDrawCardPile(drawCardPile);
     });
 
-    socket.on('updateGameState', ({ gameOver, winner, turn, player1Hand, player2Hand, topCard, playedCards, drawCardPile }) => {
+    socket.on('updateGameState', ({
+      gameOver, winner, turn, player1Hand, player2Hand,
+      validColor, topCard, playedCards, drawCardPile
+    }) => {
       gameOver && setGameOver(gameOver);
       winner && setWinner(winner);
       turn && setTurn(turn);
       player1Hand && setPlayer1Hand(player1Hand);
       player2Hand && setPlayer2Hand(player2Hand);
+      validColor && setValidColor(validColor);
       topCard && setTopCard(topCard);
       playedCards && setPlayedCards(playedCards);
       drawCardPile && setDrawCardPile(drawCardPile);
@@ -157,26 +168,192 @@ export default function GameBoard() {
   };
 
   const playCard = (player, card) => {
-    if (player === 'Player 1') {
-      socket.emit('updateGameState', {
-        gameOver: checkGameOver(player1Hand),
-        winner: checkWinner(player1Hand, 'Player 1'),
-        turn: 'Player 2',
-        playedCards: [...playedCards, card],
-        player1Hand: player1Hand.filter(c => `${c.color}-${c.type}` !== card),
-        topCard: card,
-        drawCardPile: drawCardPile
-      });
+    const cardType = card.split('-')[1];
+    let cardColor = card.split('-')[0];
+
+    if (cardColor === 'black') {
+      cardColor = prompt('Enter a color (red/green/blue/yellow)').toLowerCase();
+      if (cardType === 'draw4') {
+        if (player === 'Player 1') {
+          const copiedDeck = [...drawCardPile];
+          const card1 = copiedDeck.pop();
+          const card2 = copiedDeck.pop();
+          const card3 = copiedDeck.pop();
+          const card4 = copiedDeck.pop();
+          socket.emit('updateGameState', {
+            gameOver: checkGameOver(player1Hand),
+            winner: checkWinner(player1Hand, 'Player 1'),
+            turn: 'Player 2',
+            playedCards: [...playedCards, card],
+            player1Hand: player1Hand.filter(c => `${c.color}-${c.type}` !== card),
+            player2Hand: [...player2Hand.slice(0, player2Hand.length), card1, card2, card3, card4, ...player2Hand.slice(player1Hand.length)],
+            validColor: cardColor,
+            topCard: card,
+            drawCardPile: drawCardPile
+          });
+        } else {
+          const copiedDeck = [...drawCardPile];
+          const card1 = copiedDeck.pop();
+          const card2 = copiedDeck.pop();
+          const card3 = copiedDeck.pop();
+          const card4 = copiedDeck.pop();
+          socket.emit('updateGameState', {
+            gameOver: checkGameOver(player2Hand),
+            winner: checkWinner(player2Hand, 'Player 2'),
+            turn: 'Player 1',
+            playedCards: [...playedCards, card],
+            player1Hand: [...player1Hand.slice(0, player1Hand.length), card1, card2, card3, card4, ...player1Hand.slice(player1Hand.length)],
+            player2Hand: player2Hand.filter(c => `${c.color}-${c.type}` !== card),
+            validColor: cardColor,
+            topCard: card,
+            drawCardPile: drawCardPile
+          });
+        }
+      } else {
+        if (player === 'Player 1') {
+          socket.emit('updateGameState', {
+            gameOver: checkGameOver(player1Hand),
+            winner: checkWinner(player1Hand, 'Player 1'),
+            turn: 'Player 2',
+            playedCards: [...playedCards, card],
+            player1Hand: player1Hand.filter(c => `${c.color}-${c.type}` !== card),
+            validColor: cardColor,
+            topCard: card,
+            drawCardPile: drawCardPile
+          });
+        } else {
+          socket.emit('updateGameState', {
+            gameOver: checkGameOver(player2Hand),
+            winner: checkWinner(player2Hand, 'Player 2'),
+            turn: 'Player 1',
+            playedCards: [...playedCards, card],
+            player2Hand: player2Hand.filter(c => `${c.color}-${c.type}` !== card),
+            validColor: cardColor,
+            topCard: card,
+            drawCardPile: drawCardPile
+          });
+        }
+      }
     } else {
-      socket.emit('updateGameState', {
-        gameOver: checkGameOver(player2Hand),
-        winner: checkWinner(player2Hand, 'Player 2'),
-        turn: 'Player 1',
-        playedCards: [...playedCards, card],
-        player2Hand: player2Hand.filter(c => `${c.color}-${c.type}` !== card),
-        topCard: card,
-        drawCardPile: drawCardPile
-      });
+      switch (cardType) {
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+          if (player === 'Player 1') {
+            socket.emit('updateGameState', {
+              gameOver: checkGameOver(player1Hand),
+              winner: checkWinner(player1Hand, 'Player 1'),
+              turn: 'Player 2',
+              playedCards: [...playedCards, card],
+              player1Hand: player1Hand.filter(c => `${c.color}-${c.type}` !== card),
+              validColor: cardColor,
+              topCard: card,
+              drawCardPile: drawCardPile
+            });
+          } else {
+            socket.emit('updateGameState', {
+              gameOver: checkGameOver(player2Hand),
+              winner: checkWinner(player2Hand, 'Player 2'),
+              turn: 'Player 1',
+              playedCards: [...playedCards, card],
+              player2Hand: player2Hand.filter(c => `${c.color}-${c.type}` !== card),
+              validColor: cardColor,
+              topCard: card,
+              drawCardPile: drawCardPile
+            });
+          }
+          break;
+        case 'skip':
+          if (player === 'Player 1') {
+            socket.emit('updateGameState', {
+              gameOver: checkGameOver(player1Hand),
+              winner: checkWinner(player1Hand, 'Player 1'),
+              turn: 'Player 1',
+              playedCards: [...playedCards, card],
+              player1Hand: player1Hand.filter(c => `${c.color}-${c.type}` !== card),
+              validColor: cardColor,
+              topCard: card,
+              drawCardPile: drawCardPile
+            });
+          } else {
+            socket.emit('updateGameState', {
+              gameOver: checkGameOver(player2Hand),
+              winner: checkWinner(player2Hand, 'Player 2'),
+              turn: 'Player 2',
+              playedCards: [...playedCards, card],
+              player2Hand: player2Hand.filter(c => `${c.color}-${c.type}` !== card),
+              validColor: cardColor,
+              topCard: card,
+              drawCardPile: drawCardPile
+            });
+          }
+          break;
+        case 'reverse':
+          if (player === 'Player 1') {
+            socket.emit('updateGameState', {
+              gameOver: checkGameOver(player1Hand),
+              winner: checkWinner(player1Hand, 'Player 1'),
+              turn: 'Player 1',
+              playedCards: [...playedCards, card],
+              player1Hand: player1Hand.filter(c => `${c.color}-${c.type}` !== card),
+              validColor: cardColor,
+              topCard: card,
+              drawCardPile: drawCardPile
+            });
+          } else {
+            socket.emit('updateGameState', {
+              gameOver: checkGameOver(player2Hand),
+              winner: checkWinner(player2Hand, 'Player 2'),
+              turn: 'Player 2',
+              playedCards: [...playedCards, card],
+              player2Hand: player2Hand.filter(c => `${c.color}-${c.type}` !== card),
+              validColor: cardColor,
+              topCard: card,
+              drawCardPile: drawCardPile
+            });
+          }
+          break;
+        case 'draw2':
+          if (player === 'Player 1') {
+            const copiedDeck = [...drawCardPile];
+            const card1 = copiedDeck.pop();
+            const card2 = copiedDeck.pop();
+            socket.emit('updateGameState', {
+              gameOver: checkGameOver(player1Hand),
+              winner: checkWinner(player1Hand, 'Player 1'),
+              turn: 'Player 2',
+              playedCards: [...playedCards, card],
+              player1Hand: player1Hand.filter(c => `${c.color}-${c.type}` !== card),
+              player2Hand: [...player2Hand.slice(0, player2Hand.length), card1, card2, ...player2Hand.slice(player2Hand.length)],
+              validColor: cardColor,
+              topCard: card,
+              drawCardPile: drawCardPile
+            });
+          } else {
+            const copiedDeck = [...drawCardPile];
+            const card1 = copiedDeck.pop();
+            const card2 = copiedDeck.pop();
+            socket.emit('updateGameState', {
+              gameOver: checkGameOver(player2Hand),
+              winner: checkWinner(player2Hand, 'Player 2'),
+              turn: 'Player 1',
+              playedCards: [...playedCards, card],
+              player1Hand: [...player1Hand.slice(0, player1Hand.length), card1, card2, ...player1Hand.slice(player1Hand.length)],
+              player2Hand: player2Hand.filter(c => `${c.color}-${c.type}` !== card),
+              validColor: cardColor,
+              topCard: card,
+              drawCardPile: drawCardPile
+            });
+          }
+          break;
+      }
     }
   };
 
@@ -186,13 +363,11 @@ export default function GameBoard() {
     const drawCard = copiedDrawCardPile.pop();
     if (cardDrawnBy === 'Player 1') {
       socket.emit('updateGameState', {
-        turn: 'Player 2',
         player1Hand: [...player1Hand.slice(0, player1Hand.length), drawCard, ...player1Hand.slice(player1Hand.length)],
         drawCardPile: [...copiedDrawCardPile]
       });
     } else {
       socket.emit('updateGameState', {
-        turn: 'Player 1',
         player2Hand: [...player2Hand.slice(0, player2Hand.length), drawCard, ...player2Hand.slice(player2Hand.length)],
         drawCardPile: [...copiedDrawCardPile]
       });
@@ -202,8 +377,7 @@ export default function GameBoard() {
   return (
     <div className={classes.root}>
       <div className='topInfo'>
-        <h1>Game Code: {room}</h1>
-        <h4>{turn + '\'s turn'}</h4>
+        <h1>Game Code: {room}</h1><span>{turn + '\'s turn'}</span>
       </div>
 
       { users.length === 1 && currentUser === 'Player 1' &&
@@ -220,13 +394,13 @@ export default function GameBoard() {
             >
               { currentUser === 'Player 1' &&
               <Player1View playCard={playCard} onCardClick={drawCard}
-                topCard={topCard} playedCards={playedCards}
+                validColor={validColor} topCard={topCard} playedCards={playedCards}
                 player1Hand={player1Hand} player2Hand={player2Hand}
                 turn={turn} username={username}
               />}
               { currentUser === 'Player 2' &&
               <Player2View playCard={playCard} onCardClick={drawCard}
-                topCard={topCard} playedCards={playedCards}
+                validColor={validColor} topCard={topCard} playedCards={playedCards}
                 player1Hand={player1Hand} player2Hand={player2Hand}
                 turn={turn} username={username}
               />}

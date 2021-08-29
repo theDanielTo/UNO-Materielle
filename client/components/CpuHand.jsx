@@ -35,19 +35,24 @@ export default function CpuHand({ side, hand }) {
 
   return (
     <>
+      {hand.length > 7 && <span>{`+${hand.length - 7}`}</span> }
+
       {
         hand.map((card, index) => {
           const src = 'back-of-card';
-          return (
-            <Grid item key={index}>
-              <Card
-                src={src} className={classes.card}
-                deg={deg} prop={prop} margin={margin}
-                draggable="false"
-              />
-            </Grid>
-          );
+          if (index <= 7) {
+            return (
+              <Grid item key={index}>
+                <Card
+                  src={src} className={classes.card}
+                  deg={deg} prop={prop} margin={margin}
+                  draggable="false"
+                />
+              </Grid>
+            );
+          } else return <></>;
         })
       }
-    </>);
+    </>
+  );
 }

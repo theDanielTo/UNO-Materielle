@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Player2View({ onCardClick, playCard, turn, topCard, playedCards, player1Hand, player2Hand }) {
+export default function Player2View({ onCardClick, playCard, turn, validColor, topCard, playedCards, player1Hand, player2Hand }) {
   const classes = useStyles();
   const curColor = topCard.split('-')[0];
 
@@ -66,6 +66,8 @@ export default function Player2View({ onCardClick, playCard, turn, topCard, play
           onDragLeave={e => { if (e.target.closest('div').id === 'midRow') e.target.style.background = ''; }}
         >
           <BoardCenter
+            player={'Player 2'}
+            turn={turn}
             onCardClick={onCardClick}
             cardStyle={classes.card}
             topCard={topCard}
@@ -84,6 +86,7 @@ export default function Player2View({ onCardClick, playCard, turn, topCard, play
             playerHand={player2Hand}
             turn={turn}
             topCard={topCard}
+            validColor={validColor}
           />
         </Grid>
       </Grid>
