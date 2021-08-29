@@ -23,7 +23,11 @@ export default function PlayerHand({ playerHand, turn, player, topCard }) {
       {
         playerHand.map((card, index) => {
           const src = `${card.color}-${card.type}`;
-          const valid = (topColor === card.color || topType === card.type);
+          const valid = (
+            topColor === card.color ||
+            topType === card.type ||
+            card.color === 'black'
+          );
           const draggable = (turn === player && valid) ? 'true' : 'false';
           const cursor = (turn === player && valid) ? 'pointer' : 'not-allowed';
           return (
