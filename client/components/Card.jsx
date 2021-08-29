@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function Card(props) {
-  const { src, className, deg, prop, margin, draggable } = props;
+  const { src, className, deg, prop, margin, draggable, cursor } = props;
   const id = Math.floor(Math.random() * 100000);
 
   const dragStart = e => {
@@ -26,7 +26,7 @@ export default function Card(props) {
       <img src={`./images/cards/${src}.png`} alt={src}
         id={id}
         className={className} draggable={draggable}
-        style={{ transform: 'rotate(' + deg + ')', [prop]: margin }}
+        style={{ transform: 'rotate(' + deg + ')', [prop]: margin, cursor: cursor }}
         onDragStart={dragStart}
         onDragEnd={handleDragEnd}
         onDragOver={dragOver}

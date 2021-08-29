@@ -107,7 +107,7 @@ export default function GameBoard() {
 
     socket.emit('initGameState', {
       gameOver: false,
-      turn: players[0].id,
+      turn: 'Player 1',
       player1Hand: [...players[0].hand],
       player2Hand: [...players[1].hand],
       topCard: topCard,
@@ -222,13 +222,13 @@ export default function GameBoard() {
               <Player1View playCard={playCard} onCardClick={drawCard}
                 topCard={topCard} playedCards={playedCards}
                 player1Hand={player1Hand} player2Hand={player2Hand}
-                username={username}
+                turn={turn} username={username}
               />}
               { currentUser === 'Player 2' &&
               <Player2View playCard={playCard} onCardClick={drawCard}
                 topCard={topCard} playedCards={playedCards}
                 player1Hand={player1Hand} player2Hand={player2Hand}
-                username={username}
+                turn={turn} username={username}
               />}
             </Grid>
         }

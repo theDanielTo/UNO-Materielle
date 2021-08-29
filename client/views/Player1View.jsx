@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Player1View({ onCardClick, playCard, topCard, playedCards, player1Hand, player2Hand }) {
+export default function Player1View({ onCardClick, playCard, turn, topCard, playedCards, player1Hand, player2Hand }) {
   const classes = useStyles();
   const curColor = topCard.split('-')[0];
 
@@ -82,7 +82,7 @@ export default function Player1View({ onCardClick, playCard, topCard, playedCard
           justifyContent="center"
           alignItems="center"
         >
-          <PlayerHand playerHand={player1Hand} />
+          <PlayerHand player={'Player 1'} playerHand={player1Hand} turn={turn} />
         </Grid>
       </Grid>
 

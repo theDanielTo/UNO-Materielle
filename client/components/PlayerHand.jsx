@@ -12,8 +12,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PlayerHand({ playerHand }) {
+export default function PlayerHand({ playerHand, turn, player }) {
   const classes = useStyles();
+  const draggable = turn === player ? 'true' : 'false';
+  const cursor = turn === player ? 'pointer' : 'not-allowed';
 
   return (
     <>
@@ -25,7 +27,8 @@ export default function PlayerHand({ playerHand }) {
               <Card
                 src={src}
                 className={classes.card}
-                draggable="true"
+                draggable={draggable}
+                cursor={cursor}
               />
             </Grid>
           );
