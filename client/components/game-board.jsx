@@ -86,8 +86,6 @@ export default function GameBoard() {
 
   useEffect(() => {
     const { players, shuffledDeck, topCard } = gameStart(NUM_PLAYERS);
-    setPlayer1Hand([...players[0].hand]);
-    setPlayer2Hand([...players[1].hand]);
 
     socket.emit('initGameState', {
       gameOver: false,
