@@ -25,19 +25,6 @@ export default function LobbyCard({ game }) {
   const classes = useStyles();
   const { gameId, isStarted } = game;
 
-  const joinGame = () => {
-    const userId = JSON.parse(localStorage.getItem('mintbean-user')).id;
-    fetch('/api/lobbies', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ userId, gameId })
-    })
-      .then(res => res.json())
-      .catch(err => console.error('fetch err:', err));
-  };
-
   return (
     <Grid item>
       <Card className={classes.card}>
@@ -50,15 +37,11 @@ export default function LobbyCard({ game }) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button
-            className={classes.button}
-            onClick={joinGame}
-            disabled={isStarted}
-          >
-            <Link to={`/play?game-id=${gameId}`}>
+          <Link to={`/play?game-id=${gameId}`}>
+            <Button className={classes.button} disabled={isStarted}>
               Join
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         </CardActions>
       </Card>
     </Grid>

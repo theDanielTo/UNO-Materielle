@@ -191,23 +191,30 @@ export default function GameBoard() {
         <h1 className='topInfoText'>Waiting for Player 2 to join the game.</h1>
       }
 
-      <Grid container spacing={0}
-        className={classes.columnSm}
-        onDragOver={e => e.preventDefault()}
-      >
-        {currentUser === 'Player 1' &&
-          <Player1View playCard={playCard}
-            topCard={topCard} playedCards={playedCards}
-            player1Hand={player1Hand} player2Hand={player2Hand}
-            username={username}
-          />}
-        {currentUser === 'Player 2' &&
-          <Player2View playCard={playCard}
-            topCard={topCard} playedCards={playedCards}
-            player1Hand={player1Hand} player2Hand={player2Hand}
-            username={username}
-          />}
-      </Grid>
+      { users.length === 2 && <>
+          { gameOver
+            ? <div>{winner !== '' && <><h1>GAME OVER</h1><h2>{winner} wins!</h2></>}</div>
+
+            : <Grid container spacing={0}
+                className={classes.columnSm}
+                onDragOver={e => e.preventDefault()}
+              >
+                {currentUser === 'Player 1' &&
+                  <Player1View playCard={playCard}
+                    topCard={topCard} playedCards={playedCards}
+                    player1Hand={player1Hand} player2Hand={player2Hand}
+                    username={username}
+                  />}
+                {currentUser === 'Player 2' &&
+                  <Player2View playCard={playCard}
+                    topCard={topCard} playedCards={playedCards}
+                    player1Hand={player1Hand} player2Hand={player2Hand}
+                    username={username}
+                  />}
+              </Grid>
+          }
+        </>
+      }
     </div>
   );
 }

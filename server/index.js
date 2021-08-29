@@ -75,19 +75,6 @@ app.post('/api/games', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.post('/api/lobbies', (req, res, next) => {
-  const { gameId, userId } = req.body;
-  const sql = `
-    INSERT into "lobbies" ("gameId", "userId")
-      VALUES ($1, $2)
-      RETURNING *
-  `;
-  const param = [gameId, userId];
-  db.query(sql, param)
-    .then(result => res.status(201).json(result.rows[0]))
-    .catch(err => next(err));
-});
-
 app.use(errorMiddleware);
 
 server.listen(process.env.PORT, () => {
