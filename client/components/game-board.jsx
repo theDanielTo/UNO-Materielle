@@ -32,12 +32,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-// NUMBER CODES FOR ACTION CARDS
-// SKIP - 404
-// DRAW 2 - 252
-// WILD - 300
-// DRAW 4 WILD - 600
-
 let socket;
 const ENDPOINT = 'http://localhost:3000';
 const NUM_PLAYERS = 2;
@@ -77,6 +71,7 @@ export default function GameBoard() {
   const [winner, setWinner] = useState('');
   const [turn, setTurn] = useState('');
 
+  const [validColor, setValidColor] = useState('');
   const [topCard, setTopCard] = useState('mint-bean');
   const [playedCards, setPlayedCards] = useState([]);
   const [drawCardPile, setDrawCardPile] = useState([]);
@@ -92,6 +87,7 @@ export default function GameBoard() {
       turn: 'Player 1',
       player1Hand: [...players[0].hand],
       player2Hand: [...players[1].hand],
+      validColor: topCard.split('-')[0],
       topCard: topCard,
       playedCards: [...playedCards],
       drawCardPile: [...shuffledDeck]
@@ -99,22 +95,30 @@ export default function GameBoard() {
   }, []);
 
   useEffect(() => {
-    socket.on('initGameState', ({ gameOver, turn, player1Hand, player2Hand, topCard, playedCards, drawCardPile }) => {
+    socket.on('initGameState', ({
+      gameOver, turn, player1Hand, player2Hand,
+      validColor, topCard, playedCards, drawCardPile
+    }) => {
       setGameOver(gameOver);
       setTurn(turn);
       setPlayer1Hand(player1Hand);
       setPlayer2Hand(player2Hand);
+      setValidColor(validColor);
       setTopCard(topCard);
       setPlayedCards(playedCards);
       setDrawCardPile(drawCardPile);
     });
 
-    socket.on('updateGameState', ({ gameOver, winner, turn, player1Hand, player2Hand, topCard, playedCards, drawCardPile }) => {
+    socket.on('updateGameState', ({
+      gameOver, winner, turn, player1Hand, player2Hand,
+      validColor, topCard, playedCards, drawCardPile
+    }) => {
       gameOver && setGameOver(gameOver);
       winner && setWinner(winner);
       turn && setTurn(turn);
       player1Hand && setPlayer1Hand(player1Hand);
       player2Hand && setPlayer2Hand(player2Hand);
+      validColor && setValidColor(validColor);
       topCard && setTopCard(topCard);
       playedCards && setPlayedCards(playedCards);
       drawCardPile && setDrawCardPile(drawCardPile);
@@ -138,6 +142,11 @@ export default function GameBoard() {
   };
 
   const playCard = (player, card) => {
+    let cardColor = card.split('-')[0];
+    if (cardColor === 'black') {
+      cardColor = prompt('Enter a color (red/green/blue/yellow)').toLowerCase();
+    }
+
     if (player === 'Player 1') {
       socket.emit('updateGameState', {
         gameOver: checkGameOver(player1Hand),
@@ -145,6 +154,7 @@ export default function GameBoard() {
         turn: 'Player 2',
         playedCards: [...playedCards, card],
         player1Hand: player1Hand.filter(c => `${c.color}-${c.type}` !== card),
+        validColor: cardColor,
         topCard: card,
         drawCardPile: drawCardPile
       });
@@ -155,6 +165,7 @@ export default function GameBoard() {
         turn: 'Player 1',
         playedCards: [...playedCards, card],
         player2Hand: player2Hand.filter(c => `${c.color}-${c.type}` !== card),
+        validColor: cardColor,
         topCard: card,
         drawCardPile: drawCardPile
       });
@@ -199,13 +210,13 @@ export default function GameBoard() {
             >
               { currentUser === 'Player 1' &&
               <Player1View playCard={playCard} onCardClick={drawCard}
-                topCard={topCard} playedCards={playedCards}
+                validColor={validColor} topCard={topCard} playedCards={playedCards}
                 player1Hand={player1Hand} player2Hand={player2Hand}
                 turn={turn} username={username}
               />}
               { currentUser === 'Player 2' &&
               <Player2View playCard={playCard} onCardClick={drawCard}
-                topCard={topCard} playedCards={playedCards}
+                validColor={validColor} topCard={topCard} playedCards={playedCards}
                 player1Hand={player1Hand} player2Hand={player2Hand}
                 turn={turn} username={username}
               />}

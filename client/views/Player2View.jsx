@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Player2View({ onCardClick, playCard, turn, topCard, playedCards, player1Hand, player2Hand }) {
+export default function Player2View({ onCardClick, playCard, turn, validColor, topCard, playedCards, player1Hand, player2Hand }) {
   const classes = useStyles();
   const curColor = topCard.split('-')[0];
 
@@ -84,6 +84,7 @@ export default function Player2View({ onCardClick, playCard, turn, topCard, play
             playerHand={player2Hand}
             turn={turn}
             topCard={topCard}
+            validColor={validColor}
           />
         </Grid>
       </Grid>

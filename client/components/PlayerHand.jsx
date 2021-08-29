@@ -12,10 +12,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PlayerHand({ playerHand, turn, player, topCard }) {
+export default function PlayerHand({ playerHand, turn, player, validColor, topCard }) {
   const classes = useStyles();
 
-  const topColor = topCard.split('-')[0];
   const topType = topCard.split('-')[1];
 
   return (
@@ -24,7 +23,7 @@ export default function PlayerHand({ playerHand, turn, player, topCard }) {
         playerHand.map((card, index) => {
           const src = `${card.color}-${card.type}`;
           const valid = (
-            topColor === card.color ||
+            validColor === card.color ||
             topType === card.type ||
             card.color === 'black'
           );
