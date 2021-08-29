@@ -128,14 +128,12 @@ export default function SideNav(props) {
           onClick={handleDrawerToggle} >
             <MenuIcon />
           </IconButton>
-          {/* <Typography variant="h6" noWrap>
-            Mint Bean Hackathon!
-          </Typography> */}
         </Toolbar>
-        </AppBar>
+      </AppBar>
         <nav aria-label="sidenav">
           <Hidden lgUp implementation="css">
             <Drawer
+              anchor='left'
               container={container}
               className={classes.drawer}
               variant="temporary"
