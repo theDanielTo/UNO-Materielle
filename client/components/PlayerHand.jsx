@@ -12,21 +12,23 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PlayerHand({ playerHand, turn, player, topCard }) {
+export default function PlayerHand({ playerHand, turn, player, validColor, topCard }) {
   const classes = useStyles();
 
-  const draggable = turn === player ? 'true' : 'false';
-  const cursor = turn === player ? 'pointer' : 'not-allowed';
-
-  const topColor = topCard.split('-')[0];
-  const topType = topCard.split('-')[2];
+  const topType = topCard.split('-')[1];
 
   return (
     <>
       {
         playerHand.map((card, index) => {
           const src = `${card.color}-${card.type}`;
-          const valid = (topColor === card.color || topType === card.type);
+          const valid = (
+            validColor === card.color ||
+            topType === card.type ||
+            card.color === 'black'
+          );
+          const draggable = (turn === player && valid) ? 'true' : 'false';
+          const cursor = (turn === player && valid) ? 'pointer' : 'not-allowed';
           return (
             <Grid item key={index}>
               <Card
