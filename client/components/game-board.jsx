@@ -85,26 +85,9 @@ export default function GameBoard() {
   const [player2Hand, setPlayer2Hand] = useState([]);
 
   useEffect(() => {
-    const { players, shuffledDeck } = gameStart(NUM_PLAYERS);
+    const { players, shuffledDeck, topCard } = gameStart(NUM_PLAYERS);
     setPlayer1Hand([...players[0].hand]);
     setPlayer2Hand([...players[1].hand]);
-
-    let startingCardIndex;
-    while (true) {
-      startingCardIndex = Math.floor(Math.random() * 100);
-      if (shuffledDeck[startingCardIndex].color === 'black' ||
-        shuffledDeck[startingCardIndex].type === 'skip' ||
-        shuffledDeck[startingCardIndex].type === 'reverse' ||
-        shuffledDeck[startingCardIndex].type === 'draw2') {
-        continue;
-      } else break;
-    }
-
-    const playedCards = shuffledDeck.splice(startingCardIndex, 1);
-
-    const drawCardPile = shuffledDeck;
-
-    const topCard = `${shuffledDeck[startingCardIndex].color}-${shuffledDeck[startingCardIndex].type}`;
 
     socket.emit('initGameState', {
       gameOver: false,
@@ -113,7 +96,7 @@ export default function GameBoard() {
       player2Hand: [...players[1].hand],
       topCard: topCard,
       playedCards: [...playedCards],
-      drawCardPile: [...drawCardPile]
+      drawCardPile: [...shuffledDeck]
     });
   }, []);
 
@@ -186,13 +169,11 @@ export default function GameBoard() {
     const drawCard = copiedDrawCardPile.pop();
     if (cardDrawnBy === 'Player 1') {
       socket.emit('updateGameState', {
-        turn: 'Player 2',
         player1Hand: [...player1Hand.slice(0, player1Hand.length), drawCard, ...player1Hand.slice(player1Hand.length)],
         drawCardPile: [...copiedDrawCardPile]
       });
     } else {
       socket.emit('updateGameState', {
-        turn: 'Player 1',
         player2Hand: [...player2Hand.slice(0, player2Hand.length), drawCard, ...player2Hand.slice(player2Hand.length)],
         drawCardPile: [...copiedDrawCardPile]
       });

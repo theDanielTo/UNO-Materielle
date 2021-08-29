@@ -19,7 +19,7 @@ export default function PlayerHand({ playerHand, turn, player, topCard }) {
   const cursor = turn === player ? 'pointer' : 'not-allowed';
 
   const topColor = topCard.split('-')[0];
-  const topType = topCard.split('-')[2];
+  const topType = topCard.split('-')[1];
 
   return (
     <>
