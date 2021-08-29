@@ -6,7 +6,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: '#151224',
     color: '#DDE0EF',
-    minHeight: '93.6vh',
+    minHeight: '96.6vh',
     maxWidth: '1300px',
     fontSize: '1.5rem'
   },
@@ -56,8 +56,7 @@ export default function Home(props) {
           <img src="/images/home-3.png" className={classes.image} alt="placeholder"></img>
         </Grid>
         <Grid item lg={5}>
-          <p className={classes.infoText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae voluptatum officia maxime, odit
-            adipisci nam fugit qui asperiores obcaecati cupiditate accusamus dicta excepturi, exercitationem neque.</p>
+          <p className={classes.infoText}>So, what are you waiting for!? Grabs some friends and get ready to battle it out online for the top prize of being the  Uno master!</p>
         </Grid>
       </Grid>
     </div>
