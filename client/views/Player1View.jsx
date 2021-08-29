@@ -25,6 +25,19 @@ const useStyles = makeStyles(theme => ({
 export default function Player1View({ drop, topCard, playedCards, player1Hand, player2Hand }) {
   const classes = useStyles();
 
+  const drop = e => {
+    e.preventDefault();
+    e.target.style.background = '';
+
+    const cardId = e.dataTransfer.getData('card-id');
+    const cardSrc = e.dataTransfer.getData('card');
+    const card = document.getElementById(cardId);
+
+    setPlayedCards(prevCards => [...prevCards, cardSrc]);
+    setTopCard(cardSrc);
+    setPlayer1Hand(player1Hand.filter(c => `${c.color}-${c.type}` !== card.alt));
+  };
+
   return (
     <>
       {/* <Grid className={classes.columnSm}

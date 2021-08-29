@@ -26,7 +26,7 @@ export default function LobbyCard({ game }) {
   const { gameTitle, gameId, isStarted } = game;
 
   const joinGame = () => {
-    const userId = JSON.parse(localStorage.getItem('mintbean-user')).userId;
+    const userId = JSON.parse(localStorage.getItem('mintbean-user')).id;
     fetch('/api/lobbies', {
       method: 'POST',
       headers: {

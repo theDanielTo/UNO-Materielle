@@ -1,8 +1,4 @@
 INSERT into "games" ("gameId", "gameTitle", "numPlayers", "isStarted")
-  VALUES (11111, 'test', 4, false);
+  VALUES (11111, 'game 1 title', 4, false);
 INSERT into "games" ("gameId", "gameTitle", "numPlayers", "isStarted")
-  VALUES (22222, 'a game', 4, true);
-INSERT into "games" ("gameId", "gameTitle", "numPlayers", "isStarted")
-  VALUES (33333, 'ha', 4, false);
-INSERT into "games" ("gameId", "gameTitle", "numPlayers", "isStarted")
-  VALUES (44444, 'yep', 4, false);
+  VALUES (22222, 'game 2 title', 4, true);
