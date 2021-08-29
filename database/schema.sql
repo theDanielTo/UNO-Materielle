@@ -20,7 +20,7 @@ CREATE TABLE "public"."games" (
 
 CREATE TABLE "public"."lobbies" (
 	"gameId" integer NOT NULL,
-	"userId" integer NOT NULL
+	"userId" VARCHAR(255) NOT NULL
 ) WITH (
   OIDS=FALSE
 );

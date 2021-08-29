@@ -147,12 +147,14 @@ export default function GameBoard() {
     });
   }, []);
 
-  const onPlayCard1 = () => {
-
-  };
-
-  const onPlayCard2 = () => {
-
+  const playCard = (player, cardSrc, card) => {
+    setPlayedCards(prevCards => [...prevCards, cardSrc]);
+    setTopCard(cardSrc);
+    if (player === 'Player 1') {
+      setPlayer1Hand(player1Hand.filter(c => `${c.color}-${c.type}` !== card.alt));
+    } else {
+      setPlayer2Hand(player2Hand.filter(c => `${c.color}-${c.type}` !== card.alt));
+    }
   };
 
   return (
@@ -162,12 +164,12 @@ export default function GameBoard() {
         onDragOver={e => e.preventDefault()}
       >
         {currentUser === 'Player 1' &&
-          <Player1View playCard={onPlayCard1}
+          <Player1View playCard={playCard}
             topCard={topCard} playedCards={playedCards}
             player1Hand={player1Hand} player2Hand={player2Hand}
           />}
         {currentUser === 'Player 2' &&
-          <Player2View playCard={onPlayCard2}
+          <Player2View playCard={playCard}
             topCard={topCard} playedCards={playedCards}
             player1Hand={player1Hand} player2Hand={player2Hand}
           />}

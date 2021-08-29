@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Player1View({ drop, topCard, playedCards, player1Hand, player2Hand }) {
+export default function Player1View({ playCard, topCard, playedCards, player1Hand, player2Hand }) {
   const classes = useStyles();
 
   const drop = e => {
@@ -33,9 +33,7 @@ export default function Player1View({ drop, topCard, playedCards, player1Hand, p
     const cardSrc = e.dataTransfer.getData('card');
     const card = document.getElementById(cardId);
 
-    setPlayedCards(prevCards => [...prevCards, cardSrc]);
-    setTopCard(cardSrc);
-    setPlayer1Hand(player1Hand.filter(c => `${c.color}-${c.type}` !== card.alt));
+    playCard('Player 1', cardSrc, card);
   };
 
   return (
@@ -82,7 +80,7 @@ export default function Player1View({ drop, topCard, playedCards, player1Hand, p
           justifyContent="center"
           alignItems="center"
         >
-          <PlayerHand player1Hand={player1Hand} />
+          <PlayerHand playerHand={player1Hand} />
         </Grid>
       </Grid>
 

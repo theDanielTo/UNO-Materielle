@@ -22,8 +22,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Player2View({ drop, topCard, playedCards, player1Hand, player2Hand }) {
+export default function Player2View({ playCard, topCard, playedCards, player1Hand, player2Hand }) {
   const classes = useStyles();
+
+  const drop = e => {
+    e.preventDefault();
+    e.target.style.background = '';
+
+    const cardId = e.dataTransfer.getData('card-id');
+    const cardSrc = e.dataTransfer.getData('card');
+    const card = document.getElementById(cardId);
+
+    playCard('Player 2', cardSrc, card);
+  };
 
   return (
     <>
@@ -69,7 +80,7 @@ export default function Player2View({ drop, topCard, playedCards, player1Hand, p
           justifyContent="center"
           alignItems="center"
         >
-          <PlayerHand player1Hand={player2Hand} />
+          <PlayerHand playerHand={player2Hand} />
         </Grid>
       </Grid>
 
