@@ -33,7 +33,7 @@ export default function LobbyCard({ game }) {
             {`ID: ${gameId}`}
           </Typography>
           <Typography>
-            {'Players: 1 / 4'}
+            {'Players: 1 / 2'}
           </Typography>
         </CardContent>
         <CardActions>

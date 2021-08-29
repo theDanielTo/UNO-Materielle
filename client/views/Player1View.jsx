@@ -22,8 +22,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Player1View({ playCard, topCard, playedCards, player1Hand, player2Hand }) {
+export default function Player1View({ onCardClick, playCard, topCard, playedCards, player1Hand, player2Hand }) {
   const classes = useStyles();
+  const curColor = topCard.split('-')[0];
 
   const drop = e => {
     e.preventDefault();
@@ -64,10 +65,11 @@ export default function Player1View({ playCard, topCard, playedCards, player1Han
           justifyContent="center"
           alignItems="center"
           onDrop={drop}
-          onDragEnter={e => { if (e.target.closest('div').id === 'midRow') e.target.style.background = 'purple'; }}
+          onDragEnter={e => { if (e.target.closest('div').id === 'midRow') e.target.style.background = curColor; }}
           onDragLeave={e => { if (e.target.closest('div').id === 'midRow') e.target.style.background = ''; }}
         >
           <BoardCenter
+            onCardClick={onCardClick}
             cardStyle={classes.card}
             topCard={topCard}
             playedCards={playedCards}

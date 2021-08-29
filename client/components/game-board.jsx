@@ -180,39 +180,58 @@ export default function GameBoard() {
     }
   };
 
+  const drawCard = () => {
+    const cardDrawnBy = turn;
+    const copiedDrawCardPile = [...drawCardPile];
+    const drawCard = copiedDrawCardPile.pop();
+    if (cardDrawnBy === 'Player 1') {
+      socket.emit('updateGameState', {
+        turn: 'Player 2',
+        player1Hand: [...player1Hand.slice(0, player1Hand.length), drawCard, ...player1Hand.slice(player1Hand.length)],
+        drawCardPile: [...copiedDrawCardPile]
+      });
+    } else {
+      socket.emit('updateGameState', {
+        turn: 'Player 1',
+        player2Hand: [...player2Hand.slice(0, player2Hand.length), drawCard, ...player2Hand.slice(player2Hand.length)],
+        drawCardPile: [...copiedDrawCardPile]
+      });
+    }
+  };
+
   return (
     <div className={classes.root}>
       <div className='topInfo'>
         <h1>Game Code: {room}</h1>
+        <h4>{turn + '\'s turn'}</h4>
       </div>
 
-      {
-        users.length === 1 && currentUser === 'Player 1' &&
-        <h1 className='topInfoText'>Waiting for Player 2 to join the game.</h1>
+      { users.length === 1 && currentUser === 'Player 1' &&
+        <h1>Waiting for another player to join the game.</h1>
       }
 
       { users.length === 2 && <>
-          { gameOver
-            ? <div>{winner !== '' && <><h1>GAME OVER</h1><h2>{winner} wins!</h2></>}</div>
+        { gameOver
+          ? <div>{winner !== '' && <><h1>GAME OVER</h1><h2>{winner} wins!</h2></>}</div>
 
-            : <Grid container spacing={0}
-                className={classes.columnSm}
-                onDragOver={e => e.preventDefault()}
-              >
-                {currentUser === 'Player 1' &&
-                  <Player1View playCard={playCard}
-                    topCard={topCard} playedCards={playedCards}
-                    player1Hand={player1Hand} player2Hand={player2Hand}
-                    username={username}
-                  />}
-                {currentUser === 'Player 2' &&
-                  <Player2View playCard={playCard}
-                    topCard={topCard} playedCards={playedCards}
-                    player1Hand={player1Hand} player2Hand={player2Hand}
-                    username={username}
-                  />}
-              </Grid>
-          }
+          : <Grid container spacing={0}
+              className={classes.columnSm}
+              onDragOver={e => e.preventDefault()}
+            >
+              { currentUser === 'Player 1' &&
+              <Player1View playCard={playCard} onCardClick={drawCard}
+                topCard={topCard} playedCards={playedCards}
+                player1Hand={player1Hand} player2Hand={player2Hand}
+                username={username}
+              />}
+              { currentUser === 'Player 2' &&
+              <Player2View playCard={playCard} onCardClick={drawCard}
+                topCard={topCard} playedCards={playedCards}
+                player1Hand={player1Hand} player2Hand={player2Hand}
+                username={username}
+              />}
+            </Grid>
+        }
         </>
       }
     </div>
