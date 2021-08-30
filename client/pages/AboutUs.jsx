@@ -38,7 +38,9 @@ const useStyles = makeStyles(theme => ({
   infoText: {
     fontFamily: 'Raleway, sans-serif',
     color: '#DDE0EF',
-    padding: '0 0.8em 0 0.8em'
+    padding: '0 0.8em 0 0.8em',
+    marginBottom: '1rem',
+    marginLeft: '1.8rem'
   },
   logo: {
     color: '#DDE0EF'
@@ -89,7 +91,7 @@ export default function AboutUs() {
               Brian Bozigian
             </Typography>
             <Typography variant="h6" className={classes.infoText}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?
+              A self-motivated Front-End developer and clean design enthusiast who enjoys problem-solving.
             </Typography>
             <Paper className={classes.link}>
               <a href="https://github.com/BrianBozi" target="_blank" rel="noreferrer">
