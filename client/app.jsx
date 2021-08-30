@@ -6,7 +6,7 @@ import Home from './pages/home';
 import HowToPlay from './pages/how-to-play';
 import AboutUs from './pages/about-us';
 import Lobby from './pages/lobby';
-import GameBoard from './components/game-board';
+import GameBoard from './components/GameBoard';
 
 const useStyles = makeStyles(theme => ({
   root: {
