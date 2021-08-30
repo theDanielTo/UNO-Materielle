@@ -38,6 +38,49 @@ const useStyles = makeStyles(theme => ({
     position: 'fixed',
     top: 100,
     right: 25
+  },
+  body: {
+    width: '300px',
+    margin: 0,
+    paddingBottom: '3rem'
+    // backgroundColor: 'black'
+  },
+
+  form: {
+    background: 'rgba(0, 0, 0, 0.15)',
+    padding: '0.25rem',
+    position: 'fixed',
+    bottom: 0,
+    right: 0,
+    display: 'flex',
+    height: '3rem',
+    width: '300px'
+
+  },
+
+  input: {
+    border: 'none',
+    padding: '0 1rem',
+    flexGrow: '1',
+    borderRadius: '2rem',
+    margin: '0.25rem',
+    width: '100px'
+  },
+
+  button: {
+    background: '#333',
+    border: 'none',
+    padding: '0 1rem',
+    margin: '0.25rem',
+    borderRadius: '3px',
+    outline: 'none',
+    color: '#fff'
+  },
+
+  messages: {
+    listStyleType: 'none',
+    marginTop: 10,
+    padding: 0
   }
 }));
 
@@ -426,9 +469,14 @@ export default function GameBoard() {
       <ul id="messages">
         {
           messages.map((messages, i) => (
+            <>
+            <li key={i} className={classes.listing}>
+              {messages.user}
+            </li>
             <li key={i}>
               {messages.text}
             </li>
+            </>
           ))
         }
       </ul>
