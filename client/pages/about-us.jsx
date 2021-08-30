@@ -6,11 +6,8 @@ const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: '#151224',
     color: '#DDE0EF',
-
-    height: '93.6vh',
     minHeight: '95.6vh',
     maxWidth: '1200px',
-    // paddingBottom: '1em',
     fontSize: '1.5rem'
   },
   about: {
@@ -38,7 +35,8 @@ const useStyles = makeStyles(theme => ({
   infoText: {
     fontFamily: 'Raleway, sans-serif',
     color: '#DDE0EF',
-    padding: '0 0.8em 0 0.8em'
+    padding: '1em 0.8em 1em 0.8em',
+    fontSize: '1.2rem'
   },
   logo: {
     color: '#DDE0EF'
@@ -112,7 +110,10 @@ export default function AboutUs() {
               <img className={classes.michael} src="/images/devs/michaelaguilar.png" alt="Michael's Picture"></img>
             </div>
             <Typography variant="h4" className={classes.header}>Michael Aguilar</Typography>
-            <Typography variant="h6" className={classes.infoText}> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?</Typography>
+            <Typography className={classes.infoText}>Michael is a full stack engineer and graduate from UC Merced holding a B.S. in Biological Sciences.
+            He has experience with technologies such as React, JavaScript, CSS, and Python.
+            In his spare time he enjoys watching sports, traveling, or learning new technologies.
+            </Typography>
             <Paper className={classes.link}>
               <a href="https://github.com/Michael-M-Aguilar" target="_blank" rel="noreferrer"><span className={classes.logo}><i className="fab fa-github-square fa-2x"></i></span></a>
               <a href="https://www.linkedin.com/in/michael-m-aguilar/" target="_blank" rel="noreferrer"><span className={classes.logo}><i className="fab fa-linkedin fa-2x"></i></span></a>
