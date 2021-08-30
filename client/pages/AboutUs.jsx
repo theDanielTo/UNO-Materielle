@@ -86,8 +86,16 @@ export default function AboutUs() {
             <Typography variant="h4" className={classes.header}>Brian Bozigian</Typography>
             <Typography variant="h6" className={classes.infoText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?</Typography>
             <Paper className={classes.link}>
-              <a href="https://github.com/BrianBozi" target="_blank" rel="noreferrer"><span className={classes.logo}><i className="fab fa-github-square fa-2x"></i></span></a>
-              <a href="https://www.linkedin.com/in/brian-bozigian/" target="_blank" rel="noreferrer"><span className={classes.logo}><i className="fab fa-linkedin fa-2x"></i></span></a>
+              <a href="https://github.com/BrianBozi" target="_blank" rel="noreferrer">
+                <span className={classes.logo}>
+                  <i className="fab fa-github-square fa-2x" />
+                </span>
+              </a>
+              <a href="https://www.linkedin.com/in/brian-bozigian/" target="_blank" rel="noreferrer">
+                <span className={classes.logo}>
+                  <i className="fab fa-linkedin fa-2x" />
+                </span>
+              </a>
             </Paper>
           </Paper>
         </Grid>
@@ -99,15 +107,23 @@ export default function AboutUs() {
             <Typography variant="h4" className={classes.header}> Daniel To</Typography>
             <Typography variant="h6" className={classes.infoText}> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?</Typography>
             <Paper className={classes.link}>
-              <a href="https://github.com/theDanielTo" target="_blank" rel="noreferrer"><span className={classes.logo}><i className="fab fa-github-square fa-2x"></i></span></a>
-              <a href="https://www.linkedin.com/in/to-daniel/" target="_blank" rel="noreferrer"><span className={classes.logo}><i className="fab fa-linkedin fa-2x"></i></span></a>
+              <a href="https://github.com/theDanielTo" target="_blank" rel="noreferrer">
+                <span className={classes.logo}>
+                  <i className="fab fa-github-square fa-2x" />
+                </span>
+              </a>
+              <a href="https://www.linkedin.com/in/to-daniel/" target="_blank" rel="noreferrer">
+                <span className={classes.logo}>
+                  <i className="fab fa-linkedin fa-2x" />
+                </span>
+              </a>
             </Paper>
           </Paper>
         </Grid>
         <Grid item md={4}>
           <Paper className={classes.about}>
             <div className={classes.trial}>
-              <img className={classes.michael} src="/images/devs/michaelaguilar.png" alt="Michael's Picture"></img>
+              <img className={classes.michael} src="/images/devs/michaelaguilar.png" alt="Michael's Picture" />
             </div>
             <Typography variant="h4" className={classes.header}>Michael Aguilar</Typography>
             <Typography className={classes.infoText}>Michael is a full stack engineer and graduate from UC Merced holding a B.S. in Biological Sciences.
@@ -115,8 +131,16 @@ export default function AboutUs() {
             In his spare time he enjoys watching sports, traveling, or learning new technologies.
             </Typography>
             <Paper className={classes.link}>
-              <a href="https://github.com/Michael-M-Aguilar" target="_blank" rel="noreferrer"><span className={classes.logo}><i className="fab fa-github-square fa-2x"></i></span></a>
-              <a href="https://www.linkedin.com/in/michael-m-aguilar/" target="_blank" rel="noreferrer"><span className={classes.logo}><i className="fab fa-linkedin fa-2x"></i></span></a>
+              <a href="https://github.com/Michael-M-Aguilar" target="_blank" rel="noreferrer">
+                <span className={classes.logo}>
+                  <i className="fab fa-github-square fa-2x" />
+                </span>
+              </a>
+              <a href="https://www.linkedin.com/in/michael-m-aguilar/" target="_blank" rel="noreferrer">
+                <span className={classes.logo}>
+                  <i className="fab fa-linkedin fa-2x" />
+                </span>
+              </a>
             </Paper>
           </Paper>
         </Grid>

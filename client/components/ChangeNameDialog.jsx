@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function FormDialog({ setStorage }) {
+export default function ChangeNameDialog({ setStorage }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');

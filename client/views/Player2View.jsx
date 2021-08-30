@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   columnSm: {
-    height: '100%'
+    height: '80vh'
   },
   midRow: {
     height: '50%',
@@ -25,9 +25,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Player2View({ onCardClick, playCard, turn, validColor, topCard, playedCards, player1Hand, player2Hand, socket }) {
+export default function Player2View({ onCardClick, playCard, turn, curColor, topCard, playedCards, player1Hand, player2Hand, socket }) {
   const classes = useStyles();
-  const curColor = topCard.split('-')[0];
 
   const drop = e => {
     e.preventDefault();
@@ -79,7 +78,7 @@ export default function Player2View({ onCardClick, playCard, turn, validColor, t
             playerHand={player2Hand}
             turn={turn}
             topCard={topCard}
-            validColor={validColor}
+            curColor={curColor}
           />
         </Grid>
       </Grid>

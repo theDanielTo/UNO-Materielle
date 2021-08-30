@@ -50,7 +50,7 @@ export default function CpuHand({ side, hand }) {
                 />
               </Grid>
             );
-          } else return <></>;
+          } else return null;
         })
       }
     </>

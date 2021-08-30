@@ -1,7 +1,18 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  card: {
+    height: 200,
+    width: 140,
+    borderRadius: 10,
+    marginLeft: -70
+  }
+}));
 
 export default function Card(props) {
-  const { src, className, valid, deg, prop, margin, draggable, cursor } = props;
+  const classes = useStyles();
+  const { src, valid, deg, prop, margin, draggable, cursor } = props;
   const id = Math.floor(Math.random() * 100000);
 
   const dragStart = e => {
@@ -25,12 +36,9 @@ export default function Card(props) {
   const validFilter = valid
     ? `drop-shadow(0px 0px 20px ${shadowColor})`
     : 'opacity(50%) grayscale(80%)';
-  const validTranslate = valid
-    ? '25px'
-    : '0px';
 
   const cardStyle = {
-    transform: `rotate(${deg}) translateY(${validTranslate})`,
+    transform: `rotate(${deg})`,
     [prop]: margin,
     cursor: cursor,
     filter: validFilter
@@ -40,7 +48,7 @@ export default function Card(props) {
     <>
       <img src={`./images/cards/${src}.png`} alt={src}
         id={id}
-        className={className} draggable={draggable}
+        className={classes.card} draggable={draggable}
         style={cardStyle}
         onDragStart={dragStart}
         onDragEnd={handleDragEnd}
