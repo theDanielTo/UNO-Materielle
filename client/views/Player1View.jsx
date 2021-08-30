@@ -10,14 +10,17 @@ const useStyles = makeStyles(theme => ({
     height: '100%'
   },
   midRow: {
-    height: '50%'
+    height: '50%',
+    paddingTop: '2em',
+    paddingBottom: '2em'
   },
   midCards: {
-    height: '25%'
+    height: '25%',
+    paddingTop: '1em'
   },
   card: {
-    height: 210,
-    width: 150,
+    height: 200,
+    width: 140,
     borderRadius: 10
   }
 }));
@@ -37,10 +40,10 @@ export default function Player1View({ onCardClick, playCard, turn, validColor, t
   return (
     <>
       <Grid className={classes.columnSm}
-        container item xl={8} spacing={0}
+        container item xl={12} md={12} sm={12} spacing={0}
       >
         <Grid className={classes.midCards}
-          container item xl={12} spacing={1}
+          container item xl={12} md={12} sm={12} spacing={1}
           direction="row-reverse"
           justifyContent="center"
           alignItems="center"
@@ -49,7 +52,7 @@ export default function Player1View({ onCardClick, playCard, turn, validColor, t
         </Grid>
 
         <Grid className={classes.midRow} id='midRow'
-          container item xl={12} spacing={2}
+          container item xl={12} lg={12} md={12} sm={12} spacing={8}
           justifyContent="center"
           alignItems="center"
           onDrop={drop}
@@ -67,7 +70,7 @@ export default function Player1View({ onCardClick, playCard, turn, validColor, t
         </Grid>
 
         <Grid className={classes.midCards}
-          container item xl={12} spacing={1}
+          container item xl={12} md={12} sm={12} spacing={1}
           direction="row"
           justifyContent="center"
           alignItems="center"
