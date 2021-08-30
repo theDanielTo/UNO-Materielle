@@ -19,11 +19,9 @@ import GradeIcon from '@material-ui/icons/Grade';
 import MoodIcon from '@material-ui/icons/Mood';
 import VideogameAssetIcon from '@material-ui/icons/VideogameAsset';
 
-import FormDialog from './name-dialogs';
+import ChangeNameDialog from './ChangeNameDialog';
 import { Hidden, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-// import ChatNav from './chat-nav-bar';
-// import MessageIcon from '@material-ui/icons/Message';
 
 const drawerWidth = 300;
 
@@ -113,7 +111,7 @@ export default function SideNav(props) {
         }
       </List>
       <List>
-        <FormDialog />
+        <ChangeNameDialog />
       </List>
     </div>
   );

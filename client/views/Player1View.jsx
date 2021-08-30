@@ -1,23 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import BoardCenter from '../components/BoardCenter';
 import PlayerHand from '../components/PlayerHand';
 import CpuHand from '../components/CpuHand';
 import { makeStyles } from '@material-ui/core/styles';
-// import Chat from '../components/chat';
-// import MessageIcon from '@material-ui/icons/Message';
-// import { IconButton, Drawer } from '@material-ui/core';
-// import { Drawer } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   columnSm: {
-    height: '100%'
+    height: '80vh'
   },
   midRow: {
-    height: '50%'
+    height: '400px'
   },
   midCards: {
-    height: '25%'
+    height: '200px'
   },
   card: {
     height: 210,
@@ -26,9 +22,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Player1View({ onCardClick, playCard, turn, validColor, topCard, playedCards, player1Hand, player2Hand, socket }) {
+export default function Player1View({ onCardClick, playCard, turn, curColor, topCard, playedCards, player1Hand, player2Hand, socket }) {
   const classes = useStyles();
-  const curColor = topCard.split('-')[0];
 
   const drop = e => {
     e.preventDefault();
@@ -37,51 +32,12 @@ export default function Player1View({ onCardClick, playCard, turn, validColor, t
     const cardSrc = e.dataTransfer.getData('card');
     playCard('Player 1', cardSrc);
   };
-  // const [mobileOpen, setMobileOpen] = useState(false);
-
-  // const handleDrawerToggle = () => {
-  //   setMobileOpen(!mobileOpen);
-  // };
-
-  // const drawer = (
-  //   <Chat socket={socket} />
-  // );
 
   return (
     <>
-      {/* <IconButton
-        color="inherit"
-        aria-label="open drawer"
-        edge="start"
-        onClick={handleDrawerToggle} >
-        <MessageIcon className={classes.message} />
-      </IconButton>
-      <Drawer
-        anchor='right'
-        className={classes.drawer}
-        variant="temporary"
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-        classes={{
-          paper: classes.drawerPaper
-        }}
-        ModalProps={{
-          keepMounted: true
-        }}
-      >
-        {drawer}
-      </Drawer> */}
-      {/* <Grid className={classes.columnSm}
-          container item xl={2} spacing={0}
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <CpuHand side={'left'} player={players[0]}/>
-        </Grid> */}
-
+      <p>{'Player 2'}</p>
       <Grid className={classes.columnSm}
-        container item xl={8} spacing={0}
+        container spacing={0}
       >
         <Grid className={classes.midCards}
           container item xl={12} spacing={1}
@@ -121,19 +77,11 @@ export default function Player1View({ onCardClick, playCard, turn, validColor, t
             playerHand={player1Hand}
             turn={turn}
             topCard={topCard}
-            validColor={validColor}
+            curColor={curColor}
           />
         </Grid>
       </Grid>
-      {/* <Chat socket={socket}/> */}
-      {/* <Grid className={classes.columnSm}
-          container item xl={2} spacing={0}
-          direction="column-reverse"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <CpuHand side={'right'} player={players[3]} />
-        </Grid> */}
+      <p>{'Player 1'}</p>
     </>
   );
 }

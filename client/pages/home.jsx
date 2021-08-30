@@ -38,25 +38,33 @@ export default function Home(props) {
     <div className={classes.root}>
       <Grid container direction="row">
         <Grid item xs={12}>
-          <p className={classes.header}>UNO <em>Matérielle</em></p>
+          <p className={classes.header}>
+            UNO <em>Matérielle</em>
+          </p>
         </Grid>
         <Grid item lg={7}>
-          <img src="/images/home-1.png" className={classes.image} alt="placeholder"></img>
+          <img src="/images/home-1.png" className={classes.image} alt="placeholder" />
         </Grid>
         <Grid item lg={5}>
-          <p className={classes.infoText}>UNO is back with a new look and feel! Players take turns matching a card in their hand with the current card shown on top of the deck either by color or number.</p>
+          <p className={classes.infoText}>
+            UNO is back with a new look and feel! Players take turns matching a card in their hand with the current card shown on top of the deck either by color or number.
+          </p>
         </Grid>
         <Grid item lg={5}>
-          <p className={classes.infoText}>Delivering a responseive and an appealing aesthetic using React.js and Material UI, and with the addition of Socket.io, you can play with other players online!</p>
+          <p className={classes.infoText}>
+            Delivering a responsive and an appealing aesthetic using React.js and Material UI, and with the addition of Socket.io, you can play with other players online!
+          </p>
         </Grid>
         <Grid item lg={7}>
-          <img src="/images/home-2.png" className={classes.image} alt="placeholder"></img>
+          <img src="/images/home-2.png" className={classes.image} alt="placeholder" />
         </Grid>
         <Grid item lg={7}>
-          <img src="/images/home-3.png" className={classes.image} alt="placeholder"></img>
+          <img src="/images/home-3.png" className={classes.image} alt="placeholder" />
         </Grid>
         <Grid item lg={5}>
-          <p className={classes.infoText}>So, what are you waiting for!? Grabs some friends and get ready to battle it out online for the top prize of being the  Uno master!</p>
+          <p className={classes.infoText}>
+            So, what are you waiting for!? Grab some friends and get ready to battle it out online for the top prize of being the Uno master!
+          </p>
         </Grid>
       </Grid>
     </div>

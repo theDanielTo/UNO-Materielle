@@ -1,20 +1,8 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from './Card';
 
-const useStyles = makeStyles(theme => ({
-  card: {
-    height: 200,
-    width: 140,
-    borderRadius: 10,
-    marginLeft: -70
-  }
-}));
-
-export default function PlayerHand({ playerHand, turn, player, validColor, topCard }) {
-  const classes = useStyles();
-
+export default function PlayerHand({ playerHand, turn, player, curColor, topCard }) {
   const topType = topCard.split('-')[1];
 
   return (
@@ -23,7 +11,7 @@ export default function PlayerHand({ playerHand, turn, player, validColor, topCa
         playerHand.map((card, index) => {
           const src = `${card.color}-${card.type}`;
           const valid = (
-            validColor === card.color ||
+            curColor === card.color ||
             topType === card.type ||
             card.color === 'black'
           );
@@ -33,7 +21,6 @@ export default function PlayerHand({ playerHand, turn, player, validColor, topCa
             <Grid item key={index}>
               <Card
                 src={src}
-                className={classes.card}
                 draggable={draggable}
                 cursor={cursor}
                 valid={valid}

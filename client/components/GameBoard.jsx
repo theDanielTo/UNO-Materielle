@@ -4,19 +4,17 @@ import { Player, shuffleDeck, parseRoute } from '../lib';
 import UnoCards from '../lib/UnoCards';
 import Player1View from '../views/Player1View';
 import Player2View from '../views/Player2View';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+
 import { io } from 'socket.io-client';
-import { IconButton, Drawer } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Grid, IconButton, Drawer } from '@material-ui/core';
 import MessageIcon from '@material-ui/icons/Message';
-import ChatNav from './chat-nav-bar';
-import Chat from './chat';
 
 const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: '#151224',
     color: '#DDE0EF',
-    height: '100vh',
+    height: '150vh',
     maxWidth: '1200px',
     fontSize: '1.5rem'
   },
@@ -34,18 +32,24 @@ const useStyles = makeStyles(theme => ({
     width: 150,
     borderRadius: 10
   },
-  message: {
-    position: 'fixed',
-    top: 100,
-    right: 25
+  topInfo: {
+    display: 'flex',
+    alignItems: 'flex-end'
   },
-  body: {
-    width: '300px',
+  chatIcon: {
+    position: 'fixed',
+    bottom: 25,
+    right: 25,
+    fontSize: '3rem'
+  },
+  chatBox: {
+    width: '400px',
     margin: 0,
     paddingBottom: '3rem'
-    // backgroundColor: 'black'
   },
-
+  messagesContainer: {
+    padding: 10
+  },
   form: {
     background: 'rgba(0, 0, 0, 0.15)',
     padding: '0.25rem',
@@ -54,20 +58,17 @@ const useStyles = makeStyles(theme => ({
     right: 0,
     display: 'flex',
     height: '3rem',
-    width: '300px'
-
+    width: '400px'
   },
-
   input: {
     border: 'none',
     padding: '0 1rem',
     flexGrow: '1',
     borderRadius: '2rem',
     margin: '0.25rem',
-    width: '100px'
+    width: '300px'
   },
-
-  button: {
+  sendButton: {
     background: '#333',
     border: 'none',
     padding: '0 1rem',
@@ -76,16 +77,26 @@ const useStyles = makeStyles(theme => ({
     outline: 'none',
     color: '#fff'
   },
-
-  messages: {
+  message: {
     listStyleType: 'none',
     marginTop: 10,
-    padding: 0
+    padding: 15,
+    width: 'fit-content',
+    borderRadius: 10,
+    backgroundColor: 'blue',
+    color: 'white',
+    fontSize: '1.2rem'
+  },
+  username: {
+    listStyleType: 'none',
+    color: '#666666',
+    marginLeft: 15
   }
 }));
 
 let socket;
 const ENDPOINT = 'http://localhost:3000';
+// const ENDPOINT = 'http://localhost:3000';
 const NUM_PLAYERS = 2;
 const HAND_SIZE = 7;
 // indices for 'skip', 'reverse', 'draw2', black cards
@@ -103,13 +114,20 @@ export default function GameBoard() {
 
   const route = parseRoute(window.location.hash);
   const gameId = route.params.get('game-id');
-  const username = JSON.parse(localStorage.getItem('mintbean-user'));
 
   const [room, setRoom] = useState(gameId);
   const [roomFull, setRoomFull] = useState(false);
   const [users, setUsers] = useState([]);
   const [currentUser, setCurrentUser] = useState('');
+  const [username, setUsername] = useState(() => {
+    return JSON.parse(localStorage.getItem('mintbean-user')).username;
+  });
 
+  const [chatDrawerOpen, setChatDrawerOpen] = useState(false);
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
+
+  // Socket init
   useEffect(() => {
     const connectionOptions = {
       forceNew: true,
@@ -133,42 +151,17 @@ export default function GameBoard() {
   const [winner, setWinner] = useState('');
   const [turn, setTurn] = useState('');
 
-  const [validColor, setValidColor] = useState('');
+  const [curColor, setCurColor] = useState('');
+  const [curType, setCurType] = useState('');
   const [topCard, setTopCard] = useState('mint-bean');
+  const [notification, setNotification] = useState('');
   const [playedCards, setPlayedCards] = useState([]);
   const [drawCardPile, setDrawCardPile] = useState([]);
 
   const [player1Hand, setPlayer1Hand] = useState([]);
   const [player2Hand, setPlayer2Hand] = useState([]);
 
-  const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState([]);
-
-  // const classes = useStyles();
-
-  const handleNewMessageChange = event => {
-    setMessage(event.target.value);
-  };
-
-  const sendMessage = event => {
-    event.preventDefault();
-    if (message) {
-      socket.emit('sendMessage', { message: message }, () => {
-        setMessage('');
-      });
-    }
-  };
-
-  const handleKeyUp = event => {
-    if (event.key === 'Enter') {
-      if (message !== '') {
-        socket.emit('sendMessage', { message: message }, () => {
-          setMessage('');
-        });
-      }
-    }
-  };
-
+  // Game pieces init (player hands, deck, top card)
   useEffect(() => {
     const players = [];
     const shuffledDeck = shuffleDeck(UnoCards);
@@ -193,42 +186,42 @@ export default function GameBoard() {
       turn: 'Player 1',
       player1Hand: [...players[0].hand],
       player2Hand: [...players[1].hand],
-      validColor: topCard.split('-')[0],
+      curColor: topColor,
+      curType: topType,
       topCard: topCard,
       playedCards: [...playedCards],
       drawCardPile: [...shuffledDeck]
     });
   }, []);
 
+  // Game state events init
   useEffect(() => {
     socket.on('initGameState', ({
       gameOver, turn, player1Hand, player2Hand,
-      validColor, topCard, playedCards, drawCardPile
+      curColor, curType, topCard, playedCards, drawCardPile
     }) => {
       setGameOver(gameOver);
       setTurn(turn);
       setPlayer1Hand(player1Hand);
       setPlayer2Hand(player2Hand);
-      setValidColor(validColor);
+      setCurColor(curColor);
+      setCurType(curType);
       setTopCard(topCard);
       setPlayedCards(playedCards);
       setDrawCardPile(drawCardPile);
     });
 
-    socket.on('message', message => {
-      setMessages(messages => [...messages, message]);
-    });
-
     socket.on('updateGameState', ({
       gameOver, winner, turn, player1Hand, player2Hand,
-      validColor, topCard, playedCards, drawCardPile
+      curColor, curType, topCard, playedCards, drawCardPile
     }) => {
       gameOver && setGameOver(gameOver);
       winner && setWinner(winner);
       turn && setTurn(turn);
       player1Hand && setPlayer1Hand(player1Hand);
       player2Hand && setPlayer2Hand(player2Hand);
-      validColor && setValidColor(validColor);
+      curColor && setCurColor(curColor);
+      curType && setCurType(curType);
       topCard && setTopCard(topCard);
       playedCards && setPlayedCards(playedCards);
       drawCardPile && setDrawCardPile(drawCardPile);
@@ -238,11 +231,29 @@ export default function GameBoard() {
       setUsers(users);
     });
 
-    socket.on('currentUserData', ({ name }) => {
-      setCurrentUser(name);
+    socket.on('currentUserData', ({ player, username }) => {
+      setCurrentUser(player);
+      setUsername(username);
+    });
+
+    socket.on('message', message => {
+      setMessages(messages => [...messages, message]);
     });
   }, []);
 
+  useEffect(() => {
+    if (
+      curType === 'reverse' ||
+      curType === 'skip' ||
+      curType === 'draw2' ||
+      curType === 'wild' ||
+      curType === 'draw4'
+    ) {
+      setNotification(`${turn}'s turn. ${curType} was played!`);
+    } else setNotification(`${turn}'s turn.`);
+  }, [curType]);
+
+  // Utility functions
   const checkGameOver = hand => {
     return hand.length === 1;
   };
@@ -251,9 +262,10 @@ export default function GameBoard() {
     return hand.length === 1 ? player : '';
   };
 
+  // Game driver
   const playCard = (player, card) => {
-    const cardType = card.split('-')[1];
     let cardColor = card.split('-')[0];
+    const cardType = card.split('-')[1];
 
     if (cardColor === 'black') {
       cardColor = prompt('Enter a color (red/green/blue/yellow)').toLowerCase();
@@ -270,8 +282,9 @@ export default function GameBoard() {
             turn: 'Player 2',
             playedCards: [...playedCards, card],
             player1Hand: player1Hand.filter(c => `${c.color}-${c.type}` !== card),
-            player2Hand: [...player2Hand.slice(0, player2Hand.length), card1, card2, card3, card4, ...player2Hand.slice(player1Hand.length)],
-            validColor: cardColor,
+            player2Hand: [...player2Hand, card1, card2, card3, card4],
+            curColor: cardColor,
+            curType: cardType,
             topCard: card,
             drawCardPile: drawCardPile
           });
@@ -286,9 +299,10 @@ export default function GameBoard() {
             winner: checkWinner(player2Hand, 'Player 2'),
             turn: 'Player 1',
             playedCards: [...playedCards, card],
-            player1Hand: [...player1Hand.slice(0, player1Hand.length), card1, card2, card3, card4, ...player1Hand.slice(player1Hand.length)],
+            player1Hand: [...player1Hand, card1, card2, card3, card4],
             player2Hand: player2Hand.filter(c => `${c.color}-${c.type}` !== card),
-            validColor: cardColor,
+            curColor: cardColor,
+            curType: cardType,
             topCard: card,
             drawCardPile: drawCardPile
           });
@@ -301,7 +315,8 @@ export default function GameBoard() {
             turn: 'Player 2',
             playedCards: [...playedCards, card],
             player1Hand: player1Hand.filter(c => `${c.color}-${c.type}` !== card),
-            validColor: cardColor,
+            curColor: cardColor,
+            curType: cardType,
             topCard: card,
             drawCardPile: drawCardPile
           });
@@ -312,7 +327,8 @@ export default function GameBoard() {
             turn: 'Player 1',
             playedCards: [...playedCards, card],
             player2Hand: player2Hand.filter(c => `${c.color}-${c.type}` !== card),
-            validColor: cardColor,
+            curColor: cardColor,
+            curType: cardType,
             topCard: card,
             drawCardPile: drawCardPile
           });
@@ -337,7 +353,8 @@ export default function GameBoard() {
               turn: 'Player 2',
               playedCards: [...playedCards, card],
               player1Hand: player1Hand.filter(c => `${c.color}-${c.type}` !== card),
-              validColor: cardColor,
+              curColor: cardColor,
+              curType: cardType,
               topCard: card,
               drawCardPile: drawCardPile
             });
@@ -348,7 +365,8 @@ export default function GameBoard() {
               turn: 'Player 1',
               playedCards: [...playedCards, card],
               player2Hand: player2Hand.filter(c => `${c.color}-${c.type}` !== card),
-              validColor: cardColor,
+              curColor: cardColor,
+              curType: cardType,
               topCard: card,
               drawCardPile: drawCardPile
             });
@@ -362,7 +380,8 @@ export default function GameBoard() {
               turn: 'Player 1',
               playedCards: [...playedCards, card],
               player1Hand: player1Hand.filter(c => `${c.color}-${c.type}` !== card),
-              validColor: cardColor,
+              curColor: cardColor,
+              curType: cardType,
               topCard: card,
               drawCardPile: drawCardPile
             });
@@ -373,7 +392,8 @@ export default function GameBoard() {
               turn: 'Player 2',
               playedCards: [...playedCards, card],
               player2Hand: player2Hand.filter(c => `${c.color}-${c.type}` !== card),
-              validColor: cardColor,
+              curColor: cardColor,
+              curType: cardType,
               topCard: card,
               drawCardPile: drawCardPile
             });
@@ -387,7 +407,8 @@ export default function GameBoard() {
               turn: 'Player 1',
               playedCards: [...playedCards, card],
               player1Hand: player1Hand.filter(c => `${c.color}-${c.type}` !== card),
-              validColor: cardColor,
+              curColor: cardColor,
+              curType: cardType,
               topCard: card,
               drawCardPile: drawCardPile
             });
@@ -398,7 +419,8 @@ export default function GameBoard() {
               turn: 'Player 2',
               playedCards: [...playedCards, card],
               player2Hand: player2Hand.filter(c => `${c.color}-${c.type}` !== card),
-              validColor: cardColor,
+              curColor: cardColor,
+              curType: cardType,
               topCard: card,
               drawCardPile: drawCardPile
             });
@@ -415,8 +437,9 @@ export default function GameBoard() {
               turn: 'Player 2',
               playedCards: [...playedCards, card],
               player1Hand: player1Hand.filter(c => `${c.color}-${c.type}` !== card),
-              player2Hand: [...player2Hand.slice(0, player2Hand.length), card1, card2, ...player2Hand.slice(player2Hand.length)],
-              validColor: cardColor,
+              player2Hand: [...player2Hand, card1, card2],
+              curColor: cardColor,
+              curType: cardType,
               topCard: card,
               drawCardPile: drawCardPile
             });
@@ -429,9 +452,10 @@ export default function GameBoard() {
               winner: checkWinner(player2Hand, 'Player 2'),
               turn: 'Player 1',
               playedCards: [...playedCards, card],
-              player1Hand: [...player1Hand.slice(0, player1Hand.length), card1, card2, ...player1Hand.slice(player1Hand.length)],
+              player1Hand: [...player1Hand, card1, card2],
               player2Hand: player2Hand.filter(c => `${c.color}-${c.type}` !== card),
-              validColor: cardColor,
+              curColor: cardColor,
+              curType: cardType,
               topCard: card,
               drawCardPile: drawCardPile
             });
@@ -458,53 +482,77 @@ export default function GameBoard() {
     }
   };
 
-  const [mobileOpen, setMobileOpen] = useState(false);
-
+  // Chat handlers
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+    setChatDrawerOpen(drawerOpen => !drawerOpen);
   };
 
-  const drawer = (
-    <div className={classes.body}>
-      <ul id="messages">
+  const handleNewMessageChange = event => {
+    setMessage(event.target.value);
+  };
+
+  const sendMessage = e => {
+    e.preventDefault();
+    if (message) {
+      socket.emit('sendMessage', { message: message }, () => {
+        setMessage('');
+      });
+    }
+  };
+
+  const handleKeyUp = e => {
+    e.preventDefault();
+    if (event.key === 'Enter') {
+      if (message) {
+        socket.emit('sendMessage', { message: message }, () => {
+          setMessage('');
+        });
+      }
+    }
+  };
+
+  const chatBox = (
+    <div className={classes.chatBox}>
+      <ul className={classes.messagesContainer}>
         {
           messages.map((messages, i) => (
-            <>
-            <li key={i} className={classes.listing}>
-              {messages.user}
-            </li>
-            <li key={i}>
-              {messages.text}
-            </li>
-            </>
+            <div key={i}>
+              <li className={classes.message}>
+                {messages.text}
+              </li>
+              <li className={classes.username}>
+                {messages.user}
+              </li>
+            </div>
           ))
         }
       </ul>
       <form id="form" action="" className={classes.form}>
-        <input className={classes.input} type="text" id="input" autoComplete="off" value={message}
+        <input className={classes.input}
+          type="text" id="input" autoComplete="off" value={message}
           onChange={handleNewMessageChange}
           onKeyUp={handleKeyUp} />
-        <button className={classes.button} onClick={sendMessage}>Send</button>
+        <button className={classes.sendButton} onClick={sendMessage}>
+          Send
+        </button>
       </form>
     </div>
   );
 
   return (
-    // messages component
     <div className={classes.root}>
-
       <IconButton
         color="inherit"
         aria-label="open drawer"
         edge="start"
         onClick={handleDrawerToggle} >
-        <MessageIcon className={classes.message} />
+        <MessageIcon className={classes.chatIcon} />
       </IconButton>
       <Drawer
         anchor='right'
         className={classes.drawer}
         variant="temporary"
-        open={mobileOpen}
+        open={chatDrawerOpen}
         onClose={handleDrawerToggle}
         classes={{
           paper: classes.drawerPaper
@@ -513,13 +561,18 @@ export default function GameBoard() {
           keepMounted: true
         }}
       >
-        {drawer}
+        {chatBox}
       </Drawer>
 
- {/* game jjjjjjj */}
-      <div className='topInfo'>
-        <h1>Game Code: {room}</h1><span>{turn + '\'s turn'}</span>
-
+      <div className={classes.topInfo}>
+        <h3>
+          Game Code: {room}
+        </h3>
+        <span>
+          {users.length === 2 && <>
+            {notification}
+          </>}
+        </span>
       </div>
 
       { users.length === 1 && currentUser === 'Player 1' &&
@@ -536,13 +589,13 @@ export default function GameBoard() {
             >
               { currentUser === 'Player 1' &&
               <Player1View playCard={playCard} onCardClick={drawCard}
-                validColor={validColor} topCard={topCard} playedCards={playedCards}
+                curColor={curColor} topCard={topCard} playedCards={playedCards}
                 player1Hand={player1Hand} player2Hand={player2Hand}
                 turn={turn} username={username} socket={socket}
               />}
               { currentUser === 'Player 2' &&
               <Player2View playCard={playCard} onCardClick={drawCard}
-                validColor={validColor} topCard={topCard} playedCards={playedCards}
+                curColor={curColor} topCard={topCard} playedCards={playedCards}
                 player1Hand={player1Hand} player2Hand={player2Hand}
                 turn={turn} username={username} socket={socket}
               />}
