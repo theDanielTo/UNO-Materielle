@@ -42,8 +42,10 @@ export default function Home(props) {
             UNO <em>Matérielle</em>
           </p>
         </Grid>
+        </Grid>
+        <Grid container>
         <Grid item lg={7}>
-          <img src="/images/home-1.png" className={classes.image} alt="placeholder" />
+          <img src="/images/home-1.png" className={classes.image} alt="UNO made with React.js, Materail UI, and Socket.io" />
         </Grid>
         <Grid item lg={5}>
           <p className={classes.infoText}>

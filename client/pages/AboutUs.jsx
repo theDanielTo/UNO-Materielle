@@ -6,8 +6,6 @@ const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: '#151224',
     color: '#DDE0EF',
-
-    height: '93.6vh',
     minHeight: '95.6vh',
     maxWidth: '1200px',
     fontSize: '1.5rem'
@@ -15,7 +13,8 @@ const useStyles = makeStyles(theme => ({
   about: {
     backgroundColor: '#484040',
     borderRadius: '25px',
-    paddingTop: '1em'
+    paddingTop: '1em',
+    margin: '0 1rem'
   },
   link: {
     backgroundColor: '#7e7e7e',
@@ -23,7 +22,8 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-around',
     borderRadius: '0 0 25px 25px',
     paddingTop: '0.7em',
-    paddingBottom: '0.5em'
+    paddingBottom: '0.5em',
+    marginBottom: '10px'
   },
   container: {
     display: 'flex'
@@ -37,7 +37,8 @@ const useStyles = makeStyles(theme => ({
   infoText: {
     fontFamily: 'Raleway, sans-serif',
     color: '#DDE0EF',
-    padding: '0 0.8em 0 0.8em'
+    padding: '1em 0.8em 1em 0.8em',
+    fontSize: '1.2rem'
   },
   logo: {
     color: '#DDE0EF'
@@ -88,7 +89,7 @@ export default function AboutUs() {
               Brian Bozigian
             </Typography>
             <Typography variant="h6" className={classes.infoText}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?
+              A self-motivated Front-End developer and clean design enthusiast who enjoys problem-solving.
             </Typography>
             <Paper className={classes.link}>
               <a href="https://github.com/BrianBozi" target="_blank" rel="noreferrer">
@@ -109,12 +110,8 @@ export default function AboutUs() {
             <div className={classes.trial}>
               <img className={classes.daniel} src="/images/devs/danielto.png" alt="Daniel's Picture"></img>
             </div>
-            <Typography variant="h4" className={classes.header}>
-              Daniel To
-            </Typography>
-            <Typography variant="h6" className={classes.infoText}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?
-            </Typography>
+            <Typography variant="h4" className={classes.header}> Daniel To</Typography>
+            <Typography variant="h6" className={classes.infoText}> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?</Typography>
             <Paper className={classes.link}>
               <a href="https://github.com/theDanielTo" target="_blank" rel="noreferrer">
                 <span className={classes.logo}>
@@ -134,11 +131,10 @@ export default function AboutUs() {
             <div className={classes.trial}>
               <img className={classes.michael} src="/images/devs/michaelaguilar.png" alt="Michael's Picture" />
             </div>
-            <Typography variant="h4" className={classes.header}>
-              Michael Aguilar
-            </Typography>
-            <Typography variant="h6" className={classes.infoText}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?
+            <Typography variant="h4" className={classes.header}>Michael Aguilar</Typography>
+            <Typography className={classes.infoText}>Michael is a full stack engineer and graduate from UC Merced holding a B.S. in Biological Sciences.
+            He has experience with technologies such as React, JavaScript, CSS, and Python.
+            In his spare time he enjoys watching sports, traveling, or learning new technologies.
             </Typography>
             <Paper className={classes.link}>
               <a href="https://github.com/Michael-M-Aguilar" target="_blank" rel="noreferrer">

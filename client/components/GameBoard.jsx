@@ -16,6 +16,8 @@ const useStyles = makeStyles(theme => ({
     color: '#DDE0EF',
     height: '150vh',
     minWidth: '1200px',
+    minHeight: '100vh',
+    height: '-webkit-fill-available',
     fontSize: '1.5rem'
   },
   columnSm: {
