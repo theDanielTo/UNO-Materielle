@@ -22,6 +22,8 @@ import VideogameAssetIcon from '@material-ui/icons/VideogameAsset';
 import FormDialog from './name-dialogs';
 import { Hidden, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+// import ChatNav from './chat-nav-bar';
+// import MessageIcon from '@material-ui/icons/Message';
 
 const drawerWidth = 300;
 
@@ -128,6 +130,7 @@ export default function SideNav(props) {
           onClick={handleDrawerToggle} >
             <MenuIcon />
           </IconButton>
+
         </Toolbar>
       </AppBar>
         <nav aria-label="sidenav">

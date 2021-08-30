@@ -7,6 +7,10 @@ import Player2View from '../views/Player2View';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { io } from 'socket.io-client';
+import { IconButton, Drawer } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChatNav from './chat-nav-bar';
+import Chat from './chat';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,6 +33,11 @@ const useStyles = makeStyles(theme => ({
     height: 210,
     width: 150,
     borderRadius: 10
+  },
+  message: {
+    position: 'fixed',
+    top: 100,
+    right: 25
   }
 }));
 
@@ -374,10 +383,47 @@ export default function GameBoard() {
     }
   };
 
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const drawer = (
+    <Chat />
+  );
+
   return (
+    // messages component
     <div className={classes.root}>
+
+      <IconButton
+        color="inherit"
+        aria-label="open drawer"
+        edge="start"
+        onClick={handleDrawerToggle} >
+        <MenuIcon className={classes.message} />
+      </IconButton>
+      <Drawer
+        anchor='right'
+        className={classes.drawer}
+        variant="temporary"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        classes={{
+          paper: classes.drawerPaper
+        }}
+        ModalProps={{
+          keepMounted: true
+        }}
+      >
+        {drawer}
+      </Drawer>
+
+ {/* game jjjjjjj */}
       <div className='topInfo'>
         <h1>Game Code: {room}</h1><span>{turn + '\'s turn'}</span>
+
       </div>
 
       { users.length === 1 && currentUser === 'Player 1' &&
