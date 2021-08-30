@@ -98,6 +98,34 @@ export default function GameBoard() {
   const [player1Hand, setPlayer1Hand] = useState([]);
   const [player2Hand, setPlayer2Hand] = useState([]);
 
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
+
+  // const classes = useStyles();
+
+  const handleNewMessageChange = event => {
+    setMessage(event.target.value);
+  };
+
+  const sendMessage = event => {
+    event.preventDefault();
+    if (message) {
+      socket.emit('sendMessage', { message: message }, () => {
+        setMessage('');
+      });
+    }
+  };
+
+  const handleKeyUp = event => {
+    if (event.key === 'Enter') {
+      if (message !== '') {
+        socket.emit('sendMessage', { message: message }, () => {
+          setMessage('');
+        });
+      }
+    }
+  };
+
   useEffect(() => {
     const players = [];
     const shuffledDeck = shuffleDeck(UnoCards);
@@ -142,6 +170,10 @@ export default function GameBoard() {
       setTopCard(topCard);
       setPlayedCards(playedCards);
       setDrawCardPile(drawCardPile);
+    });
+
+    socket.on('message', message => {
+      setMessages(messages => [...messages, message]);
     });
 
     socket.on('updateGameState', ({
@@ -390,7 +422,23 @@ export default function GameBoard() {
   };
 
   const drawer = (
-    <Chat />
+    <div className={classes.body}>
+      <ul id="messages">
+        {
+          messages.map((messages, i) => (
+            <li key={i}>
+              {messages.text}
+            </li>
+          ))
+        }
+      </ul>
+      <form id="form" action="" className={classes.form}>
+        <input className={classes.input} type="text" id="input" autoComplete="off" value={message}
+          onChange={handleNewMessageChange}
+          onKeyUp={handleKeyUp} />
+        <button className={classes.button} onClick={sendMessage}>Send</button>
+      </form>
+    </div>
   );
 
   return (
@@ -442,13 +490,13 @@ export default function GameBoard() {
               <Player1View playCard={playCard} onCardClick={drawCard}
                 validColor={validColor} topCard={topCard} playedCards={playedCards}
                 player1Hand={player1Hand} player2Hand={player2Hand}
-                turn={turn} username={username}
+                turn={turn} username={username} socket={socket}
               />}
               { currentUser === 'Player 2' &&
               <Player2View playCard={playCard} onCardClick={drawCard}
                 validColor={validColor} topCard={topCard} playedCards={playedCards}
                 player1Hand={player1Hand} player2Hand={player2Hand}
-                turn={turn} username={username}
+                turn={turn} username={username} socket={socket}
               />}
             </Grid>
         }

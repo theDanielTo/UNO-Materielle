@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import BoardCenter from '../components/BoardCenter';
 import PlayerHand from '../components/PlayerHand';
 import CpuHand from '../components/CpuHand';
 import { makeStyles } from '@material-ui/core/styles';
+// import Chat from '../components/chat';
+// import MessageIcon from '@material-ui/icons/Message';
+// import { IconButton, Drawer } from '@material-ui/core';
+// import { Drawer } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   columnSm: {
@@ -22,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Player1View({ onCardClick, playCard, turn, validColor, topCard, playedCards, player1Hand, player2Hand }) {
+export default function Player1View({ onCardClick, playCard, turn, validColor, topCard, playedCards, player1Hand, player2Hand, socket }) {
   const classes = useStyles();
   const curColor = topCard.split('-')[0];
 
@@ -33,9 +37,40 @@ export default function Player1View({ onCardClick, playCard, turn, validColor, t
     const cardSrc = e.dataTransfer.getData('card');
     playCard('Player 1', cardSrc);
   };
+  // const [mobileOpen, setMobileOpen] = useState(false);
+
+  // const handleDrawerToggle = () => {
+  //   setMobileOpen(!mobileOpen);
+  // };
+
+  // const drawer = (
+  //   <Chat socket={socket} />
+  // );
 
   return (
     <>
+      {/* <IconButton
+        color="inherit"
+        aria-label="open drawer"
+        edge="start"
+        onClick={handleDrawerToggle} >
+        <MessageIcon className={classes.message} />
+      </IconButton>
+      <Drawer
+        anchor='right'
+        className={classes.drawer}
+        variant="temporary"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        classes={{
+          paper: classes.drawerPaper
+        }}
+        ModalProps={{
+          keepMounted: true
+        }}
+      >
+        {drawer}
+      </Drawer> */}
       {/* <Grid className={classes.columnSm}
           container item xl={2} spacing={0}
           direction="column"
@@ -90,7 +125,7 @@ export default function Player1View({ onCardClick, playCard, turn, validColor, t
           />
         </Grid>
       </Grid>
-
+      {/* <Chat socket={socket}/> */}
       {/* <Grid className={classes.columnSm}
           container item xl={2} spacing={0}
           direction="column-reverse"

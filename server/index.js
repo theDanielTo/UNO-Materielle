@@ -15,6 +15,8 @@ const io = require('socket.io')(server, {
   }
 });
 
+const NEW_MESSAGE_EVENT = 'new-message-event';
+
 io.on('connection', socket => {
   socket.on('join', (payload, callback) => {
     const numberOfUsersInRoom = getUsersInRoom(payload.room).length;
@@ -42,6 +44,21 @@ io.on('connection', socket => {
   socket.on('updateGameState', gameState => {
     const user = getUser(socket.id);
     if (user) { io.to(user.room).emit('updateGameState', gameState); }
+  });
+
+  // messaging
+  // socket.on('new-message-event', msg => {
+  //   const user = getUser(socket.id);
+  //   if (user) io.to(user.room).emit('message', msg);
+  // });
+  socket.on('sendMessage', (payload, callback) => {
+    const user = getUser(socket.id);
+    io.to(user.room).emit('message', { user: user.name, text: payload.message });
+    callback();
+  });
+
+  socket.on('disconnect', () => {
+    socket.leave();
   });
 
   // socket.on('disconnection', () => {
