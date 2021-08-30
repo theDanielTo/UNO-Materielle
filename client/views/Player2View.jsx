@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Player2View({ onCardClick, playCard, turn, curColor, topCard, playedCards, player1Hand, player2Hand, socket }) {
+export default function Player2View({ onCardClick, playCard, turn, curColor, topCard, playedCards, player1Hand, player2Hand, users, notification }) {
   const classes = useStyles();
 
   const drop = e => {
@@ -34,54 +34,55 @@ export default function Player2View({ onCardClick, playCard, turn, curColor, top
   };
 
   return (
-    <>
-      <p>{'Player 1'}</p>
-      <Grid className={classes.columnSm}
-        container spacing={0}
+    <Grid className={classes.columnSm}
+      container spacing={0}
+      justifyContent="center"
+    >
+      <Grid className={classes.midCards}
+        container item xl={12} spacing={1}
+        direction="row-reverse"
+        justifyContent="center"
+        alignItems="center"
       >
-        <Grid className={classes.midCards}
-          container item xl={12} spacing={1}
-          direction="row-reverse"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <CpuHand side={'top'} hand={player1Hand} />
-        </Grid>
-
-        <Grid className={classes.midRow} id='midRow'
-          container item xl={12} spacing={2}
-          justifyContent="center"
-          alignItems="center"
-          onDrop={drop}
-          onDragEnter={e => { if (e.target.closest('div').id === 'midRow') e.target.style.background = curColor; }}
-          onDragLeave={e => { if (e.target.closest('div').id === 'midRow') e.target.style.background = ''; }}
-        >
-          <BoardCenter
-            player={'Player 2'}
-            turn={turn}
-            onCardClick={onCardClick}
-            cardStyle={classes.card}
-            topCard={topCard}
-            playedCards={playedCards}
-          />
-        </Grid>
-
-        <Grid className={classes.midCards}
-          container item xl={12} spacing={1}
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <PlayerHand
-            player={'Player 2'}
-            playerHand={player2Hand}
-            turn={turn}
-            topCard={topCard}
-            curColor={curColor}
-          />
-        </Grid>
+        <CpuHand side={'top'} hand={player1Hand} />
       </Grid>
-      <p>{'Player 2'}</p>
-    </>
+
+      <p>{`Player 1: ${users[0].username}`}</p>
+
+      <Grid className={classes.midRow} id='midRow'
+        container item xl={12} spacing={2}
+        justifyContent="center"
+        alignItems="center"
+        onDrop={drop}
+        onDragEnter={e => { if (e.target.closest('div').id === 'midRow') e.target.style.background = curColor; }}
+        onDragLeave={e => { if (e.target.closest('div').id === 'midRow') e.target.style.background = ''; }}
+      >
+        <BoardCenter
+          player={'Player 2'}
+          turn={turn}
+          onCardClick={onCardClick}
+          cardStyle={classes.card}
+          topCard={topCard}
+          playedCards={playedCards}
+        />
+      </Grid>
+
+      <p>{`Player 2: ${users[1].username}`}</p>
+
+      <Grid className={classes.midCards}
+        container item xl={12} spacing={1}
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <PlayerHand
+          player={'Player 2'}
+          playerHand={player2Hand}
+          turn={turn}
+          topCard={topCard}
+          curColor={curColor}
+        />
+      </Grid>
+    </Grid>
   );
 }

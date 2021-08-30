@@ -94,10 +94,12 @@ app.get('/api/games', (req, res, next) => {
 
 app.post('/api/games', (req, res, next) => {
   const sql = `
-    INSERT into "games"
+    INSERT into "games" ("title")
+      VALUES ($1)
       RETURNING *
   `;
-  db.query(sql)
+  const param = ['game title'];
+  db.query(sql, param)
     .then(result => res.status(201).json(result.rows[0]))
     .catch(err => next(err));
 });

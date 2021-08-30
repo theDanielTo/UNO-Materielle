@@ -3,8 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   card: {
-    height: 200,
-    width: 140,
+    height: 140,
+    width: 100,
     borderRadius: 10,
     marginLeft: -70
   }

@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#151224',
     color: '#DDE0EF',
     height: '100vh',
-    maxWidth: '1200px',
+    minWidth: '1200px',
     fontSize: '1.5rem'
   },
   button: {
@@ -30,9 +30,18 @@ export default function Lobby() {
       .catch(err => console.error('fetch err:', err));
   }, [games]);
 
+  const title = 'new game';
+
   const createGame = () => {
-    fetch('/api/games', { method: 'POST' })
+    fetch('/api/games', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ title })
+    })
       .then(res => res.json())
+      .then(result => setGames([...games, result]))
       .catch(err => console.error('fetch err:', err));
   };
 
