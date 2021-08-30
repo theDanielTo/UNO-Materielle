@@ -4,10 +4,10 @@ import { Player, shuffleDeck, parseRoute } from '../lib';
 import UnoCards from '../lib/UnoCards';
 import Player1View from '../views/Player1View';
 import Player2View from '../views/Player2View';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+
 import { io } from 'socket.io-client';
-import { IconButton, Drawer } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Grid, IconButton, Drawer } from '@material-ui/core';
 import MessageIcon from '@material-ui/icons/Message';
 
 const useStyles = makeStyles(theme => ({
