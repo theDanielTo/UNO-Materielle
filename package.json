@@ -1,11 +1,12 @@
 {
-  "name": "final-project",
+  "name": "mint-bean-hackathon",
   "version": "1.0.0",
   "private": true,
-  "description": "A full stack JavaScript solo project.",
+  "description": "A full stack JavaScript collab project.",
   "main": "server/index.js",
   "scripts": {
     "build": "webpack --mode=production",
+    "watch": "webpack --watch",
     "start": "node server/index.js",
     "dev": "npm-run-all --silent --parallel dev:*",
     "dev:client": "webpack serve --mode=development",
