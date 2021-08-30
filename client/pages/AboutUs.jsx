@@ -6,16 +6,16 @@ const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: '#151224',
     color: '#DDE0EF',
-
-    height: '93.6vh',
-    minHeight: '95.6vh',
+    marginBottom: '1rem',
+    minHeight: '96.6vh',
     maxWidth: '1200px',
     fontSize: '1.5rem'
   },
   about: {
     backgroundColor: '#484040',
     borderRadius: '25px',
-    paddingTop: '1em'
+    paddingTop: '1em',
+    margin: '0 1rem'
   },
   link: {
     backgroundColor: '#7e7e7e',
@@ -23,7 +23,8 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-around',
     borderRadius: '0 0 25px 25px',
     paddingTop: '0.7em',
-    paddingBottom: '0.5em'
+    paddingBottom: '0.5em',
+    marginBottom: '10px'
   },
   container: {
     display: 'flex'
@@ -37,7 +38,10 @@ const useStyles = makeStyles(theme => ({
   infoText: {
     fontFamily: 'Raleway, sans-serif',
     color: '#DDE0EF',
-    padding: '0 0.8em 0 0.8em'
+    padding: '0 0.8em 0 0.8em',
+    marginBottom: '1rem',
+    marginTop: '.5rem'
+
   },
   logo: {
     color: '#DDE0EF'
@@ -88,7 +92,7 @@ export default function AboutUs() {
               Brian Bozigian
             </Typography>
             <Typography variant="h6" className={classes.infoText}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?
+              A self-motivated Front-End developer and clean design enthusiast who enjoys problem-solving.
             </Typography>
             <Paper className={classes.link}>
               <a href="https://github.com/BrianBozi" target="_blank" rel="noreferrer">
