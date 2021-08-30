@@ -1,10 +1,10 @@
 const users = [];
 
-const addUser = ({ id, name, room }) => {
+const addUser = ({ id, player, username, room }) => {
   const numberOfUsersInRoom = users.filter(user => user.room === room).length;
   if (numberOfUsersInRoom === 4) { return { error: 'Room full' }; }
 
-  const newUser = { id, name, room };
+  const newUser = { id, player, username, room };
   users.push(newUser);
   return { newUser };
 };
