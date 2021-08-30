@@ -13,7 +13,8 @@ const useStyles = makeStyles(theme => ({
   about: {
     backgroundColor: '#484040',
     borderRadius: '25px',
-    paddingTop: '1em'
+    paddingTop: '1em',
+    margin: '0 1rem'
   },
   link: {
     backgroundColor: '#7e7e7e',
@@ -21,7 +22,8 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-around',
     borderRadius: '0 0 25px 25px',
     paddingTop: '0.7em',
-    paddingBottom: '0.5em'
+    paddingBottom: '0.5em',
+    marginBottom: '10px'
   },
   container: {
     display: 'flex'
@@ -83,8 +85,12 @@ export default function AboutUs() {
             <div className={classes.trial}>
               <img className={classes.brian}src="/images/devs/brianbozigian.png" alt="Brian's Picture"></img>
             </div>
-            <Typography variant="h4" className={classes.header}>Brian Bozigian</Typography>
-            <Typography variant="h6" className={classes.infoText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?</Typography>
+            <Typography variant="h4" className={classes.header}>
+              Brian Bozigian
+            </Typography>
+            <Typography variant="h6" className={classes.infoText}>
+              A self-motivated Front-End developer and clean design enthusiast who enjoys problem-solving.
+            </Typography>
             <Paper className={classes.link}>
               <a href="https://github.com/BrianBozi" target="_blank" rel="noreferrer">
                 <span className={classes.logo}>
