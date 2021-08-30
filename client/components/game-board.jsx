@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { io } from 'socket.io-client';
 import { IconButton, Drawer } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import MessageIcon from '@material-ui/icons/Message';
 import ChatNav from './chat-nav-bar';
 import Chat from './chat';
 
@@ -402,7 +402,7 @@ export default function GameBoard() {
         aria-label="open drawer"
         edge="start"
         onClick={handleDrawerToggle} >
-        <MenuIcon className={classes.message} />
+        <MessageIcon className={classes.message} />
       </IconButton>
       <Drawer
         anchor='right'
