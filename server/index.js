@@ -1,7 +1,7 @@
 require('dotenv/config');
 const express = require('express');
 const http = require('http');
-const ClientError = require('./client-error');
+// const ClientError = require('./client-error');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
 const db = require('./db');
@@ -14,8 +14,6 @@ const io = require('socket.io')(server, {
     origin: ['http://localhost:3000']
   }
 });
-
-const NEW_MESSAGE_EVENT = 'new-message-event';
 
 io.on('connection', socket => {
   socket.on('join', (payload, callback) => {
@@ -46,11 +44,6 @@ io.on('connection', socket => {
     if (user) { io.to(user.room).emit('updateGameState', gameState); }
   });
 
-  // messaging
-  // socket.on('new-message-event', msg => {
-  //   const user = getUser(socket.id);
-  //   if (user) io.to(user.room).emit('message', msg);
-  // });
   socket.on('sendMessage', (payload, callback) => {
     const user = getUser(socket.id);
     io.to(user.room).emit('message', { user: user.name, text: payload.message });
@@ -61,10 +54,10 @@ io.on('connection', socket => {
     socket.leave();
   });
 
-  // socket.on('disconnection', () => {
-  //   const user = removeUser(socket.id);
-  //   if (user) { io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) }); }
-  // });
+  socket.on('disconnection', () => {
+    const user = removeUser(socket.id);
+    if (user) { io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) }); }
+  });
 });
 
 app.use(staticMiddleware);

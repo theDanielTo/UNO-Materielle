@@ -42,7 +42,6 @@ const useStyles = makeStyles(theme => ({
     margin: 0,
     paddingBottom: '3rem'
   },
-
   form: {
     background: 'rgba(0, 0, 0, 0.15)',
     padding: '0.25rem',
@@ -52,9 +51,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     height: '3rem',
     width: '300px'
-
   },
-
   input: {
     border: 'none',
     padding: '0 1rem',
@@ -63,7 +60,6 @@ const useStyles = makeStyles(theme => ({
     margin: '0.25rem',
     width: '100px'
   },
-
   button: {
     background: '#333',
     border: 'none',
@@ -73,7 +69,6 @@ const useStyles = makeStyles(theme => ({
     outline: 'none',
     color: '#fff'
   },
-
   messages: {
     listStyleType: 'none',
     marginTop: 10,
@@ -108,10 +103,11 @@ export default function GameBoard() {
   const [users, setUsers] = useState([]);
   const [currentUser, setCurrentUser] = useState('');
 
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [chatDrawerOpen, setChatDrawerOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
+  // Socket init
   useEffect(() => {
     const connectionOptions = {
       forceNew: true,
@@ -143,6 +139,7 @@ export default function GameBoard() {
   const [player1Hand, setPlayer1Hand] = useState([]);
   const [player2Hand, setPlayer2Hand] = useState([]);
 
+  // Game pieces init (player hands, deck, top card)
   useEffect(() => {
     const players = [];
     const shuffledDeck = shuffleDeck(UnoCards);
@@ -174,6 +171,7 @@ export default function GameBoard() {
     });
   }, []);
 
+  // Game state events init
   useEffect(() => {
     socket.on('initGameState', ({
       gameOver, turn, player1Hand, player2Hand,
@@ -217,6 +215,7 @@ export default function GameBoard() {
     });
   }, []);
 
+  // Utility functions
   const checkGameOver = hand => {
     return hand.length === 1;
   };
@@ -225,6 +224,7 @@ export default function GameBoard() {
     return hand.length === 1 ? player : '';
   };
 
+  // Game driver
   const playCard = (player, card) => {
     const cardType = card.split('-')[1];
     let cardColor = card.split('-')[0];
@@ -432,8 +432,9 @@ export default function GameBoard() {
     }
   };
 
+  // Chat handlers
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+    setChatDrawerOpen(drawerOpen => !drawerOpen);
   };
 
   const handleNewMessageChange = event => {
@@ -460,7 +461,7 @@ export default function GameBoard() {
     }
   };
 
-  const drawer = (
+  const chatBox = (
     <div className={classes.body}>
       <ul id="messages">
         {
@@ -498,7 +499,7 @@ export default function GameBoard() {
         anchor='right'
         className={classes.drawer}
         variant="temporary"
-        open={mobileOpen}
+        open={chatDrawerOpen}
         onClose={handleDrawerToggle}
         classes={{
           paper: classes.drawerPaper
@@ -507,7 +508,7 @@ export default function GameBoard() {
           keepMounted: true
         }}
       >
-        {drawer}
+        {chatBox}
       </Drawer>
 
       <div className='topInfo'>
