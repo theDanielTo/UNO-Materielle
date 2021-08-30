@@ -10,7 +10,6 @@ const useStyles = makeStyles(theme => ({
     height: '93.6vh',
     minHeight: '95.6vh',
     maxWidth: '1200px',
-    // paddingBottom: '1em',
     fontSize: '1.5rem'
   },
   about: {
@@ -78,7 +77,6 @@ export default function AboutUs() {
   return (
     <div className={classes.root}>
       <Typography variant="h3" className={classes.title}> About Us</Typography>
-      {/* <h1 className="poppins" className>About Us</h1> */}
       <hr />
       <Grid container spacing={6} direction="row" justifyContent="space-around">
         <Grid item md={4}>
@@ -86,13 +84,23 @@ export default function AboutUs() {
             <div className={classes.trial}>
               <img className={classes.brian}src="/images/devs/brianbozigian.png" alt="Brian's Picture"></img>
             </div>
-            <Typography variant="h4" className={classes.header}>Brian Bozigian</Typography>
-            <Typography variant="h6" className={classes.infoText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?</Typography>
-            {/* <p className={classes.header}>Brian Bozigan</p>
-            <p className={classes.infoText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?</p> */}
+            <Typography variant="h4" className={classes.header}>
+              Brian Bozigian
+            </Typography>
+            <Typography variant="h6" className={classes.infoText}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?
+            </Typography>
             <Paper className={classes.link}>
-              <a href="https://github.com/BrianBozi" target="_blank" rel="noreferrer"><span className={classes.logo}><i className="fab fa-github-square fa-2x"></i></span></a>
-              <a href="https://www.linkedin.com/in/brian-bozigian/" target="_blank" rel="noreferrer"><span className={classes.logo}><i className="fab fa-linkedin fa-2x"></i></span></a>
+              <a href="https://github.com/BrianBozi" target="_blank" rel="noreferrer">
+                <span className={classes.logo}>
+                  <i className="fab fa-github-square fa-2x" />
+                </span>
+              </a>
+              <a href="https://www.linkedin.com/in/brian-bozigian/" target="_blank" rel="noreferrer">
+                <span className={classes.logo}>
+                  <i className="fab fa-linkedin fa-2x" />
+                </span>
+              </a>
             </Paper>
           </Paper>
         </Grid>
@@ -101,28 +109,48 @@ export default function AboutUs() {
             <div className={classes.trial}>
               <img className={classes.daniel} src="/images/devs/danielto.png" alt="Daniel's Picture"></img>
             </div>
-            <Typography variant="h4" className={classes.header}> Daniel To</Typography>
-            <Typography variant="h6" className={classes.infoText}> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?</Typography>
-            {/* <p className={classes.header}>Daniel To</p>
-            <p className={classes.infoText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?</p> */}
+            <Typography variant="h4" className={classes.header}>
+              Daniel To
+            </Typography>
+            <Typography variant="h6" className={classes.infoText}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?
+            </Typography>
             <Paper className={classes.link}>
-              <a href="https://github.com/theDanielTo" target="_blank" rel="noreferrer"><span className={classes.logo}><i className="fab fa-github-square fa-2x"></i></span></a>
-              <a href="https://www.linkedin.com/in/to-daniel/" target="_blank" rel="noreferrer"><span className={classes.logo}><i className="fab fa-linkedin fa-2x"></i></span></a>
+              <a href="https://github.com/theDanielTo" target="_blank" rel="noreferrer">
+                <span className={classes.logo}>
+                  <i className="fab fa-github-square fa-2x" />
+                </span>
+              </a>
+              <a href="https://www.linkedin.com/in/to-daniel/" target="_blank" rel="noreferrer">
+                <span className={classes.logo}>
+                  <i className="fab fa-linkedin fa-2x" />
+                </span>
+              </a>
             </Paper>
           </Paper>
         </Grid>
         <Grid item md={4}>
           <Paper className={classes.about}>
             <div className={classes.trial}>
-              <img className={classes.michael} src="/images/devs/michaelaguilar.png" alt="Michael's Picture"></img>
+              <img className={classes.michael} src="/images/devs/michaelaguilar.png" alt="Michael's Picture" />
             </div>
-            <Typography variant="h4" className={classes.header}>Michael Aguilar</Typography>
-            <Typography variant="h6" className={classes.infoText}> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?</Typography>
-            {/* <p className={classes.header}>Michael Aguilar</p>
-            <p className={classes.infoText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?</p> */}
+            <Typography variant="h4" className={classes.header}>
+              Michael Aguilar
+            </Typography>
+            <Typography variant="h6" className={classes.infoText}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?
+            </Typography>
             <Paper className={classes.link}>
-              <a href="https://github.com/Michael-M-Aguilar" target="_blank" rel="noreferrer"><span className={classes.logo}><i className="fab fa-github-square fa-2x"></i></span></a>
-              <a href="https://www.linkedin.com/in/michael-m-aguilar/" target="_blank" rel="noreferrer"><span className={classes.logo}><i className="fab fa-linkedin fa-2x"></i></span></a>
+              <a href="https://github.com/Michael-M-Aguilar" target="_blank" rel="noreferrer">
+                <span className={classes.logo}>
+                  <i className="fab fa-github-square fa-2x" />
+                </span>
+              </a>
+              <a href="https://www.linkedin.com/in/michael-m-aguilar/" target="_blank" rel="noreferrer">
+                <span className={classes.logo}>
+                  <i className="fab fa-linkedin fa-2x" />
+                </span>
+              </a>
             </Paper>
           </Paper>
         </Grid>

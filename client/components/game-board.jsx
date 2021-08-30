@@ -9,8 +9,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { io } from 'socket.io-client';
 import { IconButton, Drawer } from '@material-ui/core';
 import MessageIcon from '@material-ui/icons/Message';
-import ChatNav from './chat-nav-bar';
-import Chat from './chat';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,7 +41,6 @@ const useStyles = makeStyles(theme => ({
     width: '300px',
     margin: 0,
     paddingBottom: '3rem'
-    // backgroundColor: 'black'
   },
 
   form: {
@@ -86,6 +83,7 @@ const useStyles = makeStyles(theme => ({
 
 let socket;
 const ENDPOINT = 'http://localhost:3000';
+// const ENDPOINT = 'http://localhost:3000';
 const NUM_PLAYERS = 2;
 const HAND_SIZE = 7;
 // indices for 'skip', 'reverse', 'draw2', black cards
@@ -109,6 +107,10 @@ export default function GameBoard() {
   const [roomFull, setRoomFull] = useState(false);
   const [users, setUsers] = useState([]);
   const [currentUser, setCurrentUser] = useState('');
+
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     const connectionOptions = {
@@ -140,34 +142,6 @@ export default function GameBoard() {
 
   const [player1Hand, setPlayer1Hand] = useState([]);
   const [player2Hand, setPlayer2Hand] = useState([]);
-
-  const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState([]);
-
-  // const classes = useStyles();
-
-  const handleNewMessageChange = event => {
-    setMessage(event.target.value);
-  };
-
-  const sendMessage = event => {
-    event.preventDefault();
-    if (message) {
-      socket.emit('sendMessage', { message: message }, () => {
-        setMessage('');
-      });
-    }
-  };
-
-  const handleKeyUp = event => {
-    if (event.key === 'Enter') {
-      if (message !== '') {
-        socket.emit('sendMessage', { message: message }, () => {
-          setMessage('');
-        });
-      }
-    }
-  };
 
   useEffect(() => {
     const players = [];
@@ -215,10 +189,6 @@ export default function GameBoard() {
       setDrawCardPile(drawCardPile);
     });
 
-    socket.on('message', message => {
-      setMessages(messages => [...messages, message]);
-    });
-
     socket.on('updateGameState', ({
       gameOver, winner, turn, player1Hand, player2Hand,
       validColor, topCard, playedCards, drawCardPile
@@ -240,6 +210,10 @@ export default function GameBoard() {
 
     socket.on('currentUserData', ({ name }) => {
       setCurrentUser(name);
+    });
+
+    socket.on('message', message => {
+      setMessages(messages => [...messages, message]);
     });
   }, []);
 
@@ -458,10 +432,32 @@ export default function GameBoard() {
     }
   };
 
-  const [mobileOpen, setMobileOpen] = useState(false);
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const handleNewMessageChange = event => {
+    setMessage(event.target.value);
+  };
+
+  const sendMessage = e => {
+    e.preventDefault();
+    if (message) {
+      socket.emit('sendMessage', { message: message }, () => {
+        setMessage('');
+      });
+    }
+  };
+
+  const handleKeyUp = e => {
+    e.preventDefault();
+    if (event.key === 'Enter') {
+      if (message) {
+        socket.emit('sendMessage', { message: message }, () => {
+          setMessage('');
+        });
+      }
+    }
   };
 
   const drawer = (
@@ -490,9 +486,7 @@ export default function GameBoard() {
   );
 
   return (
-    // messages component
     <div className={classes.root}>
-
       <IconButton
         color="inherit"
         aria-label="open drawer"
@@ -516,10 +510,8 @@ export default function GameBoard() {
         {drawer}
       </Drawer>
 
- {/* game jjjjjjj */}
       <div className='topInfo'>
         <h1>Game Code: {room}</h1><span>{turn + '\'s turn'}</span>
-
       </div>
 
       { users.length === 1 && currentUser === 'Player 1' &&

@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import BoardCenter from '../components/BoardCenter';
 import PlayerHand from '../components/PlayerHand';
 import CpuHand from '../components/CpuHand';
 import { makeStyles } from '@material-ui/core/styles';
-// import Chat from '../components/chat';
-// import MessageIcon from '@material-ui/icons/Message';
-// import { IconButton, Drawer } from '@material-ui/core';
-// import { Drawer } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   columnSm: {
@@ -38,49 +34,8 @@ export default function Player2View({ onCardClick, playCard, turn, validColor, t
     playCard('Player 2', cardSrc);
   };
 
-  // const [mobileOpen, setMobileOpen] = useState(false);
-
-  // const handleDrawerToggle = () => {
-  //   setMobileOpen(!mobileOpen);
-  // };
-
-  // const drawer = (
-  //   <Chat socket={socket} />
-  // );
-
   return (
     <>
-      {/* <IconButton
-        color="inherit"
-        aria-label="open drawer"
-        edge="start"
-        onClick={handleDrawerToggle} >
-        <MessageIcon className={classes.message} />
-      </IconButton>
-      <Drawer
-        anchor='right'
-        className={classes.drawer}
-        variant="temporary"
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-        classes={{
-          paper: classes.drawerPaper
-        }}
-        ModalProps={{
-          keepMounted: true
-        }}
-      >
-        {drawer}
-      </Drawer> */}
-      {/* <Grid className={classes.columnSm}
-          container item xl={2} spacing={0}
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <CpuHand side={'left'} player={players[0]}/>
-        </Grid> */}
-
       <Grid className={classes.columnSm}
         container item xl={8} spacing={0}
       >
@@ -126,15 +81,6 @@ export default function Player2View({ onCardClick, playCard, turn, validColor, t
           />
         </Grid>
       </Grid>
-        {/* <Chat /> */}
-      {/* <Grid className={classes.columnSm}
-          container item xl={2} spacing={0}
-          direction="column-reverse"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <CpuHand side={'right'} player={players[3]} />
-        </Grid> */}
     </>
   );
 }
