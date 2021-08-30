@@ -10,14 +10,17 @@ const useStyles = makeStyles(theme => ({
     height: '80vh'
   },
   midRow: {
-    height: '400px'
+    height: '50%',
+    paddingTop: '2em',
+    paddingBottom: '2em'
   },
   midCards: {
-    height: '200px'
+    height: '25%',
+    paddingTop: '1em'
   },
   card: {
-    height: 210,
-    width: 150,
+    height: 200,
+    width: 140,
     borderRadius: 10
   }
 }));
@@ -32,15 +35,13 @@ export default function Player2View({ onCardClick, playCard, turn, curColor, top
     const cardSrc = e.dataTransfer.getData('card');
     playCard('Player 2', cardSrc);
   };
-
   return (
     <>
-      <p>{'Player 1'}</p>
       <Grid className={classes.columnSm}
-        container spacing={0}
+        container item xl={12} md={12} sm={12} spacing={0}
       >
         <Grid className={classes.midCards}
-          container item xl={12} spacing={1}
+          container item xl={12} md={12} sm={12} spacing={1}
           direction="row-reverse"
           justifyContent="center"
           alignItems="center"
@@ -49,7 +50,7 @@ export default function Player2View({ onCardClick, playCard, turn, curColor, top
         </Grid>
 
         <Grid className={classes.midRow} id='midRow'
-          container item xl={12} spacing={2}
+          container item xl={12} lg={12} md={12} sm={12} spacing={8}
           justifyContent="center"
           alignItems="center"
           onDrop={drop}
@@ -67,7 +68,7 @@ export default function Player2View({ onCardClick, playCard, turn, curColor, top
         </Grid>
 
         <Grid className={classes.midCards}
-          container item xl={12} spacing={1}
+          container item xl={12} md={12} sm={12} spacing={1}
           direction="row"
           justifyContent="center"
           alignItems="center"
@@ -81,7 +82,6 @@ export default function Player2View({ onCardClick, playCard, turn, curColor, top
           />
         </Grid>
       </Grid>
-      <p>{'Player 2'}</p>
     </>
   );
 }
