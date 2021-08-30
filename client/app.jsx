@@ -1,7 +1,7 @@
 import React from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import SideNav from './components/sidenav';
+import SideNav from './components/SideNav';
 import Home from './pages/home';
 import HowToPlay from './pages/how-to-play';
 import AboutUs from './pages/about-us';
