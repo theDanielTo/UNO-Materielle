@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#484040',
     borderRadius: '25px',
     paddingTop: '1em',
-    margin: '0 0.5rem'
+    margin: '0 1rem'
   },
   link: {
     backgroundColor: '#7e7e7e',
@@ -40,7 +40,8 @@ const useStyles = makeStyles(theme => ({
     color: '#DDE0EF',
     padding: '0 0.8em 0 0.8em',
     marginBottom: '1rem',
-    marginLeft: '1.8rem'
+    marginTop: '.5rem'
+
   },
   logo: {
     color: '#DDE0EF'
