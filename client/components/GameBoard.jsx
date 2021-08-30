@@ -14,9 +14,10 @@ const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: '#151224',
     color: '#DDE0EF',
+    height: '150vh',
+    minWidth: '1200px',
     minHeight: '100vh',
     height: '-webkit-fill-available',
-    maxWidth: '1200px',
     fontSize: '1.5rem'
   },
   columnSm: {
@@ -35,13 +36,23 @@ const useStyles = makeStyles(theme => ({
   },
   topInfo: {
     display: 'flex',
-    alignItems: 'flex-end'
+    justifyContent: 'center',
+    color: 'yellow'
   },
   chatIcon: {
     position: 'fixed',
     bottom: 25,
     right: 25,
     fontSize: '3rem'
+  },
+  chatIconShadow: {
+    position: 'fixed',
+    bottom: 25,
+    right: 25,
+    fontSize: '3rem',
+    color: '#151224',
+    backgroundColor: 'yellow',
+    boxShadow: '0 0 10px 10px yellow'
   },
   chatBox: {
     width: '400px',
@@ -97,7 +108,7 @@ const useStyles = makeStyles(theme => ({
 
 let socket;
 const ENDPOINT = 'http://localhost:3000';
-// const ENDPOINT = 'http://localhost:3000';
+// const ENDPOINT = 'https://mintbean-uno.herokuapp.com/';
 const NUM_PLAYERS = 2;
 const HAND_SIZE = 7;
 // indices for 'skip', 'reverse', 'draw2', black cards
@@ -127,6 +138,7 @@ export default function GameBoard() {
   const [chatDrawerOpen, setChatDrawerOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const [newMsg, setNewMsg] = useState(false);
 
   // Socket init
   useEffect(() => {
@@ -142,7 +154,7 @@ export default function GameBoard() {
       if (error) { setRoomFull(true); }
     });
 
-    return function cleanup() {
+    return () => {
       socket.emit('disconnection');
       socket.off();
     };
@@ -176,8 +188,12 @@ export default function GameBoard() {
       randomIndex = Math.floor(Math.random() * 108);
     }
 
-    const topColor = shuffledDeck[randomIndex].color;
-    const topType = shuffledDeck[randomIndex].type;
+    const topColor = shuffledDeck[randomIndex]
+      ? shuffledDeck[randomIndex].color
+      : undefined;
+    const topType = shuffledDeck[randomIndex]
+      ? shuffledDeck[randomIndex].type
+      : undefined;
     const topCard = `${topColor}-${topType}`;
 
     const playedCards = shuffledDeck.splice(randomIndex, 1);
@@ -486,6 +502,7 @@ export default function GameBoard() {
   // Chat handlers
   const handleDrawerToggle = () => {
     setChatDrawerOpen(drawerOpen => !drawerOpen);
+    if (newMsg) setNewMsg(false);
   };
 
   const handleNewMessageChange = event => {
@@ -511,6 +528,14 @@ export default function GameBoard() {
       }
     }
   };
+
+  useEffect(() => {
+    setNewMsg(true);
+  }, [messages]);
+
+  const msgNotification = newMsg
+    ? classes.chatIconShadow
+    : classes.chatIcon;
 
   const chatBox = (
     <div className={classes.chatBox}>
@@ -547,7 +572,7 @@ export default function GameBoard() {
         aria-label="open drawer"
         edge="start"
         onClick={handleDrawerToggle} >
-        <MessageIcon className={classes.chatIcon} />
+        <MessageIcon className={msgNotification} />
       </IconButton>
       <Drawer
         anchor='right'
@@ -565,16 +590,12 @@ export default function GameBoard() {
         {chatBox}
       </Drawer>
 
-      <div className={classes.topInfo}>
-        <h3>
-          Game Code: {room}
-        </h3>
-        <span>
-          {users.length === 2 && <>
-            {notification}
-          </>}
-        </span>
-      </div>
+        <div className={classes.topInfo}>
+          {users.length < 2
+            ? <h3>{`Game Code: ${room}`}</h3>
+            : <h3>{ notification }</h3>
+          }
+        </div>
 
       { users.length === 1 && currentUser === 'Player 1' &&
         <h1>Waiting for another player to join the game.</h1>
@@ -592,13 +613,13 @@ export default function GameBoard() {
               <Player1View playCard={playCard} onCardClick={drawCard}
                 curColor={curColor} topCard={topCard} playedCards={playedCards}
                 player1Hand={player1Hand} player2Hand={player2Hand}
-                turn={turn} username={username} socket={socket}
+                turn={turn} users={users} notification={notification}
               />}
               { currentUser === 'Player 2' &&
               <Player2View playCard={playCard} onCardClick={drawCard}
                 curColor={curColor} topCard={topCard} playedCards={playedCards}
                 player1Hand={player1Hand} player2Hand={player2Hand}
-                turn={turn} username={username} socket={socket}
+                turn={turn} users={users} notification={notification}
               />}
             </Grid>
         }

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import NewUser from '../components/NewUser';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core';
 import LobbyCard from '../components/LobbyCard';
-import NewUser from '../components/NewUser';
+import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: '#151224',
     color: '#DDE0EF',
     height: '100vh',
-    maxWidth: '1200px',
+    minWidth: '1200px',
     fontSize: '1.5rem'
   },
   button: {
@@ -41,8 +41,8 @@ export default function Lobby() {
       body: JSON.stringify({ title })
     })
       .then(res => res.json())
+      .then(result => setGames([...games, result]))
       .catch(err => console.error('fetch err:', err));
-
   };
 
   return (
@@ -51,7 +51,7 @@ export default function Lobby() {
       <Grid container spacing={6} direction="row" justifyContent="flex-start">
         {
           games.map(game => (
-            <LobbyCard key={game.gameId} game={game}/>
+            <LobbyCard key={game.gameId} game={game} />
           ))
         }
       </Grid>

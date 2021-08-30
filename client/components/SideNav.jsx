@@ -14,12 +14,12 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 
+import LooksOneIcon from '@material-ui/icons/LooksOne';
 import HomeIcon from '@material-ui/icons/Home';
 import GradeIcon from '@material-ui/icons/Grade';
 import MoodIcon from '@material-ui/icons/Mood';
 import VideogameAssetIcon from '@material-ui/icons/VideogameAsset';
 
-import ChangeNameDialog from './ChangeNameDialog';
 import { Hidden, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
@@ -88,11 +88,13 @@ export default function SideNav(props) {
       <div className={classes.toolbar} />
       <Divider light={true} />
       <List>
-        <ListItem alignItems="center">
+        <ListItem>
           <ListItemIcon className={classes.listItem}>
-            <Avatar>M</Avatar>
+            <Avatar>
+              <LooksOneIcon/>
+            </Avatar>
           </ListItemIcon>
-          <ListItemText primary="Uno!" className={classes.listItem} />
+          <ListItemText primary="Mintbean Hackathon - Uno!" className={classes.listItem} />
         </ListItem>
       </List>
       <Divider light={true} />
@@ -110,9 +112,6 @@ export default function SideNav(props) {
           ))
         }
       </List>
-      <List>
-        <ChangeNameDialog />
-      </List>
     </div>
   );
 
@@ -122,13 +121,13 @@ export default function SideNav(props) {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
-          onClick={handleDrawerToggle} >
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+          >
             <MenuIcon />
           </IconButton>
-
         </Toolbar>
       </AppBar>
         <nav aria-label="sidenav">
@@ -140,21 +139,15 @@ export default function SideNav(props) {
               variant="temporary"
               open={mobileOpen}
               onClose={handleDrawerToggle}
-              classes={{
-                paper: classes.drawerPaper
-              }}
-              ModalProps={{
-                keepMounted: true
-              }}
+              classes={{ paper: classes.drawerPaper }}
+              ModalProps={{ keepMounted: true }}
               >
               {drawer}
             </Drawer>
           </Hidden>
           <Hidden lgDown implementation="css">
             <Drawer
-              classes={{
-                paper: classes.drawerPaper
-              }}
+              classes={{ paper: classes.drawerPaper }}
               variant="permanent"
               open
             >
