@@ -6,16 +6,16 @@ const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: '#151224',
     color: '#DDE0EF',
-
-    height: '93.6vh',
-    minHeight: '95.6vh',
+    marginBottom: '1rem',
+    minHeight: '96.6vh',
     maxWidth: '1200px',
     fontSize: '1.5rem'
   },
   about: {
     backgroundColor: '#484040',
     borderRadius: '25px',
-    paddingTop: '1em'
+    paddingTop: '1em',
+    margin: '0 0.5rem'
   },
   link: {
     backgroundColor: '#7e7e7e',
@@ -23,7 +23,8 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-around',
     borderRadius: '0 0 25px 25px',
     paddingTop: '0.7em',
-    paddingBottom: '0.5em'
+    paddingBottom: '0.5em',
+    marginBottom: '10px'
   },
   container: {
     display: 'flex'
