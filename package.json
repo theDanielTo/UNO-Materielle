@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "A full stack JavaScript collab project.",
+  "engines": {
+    "node": "14.16"
+  },
   "main": "server/index.js",
   "scripts": {
     "build": "webpack --mode=production",
