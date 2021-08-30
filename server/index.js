@@ -94,11 +94,37 @@ app.get('/api/games', (req, res, next) => {
 
 app.post('/api/games', (req, res, next) => {
   const sql = `
-    INSERT into "games" ("numPlayers", "isStarted")
-      VALUES ($1, false)
+    INSERT into "games"
       RETURNING *
   `;
-  const param = [4];
+  db.query(sql)
+    .then(result => res.status(201).json(result.rows[0]))
+    .catch(err => next(err));
+});
+
+app.post('/api/lobbies', (req, res, next) => {
+  const { gameId, userId } = req.body;
+  const sql = `
+    INSERT into "lobbies" ("gameId", "userId")
+      VALUES ($1, $2)
+      RETURNING *
+  `;
+  const params = [gameId, userId];
+  db.query(sql, params)
+    .then(result => res.status(201).json(result.rows[0]))
+    .catch(err => next(err));
+});
+
+app.get('/api/lobbies/count/:gameId', (req, res, next) => {
+  const gameId = parseInt(req.params.gameId, 10);
+  const sql = `
+    SELECT "gameId", count(*) as "participants"
+      FROM "lobbies" as "l"
+      JOIN "games" as "g" using ("gameId")
+      WHERE "gameId" = $1
+      GROUP BY "gameId"
+  `;
+  const param = [gameId];
   db.query(sql, param)
     .then(result => res.status(201).json(result.rows[0]))
     .catch(err => next(err));

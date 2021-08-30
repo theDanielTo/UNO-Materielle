@@ -7,8 +7,7 @@ export default function shuffleDeck(deck) {
     randomIndex = Math.floor(Math.random() * curIndex);
     curIndex--;
 
-    [deck[curIndex], deck[randomIndex]] = [
-      deck[randomIndex], deck[curIndex]];
+    [deck[curIndex], deck[randomIndex]] = [deck[randomIndex], deck[curIndex]];
   }
 
   return deck;

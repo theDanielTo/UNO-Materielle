@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import NewUser from '../components/NewUser';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core';
 import LobbyCard from '../components/LobbyCard';
-import NewUser from '../components/NewUser';
+import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,19 +30,10 @@ export default function Lobby() {
       .catch(err => console.error('fetch err:', err));
   }, [games]);
 
-  const title = 'new game';
-
   const createGame = () => {
-    fetch('/api/games', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ title })
-    })
+    fetch('/api/games', { method: 'POST' })
       .then(res => res.json())
       .catch(err => console.error('fetch err:', err));
-
   };
 
   return (
@@ -51,7 +42,7 @@ export default function Lobby() {
       <Grid container spacing={6} direction="row" justifyContent="flex-start">
         {
           games.map(game => (
-            <LobbyCard key={game.gameId} game={game}/>
+            <LobbyCard key={game.gameId} game={game} />
           ))
         }
       </Grid>
