@@ -95,8 +95,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 let socket;
-const ENDPOINT = 'http://localhost:3000';
-// const ENDPOINT = 'https://mintbean-uno.herokuapp.com/';
+// const ENDPOINT = 'http://localhost:3000';
+const ENDPOINT = 'https://mintbean-uno.herokuapp.com/';
 const NUM_PLAYERS = 2;
 const HAND_SIZE = 7;
 // indices for 'skip', 'reverse', 'draw2', black cards
