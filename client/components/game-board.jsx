@@ -7,6 +7,10 @@ import Player2View from '../views/Player2View';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { io } from 'socket.io-client';
+import { IconButton, Drawer } from '@material-ui/core';
+import MessageIcon from '@material-ui/icons/Message';
+import ChatNav from './chat-nav-bar';
+import Chat from './chat';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,6 +33,54 @@ const useStyles = makeStyles(theme => ({
     height: 210,
     width: 150,
     borderRadius: 10
+  },
+  message: {
+    position: 'fixed',
+    top: 100,
+    right: 25
+  },
+  body: {
+    width: '300px',
+    margin: 0,
+    paddingBottom: '3rem'
+    // backgroundColor: 'black'
+  },
+
+  form: {
+    background: 'rgba(0, 0, 0, 0.15)',
+    padding: '0.25rem',
+    position: 'fixed',
+    bottom: 0,
+    right: 0,
+    display: 'flex',
+    height: '3rem',
+    width: '300px'
+
+  },
+
+  input: {
+    border: 'none',
+    padding: '0 1rem',
+    flexGrow: '1',
+    borderRadius: '2rem',
+    margin: '0.25rem',
+    width: '100px'
+  },
+
+  button: {
+    background: '#333',
+    border: 'none',
+    padding: '0 1rem',
+    margin: '0.25rem',
+    borderRadius: '3px',
+    outline: 'none',
+    color: '#fff'
+  },
+
+  messages: {
+    listStyleType: 'none',
+    marginTop: 10,
+    padding: 0
   }
 }));
 
@@ -89,6 +141,34 @@ export default function GameBoard() {
   const [player1Hand, setPlayer1Hand] = useState([]);
   const [player2Hand, setPlayer2Hand] = useState([]);
 
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
+
+  // const classes = useStyles();
+
+  const handleNewMessageChange = event => {
+    setMessage(event.target.value);
+  };
+
+  const sendMessage = event => {
+    event.preventDefault();
+    if (message) {
+      socket.emit('sendMessage', { message: message }, () => {
+        setMessage('');
+      });
+    }
+  };
+
+  const handleKeyUp = event => {
+    if (event.key === 'Enter') {
+      if (message !== '') {
+        socket.emit('sendMessage', { message: message }, () => {
+          setMessage('');
+        });
+      }
+    }
+  };
+
   useEffect(() => {
     const players = [];
     const shuffledDeck = shuffleDeck(UnoCards);
@@ -133,6 +213,10 @@ export default function GameBoard() {
       setTopCard(topCard);
       setPlayedCards(playedCards);
       setDrawCardPile(drawCardPile);
+    });
+
+    socket.on('message', message => {
+      setMessages(messages => [...messages, message]);
     });
 
     socket.on('updateGameState', ({
@@ -374,10 +458,68 @@ export default function GameBoard() {
     }
   };
 
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const drawer = (
+    <div className={classes.body}>
+      <ul id="messages">
+        {
+          messages.map((messages, i) => (
+            <>
+            <li key={i} className={classes.listing}>
+              {messages.user}
+            </li>
+            <li key={i}>
+              {messages.text}
+            </li>
+            </>
+          ))
+        }
+      </ul>
+      <form id="form" action="" className={classes.form}>
+        <input className={classes.input} type="text" id="input" autoComplete="off" value={message}
+          onChange={handleNewMessageChange}
+          onKeyUp={handleKeyUp} />
+        <button className={classes.button} onClick={sendMessage}>Send</button>
+      </form>
+    </div>
+  );
+
   return (
+    // messages component
     <div className={classes.root}>
+
+      <IconButton
+        color="inherit"
+        aria-label="open drawer"
+        edge="start"
+        onClick={handleDrawerToggle} >
+        <MessageIcon className={classes.message} />
+      </IconButton>
+      <Drawer
+        anchor='right'
+        className={classes.drawer}
+        variant="temporary"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        classes={{
+          paper: classes.drawerPaper
+        }}
+        ModalProps={{
+          keepMounted: true
+        }}
+      >
+        {drawer}
+      </Drawer>
+
+ {/* game jjjjjjj */}
       <div className='topInfo'>
         <h1>Game Code: {room}</h1><span>{turn + '\'s turn'}</span>
+
       </div>
 
       { users.length === 1 && currentUser === 'Player 1' &&
@@ -396,13 +538,13 @@ export default function GameBoard() {
               <Player1View playCard={playCard} onCardClick={drawCard}
                 validColor={validColor} topCard={topCard} playedCards={playedCards}
                 player1Hand={player1Hand} player2Hand={player2Hand}
-                turn={turn} username={username}
+                turn={turn} username={username} socket={socket}
               />}
               { currentUser === 'Player 2' &&
               <Player2View playCard={playCard} onCardClick={drawCard}
                 validColor={validColor} topCard={topCard} playedCards={playedCards}
                 player1Hand={player1Hand} player2Hand={player2Hand}
-                turn={turn} username={username}
+                turn={turn} username={username} socket={socket}
               />}
             </Grid>
         }

@@ -12,7 +12,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { List } from '@material-ui/icons';
 import FormDialog from './name-dialogs';
 import MenuIcon from '@material-ui/icons/Menu';
-
+// import { Drawer } from '@material-ui/core';
+import Chat from './chat';
 const drawerWidth = 400;
 
 const useStyles = makeStyles(theme => ({
@@ -51,25 +52,26 @@ export default function ChatNav(props) {
     window !== undefined ? () => window().document.body : undefined;
 
   const drawer = (
-    <div>
-      <div className={classes.toolbar} />
-      <Divider light={true} />
-      <List>
-        <ListItem alignItems="center">
-          <ListItemIcon className={classes.listItem}>
-            <Avatar>M</Avatar>
-          </ListItemIcon>
-          <ListItemText primary="Uno!" className={classes.listItem} />
-        </ListItem>
-      </List>
-      <Divider light={true} />
-      <List>
-      {/* Insert Socket */}
-      </List>
-      <List>
-        <FormDialog />
-      </List>
-    </div>
+      <Chat />
+    // <div>
+    //   <div className={classes.toolbar} />
+    //   <Divider light={true} />
+    //   <List>
+    //     <ListItem alignItems="center">
+    //       <ListItemIcon className={classes.listItem}>
+    //         <Avatar>M</Avatar>
+    //       </ListItemIcon>
+    //       <ListItemText primary="Uno!" className={classes.listItem} />
+    //     </ListItem>
+    //   </List>
+    //   <Divider light={true} />
+    //   <List>
+    //   {/* Insert Socket */}
+    //   </List>
+    //   <List>
+    //     <FormDialog />
+    //   </List>
+    // </div>
   );
 
   return (
