@@ -46,13 +46,13 @@ export default function Player1View({ onCardClick, playCard, turn, curColor, top
 
       <p>{`Player 2: ${users[1].username}`}</p>
 
-      <Grid className={classes.midRow} id='midRow'
+      <Grid className={classes.midRow + ' mid'}
         container item xl={12} lg={12} md={12} sm={12} spacing={8}
         justifyContent="center"
         alignItems="center"
         onDrop={drop}
-        onDragEnter={e => { if (e.target.closest('div').id === 'midRow') e.target.style.background = curColor; }}
-        onDragLeave={e => { if (e.target.closest('div').id === 'midRow') e.target.style.background = ''; }}
+        onDragEnter={e => { if (e.target.classList.contains('mid')) e.target.style.background = curColor; }}
+        onDragLeave={e => { if (e.target.classList.contains('mid')) e.target.style.background = ''; }}
       >
         <BoardCenter
           player={'Player 1'}

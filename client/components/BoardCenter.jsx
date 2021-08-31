@@ -9,14 +9,17 @@ export default function BoardCenter({ player, turn, onCardClick, cardStyle, topC
 
   return (
     <>
-      <Grid item id="played-cards">
+      <Grid item id="played-cards" className="mid">
         <img src={`./images/cards/${topCard}.png`} alt=""
-          className={cardStyle} draggable="false"
+          className={cardStyle + ' mid'} draggable="false"
         />
       </Grid>
-      <Grid item onClick={onCardClick} style={{ pointerEvents: pEvents }}>
+      <Grid item
+        className="mid"
+        onClick={onCardClick}
+        style={{ pointerEvents: pEvents }}>
         <img src="./images/cards/back-of-card.png" alt="Uno Card"
-          className={cardStyle} draggable="false"
+          className={cardStyle + ' mid'} draggable="false"
           style={{ cursor: cursor }} />
       </Grid>
     </>
