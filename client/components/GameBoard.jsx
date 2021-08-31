@@ -7,7 +7,7 @@ import Player2View from '../views/Player2View';
 import { Link } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, IconButton, Drawer, Button } from '@material-ui/core';
+import { Grid, IconButton, Drawer, Button, Box, Container } from '@material-ui/core';
 import MessageIcon from '@material-ui/icons/Message';
 
 const useStyles = makeStyles(theme => ({
@@ -38,11 +38,13 @@ const useStyles = makeStyles(theme => ({
     boxShadow: '0 0 10px 10px yellow'
   },
   chatBox: {
+    height: '100%',
     width: '400px',
     margin: 0,
     paddingBottom: '3rem'
   },
   messagesContainer: {
+    height: '100%',
     padding: 10
   },
   form: {
@@ -73,14 +75,19 @@ const useStyles = makeStyles(theme => ({
     color: '#fff'
   },
   message: {
-    listStyleType: 'none',
     marginTop: 10,
-    padding: 15,
+    padding: '10px 15px',
     width: 'fit-content',
     borderRadius: 10,
-    backgroundColor: 'blue',
-    color: 'white',
     fontSize: '1.2rem'
+  },
+  messageP1: {
+    background: 'linear-gradient(#e66465, #38008c)',
+    color: '#ffffff'
+  },
+  messageP2: {
+    background: 'linear-gradient(#cdb4db, #a2d2ff)',
+    color: '#212529'
   },
   username: {
     listStyleType: 'none',
@@ -524,20 +531,32 @@ export default function GameBoard() {
 
   const chatBox = (
     <div className={classes.chatBox}>
-      <ul className={classes.messagesContainer} id="chat-body">
+      <Box id="chat-body"
+        className={classes.messagesContainer}
+        display="flex"
+        flexDirection="column"
+        justifyContent="flex-end">
         {
-          messages.map((messages, i) => (
-            <div key={i}>
-              <li className={classes.message}>
-                {messages.text}
-              </li>
-              <li className={classes.username}>
-                {messages.user}
-              </li>
-            </div>
-          ))
+          messages.map((message, i) => {
+            const msgStyle = message.player === 'Player 1'
+              ? `${classes.message} ${classes.messageP1}`
+              : `${classes.message} ${classes.messageP2}`;
+            const msgAlign = message.player === 'Player 1'
+              ? 'flex-start'
+              : 'flex-end';
+            return (
+              <Box key={i} alignSelf={msgAlign}>
+                <Box className={msgStyle}>
+                  {message.text}
+                </Box>
+                <Box className={classes.username}>
+                  {message.user}
+                </Box>
+              </Box>
+            );
+          })
         }
-      </ul>
+      </Box>
       <form id="form" action="" className={classes.form}>
         <input className={classes.input}
           type="text" id="input" autoComplete="off" value={message}

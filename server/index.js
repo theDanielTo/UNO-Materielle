@@ -60,7 +60,7 @@ io.on('connection', socket => {
     const user = getUser(socket.id);
     if (user) {
       io.to(user.room).emit('message',
-        { user: user.username, text: payload.message }
+        { user: user.username, player: user.player, text: payload.message }
       );
     }
     callback();
