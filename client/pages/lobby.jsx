@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
+    width: '69%',
     backgroundColor: '#151224',
     color: '#DDE0EF',
     height: '100vh',
@@ -15,9 +16,6 @@ const useStyles = makeStyles(theme => ({
   button: {
     background: '#D3A500',
     color: 'white'
-  },
-  shift: {
-    marginLeft: '.1rem'
   }
 }));
 
@@ -50,7 +48,7 @@ export default function Lobby() {
   return (
     <div className={classes.root}>
       <h2>Choose a game:</h2>
-      <Grid container spacing={2} direction="row" justifyContent="flex-start" className={classes.shift}>
+      <Grid container spacing={2} direction="row" justifyContent="flex-start" >
           {
             games.map(game => (
               <LobbyCard key={game.gameId} game={game} />

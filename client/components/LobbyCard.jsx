@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   card: {
-    width: 210,
+    width: '159px',
     borderRadius: 10,
     color: 'white',
     background: '#484040'
