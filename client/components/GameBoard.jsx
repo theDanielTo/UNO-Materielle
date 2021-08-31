@@ -17,22 +17,10 @@ const useStyles = makeStyles(theme => ({
     height: '150vh',
     minWidth: '1200px',
     minHeight: '100vh',
-    height: '-webkit-fill-available',
     fontSize: '1.5rem'
   },
   columnSm: {
     height: '100%'
-  },
-  midRow: {
-    height: '50%'
-  },
-  midCards: {
-    height: '25%'
-  },
-  card: {
-    height: 210,
-    width: 150,
-    borderRadius: 10
   },
   topInfo: {
     display: 'flex',
@@ -107,8 +95,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 let socket;
-const ENDPOINT = 'http://localhost:3000';
-// const ENDPOINT = 'https://mintbean-uno.herokuapp.com/';
+// const ENDPOINT = 'http://localhost:3000';
+const ENDPOINT = 'https://mintbean-uno.herokuapp.com/';
 const NUM_PLAYERS = 2;
 const HAND_SIZE = 7;
 // indices for 'skip', 'reverse', 'draw2', black cards
@@ -190,10 +178,10 @@ export default function GameBoard() {
 
     const topColor = shuffledDeck[randomIndex]
       ? shuffledDeck[randomIndex].color
-      : undefined;
+      : 'mint';
     const topType = shuffledDeck[randomIndex]
       ? shuffledDeck[randomIndex].type
-      : undefined;
+      : 'bean';
     const topCard = `${topColor}-${topType}`;
 
     const playedCards = shuffledDeck.splice(randomIndex, 1);

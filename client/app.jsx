@@ -2,10 +2,10 @@ import React from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import SideNav from './components/SideNav';
-import Home from './pages/Home';
-import HowToPlay from './pages/HowToPlay';
-import AboutUs from './pages/AboutUs';
-import Lobby from './pages/Lobby';
+import Home from './pages/home';
+import HowToPlay from './pages/how-to-play';
+import AboutUs from './pages/about-us';
+import Lobby from './pages/lobby';
 import GameBoard from './components/GameBoard';
 
 const useStyles = makeStyles(theme => ({
