@@ -24,18 +24,14 @@ const useStyles = makeStyles(theme => ({
   },
   chatIcon: {
     position: 'fixed',
-    bottom: 25,
+    bottom: 100,
     right: 25,
     fontSize: '3rem'
   },
   chatIconShadow: {
-    position: 'fixed',
-    bottom: 25,
-    right: 25,
-    fontSize: '3rem',
     color: '#151224',
     backgroundColor: 'yellow',
-    boxShadow: '0 0 10px 10px yellow'
+    boxShadow: '0 0 5px 5px yellow'
   },
   chatBox: {
     height: '100%',
@@ -79,7 +75,8 @@ const useStyles = makeStyles(theme => ({
     padding: '10px 15px',
     width: 'fit-content',
     borderRadius: 10,
-    fontSize: '1.2rem'
+    fontSize: '1.2rem',
+    overflowWrap: 'break-word'
   },
   messageP1: {
     background: 'linear-gradient(#e66465, #38008c)',
@@ -93,12 +90,18 @@ const useStyles = makeStyles(theme => ({
     listStyleType: 'none',
     color: '#666666',
     marginLeft: 15
+  },
+  quitBtn: {
+    position: 'fixed',
+    bottom: 25,
+    right: 25,
+    fontSize: '1.2rem'
   }
 }));
 
 let socket;
-// const ENDPOINT = 'http://localhost:3000';
-const ENDPOINT = 'https://mintbean-uno.herokuapp.com/';
+const ENDPOINT = 'http://localhost:3000';
+// const ENDPOINT = 'https://mintbean-uno.herokuapp.com/';
 const NUM_PLAYERS = 2;
 const HAND_SIZE = 7;
 // indices for 'skip', 'reverse', 'draw2', black cards
@@ -527,7 +530,7 @@ export default function GameBoard() {
 
   const msgNotification = newMsg
     ? classes.chatIconShadow
-    : classes.chatIcon;
+    : '';
 
   const chatBox = (
     <div className={classes.chatBox}>
@@ -578,7 +581,7 @@ export default function GameBoard() {
           aria-label="open drawer"
           edge="start"
           onClick={handleDrawerToggle} >
-          <MessageIcon className={msgNotification} />
+            <MessageIcon className={`${classes.chatIcon} ${msgNotification}`} />
         </IconButton>
         <Drawer
           anchor='right'
@@ -640,7 +643,7 @@ export default function GameBoard() {
 
       <br />
       <Link to={'/games'}>
-        <Button variant="contained" color="secondary">
+        <Button variant="contained" color="secondary" className={classes.quitBtn} >
           QUIT
         </Button>
       </Link>
