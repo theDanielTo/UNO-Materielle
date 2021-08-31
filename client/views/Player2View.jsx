@@ -78,7 +78,7 @@ export default function Player2View({ onCardClick, playCard, turn, curColor, top
       >
         <PlayerHand
           player={'Player 2'}
-          playerHand={player1Hand}
+          playerHand={player2Hand}
           turn={turn}
           topCard={topCard}
           curColor={curColor}
