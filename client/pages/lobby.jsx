@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#151224',
     color: '#DDE0EF',
     height: '100vh',
-    minWidth: '1200px',
+    // minWidth: '1200px',
     fontSize: '1.5rem'
   },
   button: {
@@ -48,12 +48,13 @@ export default function Lobby() {
   return (
     <div className={classes.root}>
       <h2>Choose a game:</h2>
-      <Grid container spacing={6} direction="row" justifyContent="flex-start">
-        {
-          games.map(game => (
-            <LobbyCard key={game.gameId} game={game} />
-          ))
-        }
+      <Grid container spacing={2} direction="row" justifyContent="flex-start">
+          {
+            games.map(game => (
+              <LobbyCard key={game.gameId} game={game} />
+            ))
+          }
+
       </Grid>
 
       <h2>Create Game</h2>
