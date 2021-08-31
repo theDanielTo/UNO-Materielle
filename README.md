@@ -1,16 +1,35 @@
-# Mint-Bean-Hackathon
+# Mint-Bean-Hackathon (Aug 24, 2021 - Aug 31, 2021)
+### UNO is back with a new look and feel! Delivering a responsive and an appealing aesthetic using React.js and Material UI, and with the addition of Socket.io, you can play with other players online!
 
 Collab project with
-* Brian Bozigian @BrianBozi
-* Michael Aguilar @Michael-M-Aguilar
-* Daniel To @theDanielTo
-
-### Our group project for Mint Bean
-### Aug 24, 2021 - Aug 31, 2021
+* [Brian Bozigian](https://github.com/BrianBozi)
+* [Michael Aguilar](https://github.com/Michael-M-Aguilar)
+* [Daniel To](https://github.com/theDanielTo)
 
 ## Live Demo
 
+Try the application live at [https://mintbean-uno.herokuapp.com/](https://mintbean-uno.herokuapp.com/)
+
+## Technologies Used
+
+- React.js
+- Node.js
+- Express.js
+- PostgreSQL
+- Socket.io
+- React Router
+- Material UI
+- uuid
+- Babel
+- Webpack
+- pg (PostgreSQL client for Node.js)
+- Javascript ES6
+
 ## Features
+
+- Users can create a new Uno game lobby.
+- Users can join any lobby on the 'Find a Game' page.
+- Users can play against another player. The first player to play all of their cards win!
 
 ## Preview
 
