@@ -14,13 +14,8 @@ const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: '#151224',
     color: '#DDE0EF',
-    height: '150vh',
-    minWidth: '1200px',
     minHeight: '100vh',
     fontSize: '1.5rem'
-  },
-  columnSm: {
-    height: '100%'
   },
   topInfo: {
     display: 'flex',
