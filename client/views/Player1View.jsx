@@ -6,17 +6,12 @@ import CpuHand from '../components/CpuHand';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
-  columnSm: {
-    height: '80vh'
-  },
   midRow: {
-    height: '50%',
-    paddingTop: '2em',
-    paddingBottom: '2em'
+    paddingTop: '1.3em',
+    paddingBottom: '1.3em'
   },
   midCards: {
-    height: '25%',
-    paddingTop: '1em'
+    paddingTop: '1.3em'
   },
   card: {
     height: 200,
