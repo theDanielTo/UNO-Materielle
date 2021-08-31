@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import randomize from 'randomatic';
+import { Link } from 'react-router-dom';
 import NewUser from '../components/NewUser';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -24,6 +26,7 @@ const useStyles = makeStyles(theme => ({
 export default function Lobby() {
   const classes = useStyles();
   const [games, setGames] = useState([]);
+  const code = randomize('aA0', 6);
 
   useEffect(() => {
     fetch('/api/games')
@@ -40,7 +43,7 @@ export default function Lobby() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ title })
+      body: JSON.stringify({ title, code })
     })
       .then(res => res.json())
       .then(result => setGames([...games, result]))
@@ -56,17 +59,18 @@ export default function Lobby() {
               <LobbyCard key={game.gameId} game={game} />
             ))
           }
-
       </Grid>
 
       <h2>Create Game</h2>
-      <Button
-        variant="contained"
-        className={classes.button}
-        onClick={createGame}
-      >
-        Create Game
-      </Button>
+      <Link to={`/play?game-id=${code}`}>
+        <Button
+          variant="contained"
+          className={classes.button}
+          onClick={createGame}
+        >
+          Create Game
+        </Button>
+      </Link>
       <NewUser />
     </div>
   );

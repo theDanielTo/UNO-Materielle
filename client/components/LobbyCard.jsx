@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -23,56 +23,24 @@ const useStyles = makeStyles(theme => ({
 
 export default function LobbyCard({ game }) {
   const classes = useStyles();
-  const { gameId } = game;
-  const userId = JSON.parse(localStorage.getItem('mintbean-user')).id;
-  const [participants, setParticipants] = useState(0);
-
-  useEffect(() => {
-    fetch(`/api/lobbies/count/${gameId}`)
-      .then(res => res.json())
-      .then(result => {
-        if (result) setParticipants(result.participants);
-      })
-      .catch(err => console.error('fetch err:', err));
-  }, [participants]);
-
-  const joinGame = e => {
-    fetch('/api/lobbies', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ gameId, userId })
-    })
-      .then(res => res.json())
-      .catch(err => console.error('fetch err:', err));
-  };
+  const { gameId, code } = game;
 
   return (
-    <>
-      { participants < 2
-        ? <Grid item>
-          <Card className={classes.card}>
-            <CardContent >
-              <Typography>
-                {`ID: ${gameId}`}
-              </Typography>
-              <Typography>
-                {`Players: ${participants} / 2`}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Link to={`/play?game-id=${gameId}`}>
-                <Button className={classes.button}
-                  onClick={joinGame}>
-                  Join
-                </Button>
-              </Link>
-            </CardActions>
-          </Card>
-        </Grid>
-        : null
-      }
-    </>
+    <Grid item>
+      <Card className={classes.card}>
+        <CardContent >
+          <Typography>
+            {`Code: ${code}`}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Link to={`/play?game-id=${gameId}`}>
+            <Button className={classes.button}>
+              Join
+            </Button>
+          </Link>
+        </CardActions>
+      </Card>
+    </Grid>
   );
 }
