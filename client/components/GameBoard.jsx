@@ -243,6 +243,8 @@ export default function GameBoard() {
 
     socket.on('message', message => {
       setMessages(messages => [...messages, message]);
+      const chatBody = document.getElementById('chat-body');
+      chatBody.scrollTop = chatBody.scrollHeight;
     });
   }, []);
 
@@ -494,7 +496,7 @@ export default function GameBoard() {
   };
 
   const handleNewMessageChange = event => {
-    setMessage(event.target.value);
+    setMessage(() => event.target.value);
   };
 
   const sendMessage = e => {
@@ -527,7 +529,7 @@ export default function GameBoard() {
 
   const chatBox = (
     <div className={classes.chatBox}>
-      <ul className={classes.messagesContainer}>
+      <ul className={classes.messagesContainer} id="chat-body">
         {
           messages.map((messages, i) => (
             <div key={i}>
