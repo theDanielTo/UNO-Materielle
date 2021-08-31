@@ -4,10 +4,10 @@ import { Player, shuffleDeck, parseRoute } from '../lib';
 import UnoCards from '../lib/UnoCards';
 import Player1View from '../views/Player1View';
 import Player2View from '../views/Player2View';
-
+import { Link } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, IconButton, Drawer } from '@material-ui/core';
+import { Grid, IconButton, Drawer, Button } from '@material-ui/core';
 import MessageIcon from '@material-ui/icons/Message';
 
 const useStyles = makeStyles(theme => ({
@@ -138,7 +138,7 @@ export default function GameBoard() {
     });
 
     return () => {
-      socket.emit('disconnection');
+      socket.emit('disconnection', gameId);
       socket.off();
     };
   }, []);
@@ -552,64 +552,79 @@ export default function GameBoard() {
 
   return (
     <div className={classes.root}>
-      <IconButton
-        color="inherit"
-        aria-label="open drawer"
-        edge="start"
-        onClick={handleDrawerToggle} >
-        <MessageIcon className={msgNotification} />
-      </IconButton>
-      <Drawer
-        anchor='right'
-        className={classes.drawer}
-        variant="temporary"
-        open={chatDrawerOpen}
-        onClose={handleDrawerToggle}
-        classes={{
-          paper: classes.drawerPaper
-        }}
-        ModalProps={{
-          keepMounted: true
-        }}
-      >
-        {chatBox}
-      </Drawer>
+      {(!roomFull)
+        ? <>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          edge="start"
+          onClick={handleDrawerToggle} >
+          <MessageIcon className={msgNotification} />
+        </IconButton>
+        <Drawer
+          anchor='right'
+          className={classes.drawer}
+          variant="temporary"
+          open={chatDrawerOpen}
+          onClose={handleDrawerToggle}
+          classes={{
+            paper: classes.drawerPaper
+          }}
+          ModalProps={{
+            keepMounted: true
+          }}
+        >
+          {chatBox}
+        </Drawer>
 
-        <div className={classes.topInfo}>
-          {users.length < 2
-            ? <h3>{`Game Code: ${room}`}</h3>
-            : <h3>{ notification }</h3>
-          }
-        </div>
+          <div className={classes.topInfo}>
+            {users.length < 2
+              ? <h3>{`Game Code: ${room}`}</h3>
+              : <h3>{ notification }</h3>
+            }
+          </div>
 
-      { users.length === 1 && currentUser === 'Player 1' &&
-        <h1>Waiting for another player to join the game.</h1>
-      }
-
-      { users.length === 2 && <>
-        { gameOver
-          ? <div>{winner !== '' && <><h1>GAME OVER</h1><h2>{winner} wins!</h2></>}</div>
-
-          : <Grid container spacing={0}
-              className={classes.columnSm}
-              onDragOver={e => e.preventDefault()}
-            >
-              { currentUser === 'Player 1' &&
-              <Player1View playCard={playCard} onCardClick={drawCard}
-                curColor={curColor} topCard={topCard} playedCards={playedCards}
-                player1Hand={player1Hand} player2Hand={player2Hand}
-                turn={turn} users={users} notification={notification}
-              />}
-              { currentUser === 'Player 2' &&
-              <Player2View playCard={playCard} onCardClick={drawCard}
-                curColor={curColor} topCard={topCard} playedCards={playedCards}
-                player1Hand={player1Hand} player2Hand={player2Hand}
-                turn={turn} users={users} notification={notification}
-              />}
-            </Grid>
+        { users.length === 1 && currentUser === 'Player 2' &&
+          <h1>Player 1 has left the game.</h1>
         }
-        </>
-      }
+
+        { users.length === 1 && currentUser === 'Player 1' &&
+          <h1>Waiting for another player to join the game.</h1>
+        }
+
+        { users.length === 2 && <>
+          { gameOver
+            ? <div>{winner !== '' && <><h1>GAME OVER</h1><h2>{winner} wins!</h2></>}</div>
+
+            : <Grid container spacing={0}
+                className={classes.columnSm}
+                onDragOver={e => e.preventDefault()}
+              >
+                { currentUser === 'Player 1' &&
+                <Player1View playCard={playCard} onCardClick={drawCard}
+                  curColor={curColor} topCard={topCard} playedCards={playedCards}
+                  player1Hand={player1Hand} player2Hand={player2Hand}
+                  turn={turn} users={users} notification={notification}
+                />}
+                { currentUser === 'Player 2' &&
+                <Player2View playCard={playCard} onCardClick={drawCard}
+                  curColor={curColor} topCard={topCard} playedCards={playedCards}
+                  player1Hand={player1Hand} player2Hand={player2Hand}
+                  turn={turn} users={users} notification={notification}
+                />}
+              </Grid>
+          }
+          </>
+        }
+      </>
+        : <h1>Room full</h1> }
+
+      <br />
+      <Link to={'/games'}>
+        <Button variant="contained" color="secondary">
+          QUIT
+        </Button>
+      </Link>
     </div>
   );
 }

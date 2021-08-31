@@ -13,7 +13,8 @@ export default function PlayerHand({ playerHand, turn, player, curColor, topCard
           const valid = (
             curColor === card.color ||
             topType === card.type ||
-            card.color === 'black'
+            card.color === 'black' ||
+            card.color === 'mint'
           );
           const draggable = (turn === player && valid) ? 'true' : 'false';
           const cursor = (turn === player && valid) ? 'pointer' : 'not-allowed';

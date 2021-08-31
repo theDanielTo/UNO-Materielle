@@ -89,7 +89,7 @@ export default function AboutUs() {
               Brian Bozigian
             </Typography>
             <Typography variant="h6" className={classes.infoText}>
-              A self-motivated Front-End developer and clean design enthusiast who enjoys problem-solving.
+              Brian is a  self-motivated Full-Stack developer and clean design enthusiast who enjoys problem-solving.  He has experience with HTML, CSS3, JavaScript and React.js but is always excited to learn different technologies.
             </Typography>
             <Paper className={classes.link}>
               <a href="https://github.com/BrianBozi" target="_blank" rel="noreferrer">
@@ -110,8 +110,12 @@ export default function AboutUs() {
             <div className={classes.trial}>
               <img className={classes.daniel} src="/images/devs/danielto.png" alt="Daniel's Picture"></img>
             </div>
-            <Typography variant="h4" className={classes.header}> Daniel To</Typography>
-            <Typography variant="h6" className={classes.infoText}> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta tempore quod ipsa, velit eveniet non nulla! Pariatur vero non provident temporibus sapiente a consectetur ad?</Typography>
+            <Typography variant="h4" className={classes.header}>
+              Daniel To
+            </Typography>
+            <Typography variant="h6" className={classes.infoText}>
+              Daniel is a driven Full-Stack developer whose main objective is the provide the best that he can offer to those who work alongside him. His experience with Javascript, React, CSS3 and HTML furthers his passion of problem solving and creating impactful products.
+            </Typography>
             <Paper className={classes.link}>
               <a href="https://github.com/theDanielTo" target="_blank" rel="noreferrer">
                 <span className={classes.logo}>
@@ -131,8 +135,11 @@ export default function AboutUs() {
             <div className={classes.trial}>
               <img className={classes.michael} src="/images/devs/michaelaguilar.png" alt="Michael's Picture" />
             </div>
-            <Typography variant="h4" className={classes.header}>Michael Aguilar</Typography>
-            <Typography className={classes.infoText}>Michael is a full stack engineer and graduate from UC Merced holding a B.S. in Biological Sciences.
+            <Typography variant="h4" className={classes.header}>
+              Michael Aguilar
+            </Typography>
+            <Typography className={classes.infoText}>
+              Michael is a full stack engineer and graduate from UC Merced holding a B.S. in Biological Sciences.
             He has experience with technologies such as React, JavaScript, CSS, and Python.
             In his spare time he enjoys watching sports, traveling, or learning new technologies.
             </Typography>
