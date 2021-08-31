@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function LobbyCard({ game }) {
   const classes = useStyles();
-  const { gameId, code } = game;
+  const { code } = game;
 
   return (
     <Grid item>
@@ -34,7 +34,7 @@ export default function LobbyCard({ game }) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Link to={`/play?game-id=${gameId}`}>
+          <Link to={`/play?game-id=${code}`}>
             <Button className={classes.button}>
               Join
             </Button>
