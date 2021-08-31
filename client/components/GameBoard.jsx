@@ -7,7 +7,7 @@ import Player2View from '../views/Player2View';
 import { Link } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, IconButton, Drawer, Button, Box, Container } from '@material-ui/core';
+import { Grid, IconButton, Drawer, Button, Box } from '@material-ui/core';
 import MessageIcon from '@material-ui/icons/Message';
 
 const useStyles = makeStyles(theme => ({
@@ -97,8 +97,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 let socket;
-const ENDPOINT = 'http://localhost:3000';
-// const ENDPOINT = 'https://mintbean-uno.herokuapp.com/';
+// const ENDPOINT = 'http://localhost:3000';
+const ENDPOINT = 'https://mintbean-uno.herokuapp.com/';
 const NUM_PLAYERS = 2;
 const HAND_SIZE = 7;
 // indices for 'skip', 'reverse', 'draw2', black cards
