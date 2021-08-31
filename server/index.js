@@ -70,24 +70,21 @@ io.on('connection', socket => {
     socket.leave();
   });
 
-  socket.on('disconnection', gameId => {
+  socket.on('disconnection', code => {
     const user = removeUser(socket.id);
-    if (user) {
-      io.to(user.room).emit('roomData',
-        { room: user.room, users: getUsersInRoom(user.room) }
-      );
-    }
+
     const sql = `
       DELETE from "games"
-        WHERE "gameId" = $1;
+        WHERE "code" = $1;
     `;
-
-    const params = [gameId];
-
+    const params = [code];
     db.query(sql, params)
       .then(result => {
-        // io.to('lobby').emit('game joined', { gameId });
-        // socket.to(gameId).emit('user disconnect');
+        if (user) {
+          io.to(user.room).emit('roomData',
+            { room: user.room, users: getUsersInRoom(user.room) }
+          );
+        }
       });
   });
 });
