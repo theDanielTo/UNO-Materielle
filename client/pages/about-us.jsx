@@ -89,7 +89,7 @@ export default function AboutUs() {
               Brian Bozigian
             </Typography>
             <Typography variant="h6" className={classes.infoText}>
-              A self-motivated Front-End developer and clean design enthusiast who enjoys problem-solving.
+              Brian is a  self-motivated Full-Stack developer and clean design enthusiast who enjoys problem-solving.  He has experience with HTML, CSS3, JavaScript and React.js but is always excited to learn different technologies.
             </Typography>
             <Paper className={classes.link}>
               <a href="https://github.com/BrianBozi" target="_blank" rel="noreferrer">
