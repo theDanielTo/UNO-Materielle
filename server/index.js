@@ -70,13 +70,22 @@ io.on('connection', socket => {
     socket.leave();
   });
 
-  socket.on('disconnection', () => {
+  socket.on('disconnection', code => {
     const user = removeUser(socket.id);
-    if (user) {
-      io.to(user.room).emit('roomData',
-        { room: user.room, users: getUsersInRoom(user.room) }
-      );
-    }
+
+    const sql = `
+      DELETE from "games"
+        WHERE "code" = $1;
+    `;
+    const params = [code];
+    db.query(sql, params)
+      .then(result => {
+        if (user) {
+          io.to(user.room).emit('roomData',
+            { room: user.room, users: getUsersInRoom(user.room) }
+          );
+        }
+      });
   });
 });
 
@@ -94,40 +103,13 @@ app.get('/api/games', (req, res, next) => {
 });
 
 app.post('/api/games', (req, res, next) => {
+  const { code } = req.body;
   const sql = `
-    INSERT into "games" ("title")
-      VALUES ($1)
-      RETURNING *
-  `;
-  const param = ['game title'];
-  db.query(sql, param)
-    .then(result => res.status(201).json(result.rows[0]))
-    .catch(err => next(err));
-});
-
-app.post('/api/lobbies', (req, res, next) => {
-  const { gameId, userId } = req.body;
-  const sql = `
-    INSERT into "lobbies" ("gameId", "userId")
+    INSERT into "games" ("title", "code")
       VALUES ($1, $2)
       RETURNING *
   `;
-  const params = [gameId, userId];
-  db.query(sql, params)
-    .then(result => res.status(201).json(result.rows[0]))
-    .catch(err => next(err));
-});
-
-app.get('/api/lobbies/count/:gameId', (req, res, next) => {
-  const gameId = parseInt(req.params.gameId, 10);
-  const sql = `
-    SELECT "gameId", count(*) as "participants"
-      FROM "lobbies" as "l"
-      JOIN "games" as "g" using ("gameId")
-      WHERE "gameId" = $1
-      GROUP BY "gameId"
-  `;
-  const param = [gameId];
+  const param = ['game title', code];
   db.query(sql, param)
     .then(result => res.status(201).json(result.rows[0]))
     .catch(err => next(err));
