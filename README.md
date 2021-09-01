@@ -32,6 +32,8 @@ Try the application live at [https://mintbean-uno.herokuapp.com/](https://mintbe
 - Users can play against another player. The first player to play all of their cards win!
 
 ## Preview
+![Kapture_2021-08-30_at_21 13 46](https://user-images.githubusercontent.com/70422100/131593615-420d297f-f98e-4e0a-9d53-a5cc7197c9e0.gif)
+
 
 ## Development
 
