@@ -49,8 +49,8 @@ Try the application live at [https://mintbean-uno.herokuapp.com/](https://mintbe
 1. Clone the repository.
 
     ```shell
-    git clone git@github.com:theDanielTo/Mint-Bean-Hackathon.git
-    cd mint-bean-hackathon
+    git clone git@github.com:theDanielTo/UNO-Materielle.git
+    cd uno-materielle
     ```
     
 2. Install all dependencies with NPM.
